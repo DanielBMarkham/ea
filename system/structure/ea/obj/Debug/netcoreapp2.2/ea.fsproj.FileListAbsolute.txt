@@ -1,0 +1,13 @@
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ea.deps.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ea.runtimeconfig.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ea.runtimeconfig.dev.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ea.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ea.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ealib.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\bin\Debug\netcoreapp2.2\ealib.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.fsprojAssemblyReference.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.AssemblyInfo.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.fsproj.CopyComplete
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\ea\obj\Debug\netcoreapp2.2\ea.pdb
