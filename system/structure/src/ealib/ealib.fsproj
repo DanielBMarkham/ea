@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
+      <Link>SystemTypeExtensions.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\..\..\..\..\SystemCommon\SystemUtilities.fs">
+      <Link>SystemUtilities.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\..\..\..\..\SystemCommon\CommandLineHelper.fs">
+      <Link>CommandLineHelper.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EATypeExtensions.fs">
+      <Link>EATypeExtensions.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EALenses.fs">
+      <Link>EALenses.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EAAppUtilities.fs">
+      <Link>EAAppUtilities.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EAPersist.fs">
+      <Link>EAUtilities.fs</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Util.fs" />
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.0.3" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.8.9" />
+    <PackageReference Include="NewtonSoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>
