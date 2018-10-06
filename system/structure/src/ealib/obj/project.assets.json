@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "Castle.Core/3.3.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Castle.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Castle.Core.dll": {}
+        }
+      },
       "FParsec/1.0.3": {
         "type": "package",
         "dependencies": {
@@ -70,6 +79,23 @@
           }
         }
       },
+      "Hopac/0.3.23": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.0.1.7-alpha",
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/Hopac.Core.dll": {},
+          "lib/netstandard1.6/Hopac.Platform.dll": {},
+          "lib/netstandard1.6/Hopac.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/Hopac.Core.dll": {},
+          "lib/netstandard1.6/Hopac.Platform.dll": {},
+          "lib/netstandard1.6/Hopac.dll": {}
+        }
+      },
       "HtmlAgilityPack/1.8.9": {
         "type": "package",
         "dependencies": {
@@ -83,6 +109,37 @@
         },
         "runtime": {
           "lib/netstandard2.0/HtmlAgilityPack.dll": {}
+        }
+      },
+      "Logary/4.2.1": {
+        "type": "package",
+        "dependencies": {
+          "FParsec": "1.0.2",
+          "FSharp.Core": "4.0.0.1",
+          "Hopac": "0.3.23",
+          "NodaTime": "1.3.2"
+        },
+        "compile": {
+          "lib/net452/Logary.dll": {}
+        },
+        "runtime": {
+          "lib/net452/Logary.dll": {}
+        }
+      },
+      "Logary.Adapters.Facade/4.2.1": {
+        "type": "package",
+        "dependencies": {
+          "Castle.Core": "3.3.3",
+          "FSharp.Core": "4.0.0.1",
+          "Hopac": "0.3.23",
+          "Logary": "4.2.1",
+          "NodaTime": "1.3.2"
+        },
+        "compile": {
+          "lib/net452/Logary.Adapters.Facade.dll": {}
+        },
+        "runtime": {
+          "lib/net452/Logary.Adapters.Facade.dll": {}
         }
       },
       "Markdig/0.15.3": {
@@ -134,6 +191,15 @@
         },
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "NodaTime/1.3.2": {
+        "type": "package",
+        "compile": {
+          "lib/net35-Client/NodaTime.dll": {}
+        },
+        "runtime": {
+          "lib/net35-Client/NodaTime.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -1008,6 +1074,30 @@
     }
   },
   "libraries": {
+    "Castle.Core/3.3.3": {
+      "sha512": "tvVrLbHhtAGubUUDbEkH9JlivdlJOTI25u3hlyHpPxuJdTVi/yVQKWCYvGpafGPm7G1ibdWj4brqhtSQkAmN+g==",
+      "type": "package",
+      "path": "castle.core/3.3.3",
+      "files": [
+        "ASL - Apache Software Foundation License.txt",
+        "BreakingChanges.txt",
+        "Changes.txt",
+        "License.txt",
+        "castle.core.3.3.3.nupkg.sha512",
+        "castle.core.nuspec",
+        "lib/net35/Castle.Core.dll",
+        "lib/net35/Castle.Core.xml",
+        "lib/net40-client/Castle.Core.dll",
+        "lib/net40-client/Castle.Core.xml",
+        "lib/net45/Castle.Core.dll",
+        "lib/net45/Castle.Core.xml",
+        "lib/sl4/Castle.Core.dll",
+        "lib/sl4/Castle.Core.xml",
+        "lib/sl5/Castle.Core.dll",
+        "lib/sl5/Castle.Core.xml",
+        "readme.txt"
+      ]
+    },
     "FParsec/1.0.3": {
       "sha512": "0VoZapcSUHsNCixYawx8RFZHJMRVykaKsks5OOUXRP0bZCpr7UCP6kIjbVFGHIqqBGPtICUMy7j521sH0ZcmrQ==",
       "type": "package",
@@ -1076,6 +1166,29 @@
         "lib/netstandard1.6/zh-Hant/FSharp.Core.resources.dll"
       ]
     },
+    "Hopac/0.3.23": {
+      "sha512": "P8bWrcF/Av1ySgTPSwUVjez27ybCLXtNTDNtGfp8xxa3XB5j+ULdlhWxkcEFuICNqe5+DWOHrncSKh06jW1yHA==",
+      "type": "package",
+      "path": "hopac/0.3.23",
+      "files": [
+        "hopac.0.3.23.nupkg.sha512",
+        "hopac.nuspec",
+        "lib/net45/Hopac.Core.dll",
+        "lib/net45/Hopac.Core.dll.mdb",
+        "lib/net45/Hopac.Core.xml",
+        "lib/net45/Hopac.Platform.dll",
+        "lib/net45/Hopac.Platform.dll.mdb",
+        "lib/net45/Hopac.dll",
+        "lib/net45/Hopac.dll.mdb",
+        "lib/net45/Hopac.xml",
+        "lib/netstandard1.6/Hopac.Core.dll",
+        "lib/netstandard1.6/Hopac.Core.xml",
+        "lib/netstandard1.6/Hopac.Platform.dll",
+        "lib/netstandard1.6/Hopac.Platform.xml",
+        "lib/netstandard1.6/Hopac.dll",
+        "lib/netstandard1.6/Hopac.xml"
+      ]
+    },
     "HtmlAgilityPack/1.8.9": {
       "sha512": "pCSNhes7e4UglufG/0EUx/S+9NZElNrwcI0cOAep/VpYB7PmsmfZ2UHcLRo25bP8sk3h9vAN2Ff2MEsZWqGa7Q==",
       "type": "package",
@@ -1121,6 +1234,28 @@
         "lib/uap10.0/HtmlAgilityPack.dll",
         "lib/uap10.0/HtmlAgilityPack.pdb",
         "lib/uap10.0/HtmlAgilityPack.pri"
+      ]
+    },
+    "Logary/4.2.1": {
+      "sha512": "VAPWGwC6l31N/a64i81CzuVqCa9vN6KYdS18jmRsimrxr4ZGJ7isBfsAkPs40xNS87SyJRpSnTnsIlmI/xMACw==",
+      "type": "package",
+      "path": "logary/4.2.1",
+      "files": [
+        "lib/net452/Logary.dll",
+        "lib/net452/Logary.xml",
+        "logary.4.2.1.nupkg.sha512",
+        "logary.nuspec"
+      ]
+    },
+    "Logary.Adapters.Facade/4.2.1": {
+      "sha512": "NVdugiY0WWFqwQbgTnWlTA1y06CyBCDpJfxH3PREGAelhlqv86lq0PZyzf66+kcg6uQ5t20aZ0pdghB6t4DUng==",
+      "type": "package",
+      "path": "logary.adapters.facade/4.2.1",
+      "files": [
+        "lib/net452/Logary.Adapters.Facade.dll",
+        "lib/net452/Logary.Adapters.Facade.xml",
+        "logary.adapters.facade.4.2.1.nupkg.sha512",
+        "logary.adapters.facade.nuspec"
       ]
     },
     "Markdig/0.15.3": {
@@ -1331,6 +1466,19 @@
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "newtonsoft.json.11.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
+      ]
+    },
+    "NodaTime/1.3.2": {
+      "sha512": "iIV8xtLH7JhElTag7wMzP8YkZcSvFUcHZfGZhl3npzVz7V7y0T1JJOeqS/UcY3epq9480jcuUO2jzo8ewhQmlg==",
+      "type": "package",
+      "path": "nodatime/1.3.2",
+      "files": [
+        "lib/net35-Client/NodaTime.dll",
+        "lib/net35-Client/NodaTime.xml",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+XamariniOS1/NodaTime.dll",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+XamariniOS1/NodaTime.xml",
+        "nodatime.1.3.2.nupkg.sha512",
+        "nodatime.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -3618,6 +3766,8 @@
       "FParsec >= 1.0.3",
       "FSharp.Core >= 4.5.2",
       "HtmlAgilityPack >= 1.8.9",
+      "Logary >= 4.2.1",
+      "Logary.Adapters.Facade >= 4.2.1",
       "Markdig >= 0.15.3",
       "NETStandard.Library >= 2.0.3",
       "NewtonSoft.Json >= 11.0.2"
@@ -3630,11 +3780,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
+      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
       "projectName": "ealib",
-      "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
+      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
       "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\obj\\",
+      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
@@ -3671,6 +3821,14 @@
             "target": "Package",
             "version": "[1.8.9, )"
           },
+          "Logary": {
+            "target": "Package",
+            "version": "[4.2.1, )"
+          },
+          "Logary.Adapters.Facade": {
+            "target": "Package",
+            "version": "[4.2.1, )"
+          },
           "Markdig": {
             "target": "Package",
             "version": "[0.15.3, )"
@@ -3693,5 +3851,47 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Castle.Core 3.3.3' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Castle.Core",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Logary 4.2.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Logary",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Logary.Adapters.Facade 4.2.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Logary.Adapters.Facade",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'NodaTime 1.3.2' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.",
+      "libraryId": "NodaTime",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.0"
+      ]
+    }
+  ]
 }

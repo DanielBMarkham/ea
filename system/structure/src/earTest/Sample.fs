@@ -1,6 +1,10 @@
 module Tests
 
 open Expecto
+open Hopac
+open Logary
+open Logary.Configuration
+open Logary.Adapters.Facade
 
 [<Tests>]
 let tests =

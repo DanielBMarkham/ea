@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "14ca0230182f2f0d3ac239423c2a717d53f31dbd"
+    "signature": "8d0806d9970454fa24883b911d091cea73ed71cf"
   },
   "compilationOptions": {},
   "targets": {
@@ -11,12 +11,22 @@
           "FParsec": "1.0.3",
           "FSharp.Core": "4.5.2",
           "HtmlAgilityPack": "1.8.9",
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1",
           "Markdig": "0.15.3",
           "Newtonsoft.Json": "11.0.2",
           "ealib": "1.0.0"
         },
         "runtime": {
           "ea.dll": {}
+        }
+      },
+      "Castle.Core/3.3.3": {
+        "runtime": {
+          "lib/net45/Castle.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.3.58"
+          }
         }
       },
       "FParsec/1.0.3": {
@@ -86,6 +96,25 @@
           }
         }
       },
+      "Hopac/0.3.23": {
+        "dependencies": {
+          "FSharp.Core": "4.5.2"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Hopac.Core.dll": {
+            "assemblyVersion": "0.3.23.0",
+            "fileVersion": "0.3.23.0"
+          },
+          "lib/netstandard1.6/Hopac.Platform.dll": {
+            "assemblyVersion": "0.3.23.0",
+            "fileVersion": "0.0.0.0"
+          },
+          "lib/netstandard1.6/Hopac.dll": {
+            "assemblyVersion": "0.3.23.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "HtmlAgilityPack/1.8.9": {
         "dependencies": {
           "System.Net.Http": "4.3.2",
@@ -97,6 +126,35 @@
           "lib/netstandard2.0/HtmlAgilityPack.dll": {
             "assemblyVersion": "1.8.9.0",
             "fileVersion": "1.8.9.0"
+          }
+        }
+      },
+      "Logary/4.2.1": {
+        "dependencies": {
+          "FParsec": "1.0.3",
+          "FSharp.Core": "4.5.2",
+          "Hopac": "0.3.23",
+          "NodaTime": "1.3.2"
+        },
+        "runtime": {
+          "lib/net452/Logary.dll": {
+            "assemblyVersion": "4.2.1.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Logary.Adapters.Facade/4.2.1": {
+        "dependencies": {
+          "Castle.Core": "3.3.3",
+          "FSharp.Core": "4.5.2",
+          "Hopac": "0.3.23",
+          "Logary": "4.2.1",
+          "NodaTime": "1.3.2"
+        },
+        "runtime": {
+          "lib/net452/Logary.Adapters.Facade.dll": {
+            "assemblyVersion": "4.2.1.0",
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -113,6 +171,14 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.0.2.21924"
+          }
+        }
+      },
+      "NodaTime/1.3.2": {
+        "runtime": {
+          "lib/net35-Client/NodaTime.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.2.0"
           }
         }
       },
@@ -698,6 +764,8 @@
           "FParsec": "1.0.3",
           "FSharp.Core": "4.5.2",
           "HtmlAgilityPack": "1.8.9",
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1",
           "Markdig": "0.15.3",
           "Newtonsoft.Json": "11.0.2"
         },
@@ -713,6 +781,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Castle.Core/3.3.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tvVrLbHhtAGubUUDbEkH9JlivdlJOTI25u3hlyHpPxuJdTVi/yVQKWCYvGpafGPm7G1ibdWj4brqhtSQkAmN+g==",
+      "path": "castle.core/3.3.3",
+      "hashPath": "castle.core.3.3.3.nupkg.sha512"
+    },
     "FParsec/1.0.3": {
       "type": "package",
       "serviceable": true,
@@ -727,12 +802,33 @@
       "path": "fsharp.core/4.5.2",
       "hashPath": "fsharp.core.4.5.2.nupkg.sha512"
     },
+    "Hopac/0.3.23": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P8bWrcF/Av1ySgTPSwUVjez27ybCLXtNTDNtGfp8xxa3XB5j+ULdlhWxkcEFuICNqe5+DWOHrncSKh06jW1yHA==",
+      "path": "hopac/0.3.23",
+      "hashPath": "hopac.0.3.23.nupkg.sha512"
+    },
     "HtmlAgilityPack/1.8.9": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-pCSNhes7e4UglufG/0EUx/S+9NZElNrwcI0cOAep/VpYB7PmsmfZ2UHcLRo25bP8sk3h9vAN2Ff2MEsZWqGa7Q==",
       "path": "htmlagilitypack/1.8.9",
       "hashPath": "htmlagilitypack.1.8.9.nupkg.sha512"
+    },
+    "Logary/4.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VAPWGwC6l31N/a64i81CzuVqCa9vN6KYdS18jmRsimrxr4ZGJ7isBfsAkPs40xNS87SyJRpSnTnsIlmI/xMACw==",
+      "path": "logary/4.2.1",
+      "hashPath": "logary.4.2.1.nupkg.sha512"
+    },
+    "Logary.Adapters.Facade/4.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NVdugiY0WWFqwQbgTnWlTA1y06CyBCDpJfxH3PREGAelhlqv86lq0PZyzf66+kcg6uQ5t20aZ0pdghB6t4DUng==",
+      "path": "logary.adapters.facade/4.2.1",
+      "hashPath": "logary.adapters.facade.4.2.1.nupkg.sha512"
     },
     "Markdig/0.15.3": {
       "type": "package",
@@ -747,6 +843,13 @@
       "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    },
+    "NodaTime/1.3.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iIV8xtLH7JhElTag7wMzP8YkZcSvFUcHZfGZhl3npzVz7V7y0T1JJOeqS/UcY3epq9480jcuUO2jzo8ewhQmlg==",
+      "path": "nodatime/1.3.2",
+      "hashPath": "nodatime.1.3.2.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

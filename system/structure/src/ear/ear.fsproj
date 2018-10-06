@@ -9,4 +9,9 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Logary" Version="4.2.1" />
+    <PackageReference Include="Logary.Adapters.Facade" Version="4.2.1" />
+  </ItemGroup>
+
 </Project>

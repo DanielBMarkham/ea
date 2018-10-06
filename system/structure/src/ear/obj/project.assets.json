@@ -2,6 +2,17 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "FParsec/1.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net40-client/FParsec.dll": {},
+          "lib/net40-client/FParsecCS.dll": {}
+        },
+        "runtime": {
+          "lib/net40-client/FParsec.dll": {},
+          "lib/net40-client/FParsecCS.dll": {}
+        }
+      },
       "FSharp.Core/4.5.2": {
         "type": "package",
         "compile": {
@@ -53,6 +64,38 @@
           "lib/netstandard1.6/zh-Hant/FSharp.Core.resources.dll": {
             "locale": "zh-Hant"
           }
+        }
+      },
+      "Hopac/0.3.23": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.0.1.7-alpha",
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/Hopac.Core.dll": {},
+          "lib/netstandard1.6/Hopac.Platform.dll": {},
+          "lib/netstandard1.6/Hopac.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/Hopac.Core.dll": {},
+          "lib/netstandard1.6/Hopac.Platform.dll": {},
+          "lib/netstandard1.6/Hopac.dll": {}
+        }
+      },
+      "Logary/4.2.1": {
+        "type": "package",
+        "dependencies": {
+          "FParsec": "1.0.2",
+          "FSharp.Core": "4.0.0.1",
+          "Hopac": "0.3.23",
+          "NodaTime": "1.3.2"
+        },
+        "compile": {
+          "lib/net452/Logary.dll": {}
+        },
+        "runtime": {
+          "lib/net452/Logary.dll": {}
         }
       },
       "Microsoft.NETCore.App/2.2.0-preview2-26905-02": {
@@ -260,10 +303,36 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "NodaTime/1.3.2": {
+        "type": "package",
+        "compile": {
+          "lib/net35-Client/NodaTime.dll": {}
+        },
+        "runtime": {
+          "lib/net35-Client/NodaTime.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "FParsec/1.0.2": {
+      "sha512": "QT3Y3+UsfUhoXdbrL+n1IdRbhmTWMpAucMKi3GTMMmwzjp0fgOXY/GGzVM2j37mw+N0G9HS9zEnSn6wF6KzRMQ==",
+      "type": "package",
+      "path": "fparsec/1.0.2",
+      "files": [
+        "fparsec.1.0.2.nupkg.sha512",
+        "fparsec.nuspec",
+        "lib/net40-client/FParsec.XML",
+        "lib/net40-client/FParsec.dll",
+        "lib/net40-client/FParsecCS.XML",
+        "lib/net40-client/FParsecCS.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8/FParsec.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8/FParsec.dll",
+        "lib/portable-net45+netcore45+wpa81+wp8/FParsecCS.XML",
+        "lib/portable-net45+netcore45+wpa81+wp8/FParsecCS.dll"
+      ]
+    },
     "FSharp.Core/4.5.2": {
       "sha512": "mQlCpyv/wNZAihLBUbBu8gS4NpXpBCTw/eMQqujn8sGBukxSYH3CoE0vPABACNQEv7HoAX7CJt5q7l6Yb2E2hg==",
       "type": "package",
@@ -309,6 +378,40 @@
         "lib/netstandard1.6/tr/FSharp.Core.resources.dll",
         "lib/netstandard1.6/zh-Hans/FSharp.Core.resources.dll",
         "lib/netstandard1.6/zh-Hant/FSharp.Core.resources.dll"
+      ]
+    },
+    "Hopac/0.3.23": {
+      "sha512": "P8bWrcF/Av1ySgTPSwUVjez27ybCLXtNTDNtGfp8xxa3XB5j+ULdlhWxkcEFuICNqe5+DWOHrncSKh06jW1yHA==",
+      "type": "package",
+      "path": "hopac/0.3.23",
+      "files": [
+        "hopac.0.3.23.nupkg.sha512",
+        "hopac.nuspec",
+        "lib/net45/Hopac.Core.dll",
+        "lib/net45/Hopac.Core.dll.mdb",
+        "lib/net45/Hopac.Core.xml",
+        "lib/net45/Hopac.Platform.dll",
+        "lib/net45/Hopac.Platform.dll.mdb",
+        "lib/net45/Hopac.dll",
+        "lib/net45/Hopac.dll.mdb",
+        "lib/net45/Hopac.xml",
+        "lib/netstandard1.6/Hopac.Core.dll",
+        "lib/netstandard1.6/Hopac.Core.xml",
+        "lib/netstandard1.6/Hopac.Platform.dll",
+        "lib/netstandard1.6/Hopac.Platform.xml",
+        "lib/netstandard1.6/Hopac.dll",
+        "lib/netstandard1.6/Hopac.xml"
+      ]
+    },
+    "Logary/4.2.1": {
+      "sha512": "VAPWGwC6l31N/a64i81CzuVqCa9vN6KYdS18jmRsimrxr4ZGJ7isBfsAkPs40xNS87SyJRpSnTnsIlmI/xMACw==",
+      "type": "package",
+      "path": "logary/4.2.1",
+      "files": [
+        "lib/net452/Logary.dll",
+        "lib/net452/Logary.xml",
+        "logary.4.2.1.nupkg.sha512",
+        "logary.nuspec"
       ]
     },
     "Microsoft.NETCore.App/2.2.0-preview2-26905-02": {
@@ -771,11 +874,25 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "NodaTime/1.3.2": {
+      "sha512": "iIV8xtLH7JhElTag7wMzP8YkZcSvFUcHZfGZhl3npzVz7V7y0T1JJOeqS/UcY3epq9480jcuUO2jzo8ewhQmlg==",
+      "type": "package",
+      "path": "nodatime/1.3.2",
+      "files": [
+        "lib/net35-Client/NodaTime.dll",
+        "lib/net35-Client/NodaTime.xml",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+XamariniOS1/NodaTime.dll",
+        "lib/portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+XamariniOS1/NodaTime.xml",
+        "nodatime.1.3.2.nupkg.sha512",
+        "nodatime.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "FSharp.Core >= 4.5.2",
+      "Logary >= 4.2.1",
       "Microsoft.NETCore.App >= 2.2.0-preview2-26905-02"
     ]
   },
@@ -819,6 +936,10 @@
             "target": "Package",
             "version": "[4.5.2, )"
           },
+          "Logary": {
+            "target": "Package",
+            "version": "[4.2.1, )"
+          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -833,5 +954,37 @@
         "warn": true
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'FParsec 1.0.2' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "FParsec",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Logary 4.2.1' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "Logary",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'NodaTime 1.3.2' was restored using '.NETFramework,Version=v4.6.1' instead of the project target framework '.NETCoreApp,Version=v2.2'. This package may not be fully compatible with your project.",
+      "libraryId": "NodaTime",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    }
+  ]
 }
