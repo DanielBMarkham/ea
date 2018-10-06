@@ -4281,11 +4281,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
+      "projectUniqueName": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
       "projectName": "ea",
-      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
+      "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
       "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\obj\\",
+      "outputPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
@@ -4304,8 +4304,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
-              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
+            "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
+              "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
             }
           }
         }

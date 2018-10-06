@@ -1,14 +1,18 @@
-SUPPLEMENTALS
+META SUPPLEMENTALS
   Must be able to consume anything it produces without the model changing
   Must allow markdown language anywhere text is used
-  Must work from the command line just like GCC
+  Must be useable from the command line just like GCC
   Must use latest version of dotnet
   Philosophies to use: microservices, unix philosohphy, pure FP, DDD
 
-BEHAVIOR
+META BEHAVIOR
   Record item titles in any of the three buckets
   Create sprint stories by matching titles
   Change story details (title, ac, etc)
   Create sprint story cards
   Type in code and it compiles
 
+BUSINESS BEHAVIOR
+ Accept a list of files and squash them together into a one-file output
+
+BUSINESS SUPPLEMENTALS
