@@ -30,3 +30,10 @@ c:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\n
 c:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.2\ea.AssemblyInfo.fs
 c:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.2\ea.dll
 c:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.2\ea.pdb
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\SystemUtilities.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\EALenses.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
+c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.2\EAUtilities.fs

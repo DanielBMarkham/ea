@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "b21ce76759e1cf675202130a2f7b4a8618ac9833"
+    "signature": "14ca0230182f2f0d3ac239423c2a717d53f31dbd"
   },
   "compilationOptions": {},
   "targets": {
@@ -11,6 +11,7 @@
           "FParsec": "1.0.3",
           "FSharp.Core": "4.5.2",
           "HtmlAgilityPack": "1.8.9",
+          "Markdig": "0.15.3",
           "Newtonsoft.Json": "11.0.2",
           "ealib": "1.0.0"
         },
@@ -96,6 +97,14 @@
           "lib/netstandard2.0/HtmlAgilityPack.dll": {
             "assemblyVersion": "1.8.9.0",
             "fileVersion": "1.8.9.0"
+          }
+        }
+      },
+      "Markdig/0.15.3": {
+        "runtime": {
+          "lib/netstandard2.0/Markdig.dll": {
+            "assemblyVersion": "0.15.3.0",
+            "fileVersion": "0.15.3.0"
           }
         }
       },
@@ -689,6 +698,7 @@
           "FParsec": "1.0.3",
           "FSharp.Core": "4.5.2",
           "HtmlAgilityPack": "1.8.9",
+          "Markdig": "0.15.3",
           "Newtonsoft.Json": "11.0.2"
         },
         "runtime": {
@@ -723,6 +733,13 @@
       "sha512": "sha512-pCSNhes7e4UglufG/0EUx/S+9NZElNrwcI0cOAep/VpYB7PmsmfZ2UHcLRo25bP8sk3h9vAN2Ff2MEsZWqGa7Q==",
       "path": "htmlagilitypack/1.8.9",
       "hashPath": "htmlagilitypack.1.8.9.nupkg.sha512"
+    },
+    "Markdig/0.15.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ezAu8Wn+rghVShBxbTIFvEQwnm2aSQmYxvewIyXkkDzUXCC2Pu/IXs9kyTFE6Kjek1Y8JCmJwz0KfdskAnGCdA==",
+      "path": "markdig/0.15.3",
+      "hashPath": "markdig.0.15.3.nupkg.sha512"
     },
     "Newtonsoft.Json/11.0.2": {
       "type": "package",
