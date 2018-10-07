@@ -1,4 +1,4 @@
-﻿module earTest
+﻿module EarTest
 open Expecto
 
 [<EntryPoint>]

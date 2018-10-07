@@ -1,10 +1,10 @@
 module Tests
 
 open Expecto
-open Hopac
-open Logary
-open Logary.Configuration
-open Logary.Adapters.Facade
+open Expecto.Logging
+open Expecto.Logging.Message
+
+let logger = Log.create "MyTests"
 
 [<Tests>]
 let tests =
@@ -16,6 +16,21 @@ let tests =
     testCase "when true is not (should fail)" <| fun _ ->
       let subject = false
       Expect.isTrue subject "I should fail because the subject is false"
+
+    // testCase "reading prop" <| fun _ ->
+    //   let subject = MyComponent()
+    //   // this will output to the right test context:
+    //   logger.info(
+    //     eventX "Has prop {property}"
+    //     >> setField "property" subject.property)
+    //   Expect.equal subject.property "Goodbye" "Should have goodbye as its property"
+    testCase "reading prop" <| fun _ ->
+      //let subject = MyComponent()
+      // this will output to the right test context:
+      logger.info(
+        eventX "Has prop {property}"
+        >> setField "property" "mouse")
+      Expect.equal "mouse" "Goodbye" "Should have goodbye as its property"
 
     testCase "I'm skipped (should skip)" <| fun _ ->
       Tests.skiptest "Yup, waiting for a sunny day..."

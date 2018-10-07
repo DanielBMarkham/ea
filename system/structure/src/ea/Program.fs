@@ -11,7 +11,10 @@ open System
 open SystemTypeExtensions
 open SystemUtilities
 
+
+
+
 [<EntryPoint>]
 let main argv =
-    printfn "Hello World from F#! I hear you!"
-    0 // return an integer exit code
+  // normal console app boilerplate;
+  0

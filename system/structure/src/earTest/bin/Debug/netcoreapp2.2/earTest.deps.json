@@ -18,6 +18,7 @@
           "Microsoft.NET.Test.Sdk": "15.8.0",
           "Newtonsoft.Json": "11.0.2",
           "YoloDev.Expecto.TestSdk": "0.5.0",
+          "ealib": "1.0.0",
           "ear": "1.0.0"
         },
         "runtime": {
@@ -1580,10 +1581,25 @@
           "System.Collections.Immutable": "1.4.0"
         }
       },
+      "ealib/1.0.0": {
+        "dependencies": {
+          "FParsec": "1.0.3",
+          "FSharp.Core": "4.5.2",
+          "HtmlAgilityPack": "1.8.9",
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1",
+          "Markdig": "0.15.3",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "ealib.dll": {}
+        }
+      },
       "ear/1.0.0": {
         "dependencies": {
           "FSharp.Core": "4.5.2",
-          "Logary": "4.2.1"
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1"
         },
         "runtime": {
           "ear.dll": {}
@@ -2366,6 +2382,11 @@
       "sha512": "sha512-bAqXfOcFdd85nBe40nWPjzG/aYs/PT44RiEr5ElYSE516Pq3hOU//jU9vDv8Ro02PlCGbQUFjXzP0tIKzQ4ZSQ==",
       "path": "yolodev.expecto.testsdk/0.5.0",
       "hashPath": "yolodev.expecto.testsdk.0.5.0.nupkg.sha512"
+    },
+    "ealib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "ear/1.0.0": {
       "type": "project",

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "d9cf68f2e85675447929e3883a646fbd84b2b9d8"
+    "signature": "88e75dd8ac2ec3ea4c8e51d70215dcc2adc416e2"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,10 +9,19 @@
       "ear/1.0.0": {
         "dependencies": {
           "FSharp.Core": "4.5.2",
-          "Logary": "4.2.1"
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1"
         },
         "runtime": {
           "ear.dll": {}
+        }
+      },
+      "Castle.Core/3.3.3": {
+        "runtime": {
+          "lib/net45/Castle.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.3.58"
+          }
         }
       },
       "FParsec/1.0.2": {
@@ -112,6 +121,21 @@
           }
         }
       },
+      "Logary.Adapters.Facade/4.2.1": {
+        "dependencies": {
+          "Castle.Core": "3.3.3",
+          "FSharp.Core": "4.5.2",
+          "Hopac": "0.3.23",
+          "Logary": "4.2.1",
+          "NodaTime": "1.3.2"
+        },
+        "runtime": {
+          "lib/net452/Logary.Adapters.Facade.dll": {
+            "assemblyVersion": "4.2.1.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "NodaTime/1.3.2": {
         "runtime": {
           "lib/net35-Client/NodaTime.dll": {
@@ -127,6 +151,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Castle.Core/3.3.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tvVrLbHhtAGubUUDbEkH9JlivdlJOTI25u3hlyHpPxuJdTVi/yVQKWCYvGpafGPm7G1ibdWj4brqhtSQkAmN+g==",
+      "path": "castle.core/3.3.3",
+      "hashPath": "castle.core.3.3.3.nupkg.sha512"
     },
     "FParsec/1.0.2": {
       "type": "package",
@@ -155,6 +186,13 @@
       "sha512": "sha512-VAPWGwC6l31N/a64i81CzuVqCa9vN6KYdS18jmRsimrxr4ZGJ7isBfsAkPs40xNS87SyJRpSnTnsIlmI/xMACw==",
       "path": "logary/4.2.1",
       "hashPath": "logary.4.2.1.nupkg.sha512"
+    },
+    "Logary.Adapters.Facade/4.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NVdugiY0WWFqwQbgTnWlTA1y06CyBCDpJfxH3PREGAelhlqv86lq0PZyzf66+kcg6uQ5t20aZ0pdghB6t4DUng==",
+      "path": "logary.adapters.facade/4.2.1",
+      "hashPath": "logary.adapters.facade.4.2.1.nupkg.sha512"
     },
     "NodaTime/1.3.2": {
       "type": "package",

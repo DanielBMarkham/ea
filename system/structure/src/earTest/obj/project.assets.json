@@ -2297,12 +2297,32 @@
           "build/netcoreapp2.0/YoloDev.Expecto.TestSdk.props": {}
         }
       },
+      "ealib/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "FParsec": "1.0.3",
+          "FSharp.Core": "4.5.2",
+          "HtmlAgilityPack": "1.8.9",
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1",
+          "Markdig": "0.15.3",
+          "NewtonSoft.Json": "11.0.2"
+        },
+        "compile": {
+          "bin/placeholder/ealib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ealib.dll": {}
+        }
+      },
       "ear/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "FSharp.Core": "4.5.2",
-          "Logary": "4.2.1"
+          "Logary": "4.2.1",
+          "Logary.Adapters.Facade": "4.2.1"
         },
         "compile": {
           "bin/placeholder/ear.dll": {}
@@ -7189,6 +7209,11 @@
         "yolodev.expecto.testsdk.nuspec"
       ]
     },
+    "ealib/1.0.0": {
+      "type": "project",
+      "path": "../ealib/ealib.fsproj",
+      "msbuildProject": "../ealib/ealib.fsproj"
+    },
     "ear/1.0.0": {
       "type": "project",
       "path": "../ear/ear.fsproj",
@@ -7208,6 +7233,7 @@
       "Microsoft.NETCore.App >= 2.2.0-preview2-26905-02",
       "NewtonSoft.Json >= 11.0.2",
       "YoloDev.Expecto.TestSdk >= 0.*",
+      "ealib >= 1.0.0",
       "ear >= 1.0.0"
     ]
   },
@@ -7241,6 +7267,9 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
+            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
+              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
+            },
             "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj": {
               "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj"
             }

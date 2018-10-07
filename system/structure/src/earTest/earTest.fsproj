@@ -55,5 +55,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ear\ear.fsproj" />
+    <ProjectReference Include="..\ealib\ealib.fsproj" />
   </ItemGroup>
 </Project>

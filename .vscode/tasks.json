@@ -5,16 +5,29 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet build",
+            "command": "sh build.sh",
             "type": "shell",
             "options": {
-                "cwd": "system/structure/src/ea"
+                "cwd": "system/structure/"
             },
             "group": "build",
             "presentation": {
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "sh test.sh",
+            "type": "shell",
+            "options": {
+                "cwd": "system/structure/"
+            },
+            "group": "test",
+             "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
         }
     ]
 }

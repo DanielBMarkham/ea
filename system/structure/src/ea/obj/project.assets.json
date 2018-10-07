@@ -4257,8 +4257,8 @@
     },
     "ealib/1.0.0": {
       "type": "project",
-      "path": "../ealib/ealib.fsproj",
-      "msbuildProject": "../ealib/ealib.fsproj"
+      "path": "../eaLib/ealib.fsproj",
+      "msbuildProject": "../eaLib/ealib.fsproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4281,11 +4281,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
+      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
       "projectName": "ea",
-      "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
+      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj",
       "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\obj\\",
+      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
@@ -4304,8 +4304,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
-              "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
+            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj": {
+              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj"
             }
           }
         }

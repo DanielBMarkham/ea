@@ -151,7 +151,8 @@
     let rec http (url:string) (tryCount:int)  =
         try
             ServicePointManager.ServerCertificateValidationCallback<-(new Security.RemoteCertificateValidationCallback(fun a b c d->true))
-            ServicePointManager.SecurityProtocol<-(SecurityProtocolType.Ssl3 ||| SecurityProtocolType.Tls12 ||| SecurityProtocolType.Tls11 ||| SecurityProtocolType.Tls)
+            //ServicePointManager.SecurityProtocol<-(SecurityProtocolType.Ssl3 ||| SecurityProtocolType.Tls12 ||| SecurityProtocolType.Tls11 ||| SecurityProtocolType.Tls)
+            ServicePointManager.SecurityProtocol<-(SecurityProtocolType.Tls12 ||| SecurityProtocolType.Tls11 ||| SecurityProtocolType.Tls)
             HtmlAgilityPack.HtmlWeb.PreRequestHandler(fun webRequest->
                 webRequest.MaximumAutomaticRedirections<-5
                 webRequest.MaximumResponseHeadersLength<-4
