@@ -809,7 +809,7 @@
       ]
     },
     "NETStandard.Library/2.0.3": {
-      "sha512": "WysbSYKTtk18OgAze7pdZkv1HUL7SrWXLARE9lf6NYxFPp8+0V8VmpQehlHD7QxzJXtxutT5Y14Xc9qdtJPFxQ==",
+      "sha512": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
       "type": "package",
       "path": "netstandard.library/2.0.3",
       "files": [
@@ -958,31 +958,29 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Daniel_Main\\.nuget\\packages\\": {},
-    "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Daniel Markham\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj",
+      "projectUniqueName": "C:\\Users\\Daniel Markham\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj",
       "projectName": "ear",
-      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj",
-      "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\obj\\",
+      "projectPath": "C:\\Users\\Daniel Markham\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\ear.fsproj",
+      "packagesPath": "C:\\Users\\Daniel Markham\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Daniel Markham\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ear\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Daniel_Main\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Daniel Markham\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://www.nuget.org/api/v2/": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.2": {

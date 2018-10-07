@@ -29,3 +29,10 @@ c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\n
 c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EALenses.fs
 c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAAppUtilities.fs
 c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAUtilities.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\SystemTypeExtensions.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\SystemUtilities.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\CommandLineHelper.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EATypeExtensions.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EALenses.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAAppUtilities.fs
+C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAUtilities.fs
