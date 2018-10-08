@@ -4,11 +4,47 @@
     open System.IO
     open Newtonsoft.Json
 
+    /// Throw this anywhere to have outer shell catch and try to help user
     exception UserNeedsHelp of string
+    // I modified some of these from the Logary help file
+    // I liked them
+    /// How much extra logging detail to get from the apps
     type Verbosity =
-        | Silent            = 1
-        | Normal            = 5
-        | Anal              = 9
+        /// Never tell me about anything no matter what. STFU
+        | Silent
+        /// Reserved for things that make the service/process crash. I cannot work at all. Alert humans!
+        | Fatal
+        /// Edge cases. IO failed. I did not plan for this. Alert humans!
+        | Error
+        /// Temp glitches. Lots of retries. Unusual things but we're good. It this happens a lot, people may be to be alerted
+        | Warn
+        /// Events and gauges for company-revelvant sutff. users sign in, sign up, integration has to retry, etc.
+        | Info
+        ///  Log all metrics here. Anything a coder might need from far away to figure out what's going on
+        | Debug
+        ///  Super-anal logging. Anything conceivably anybody might need anywhere. Assume no sources code or understanding of app
+        | Verbose
+        static member ToList()=[Silent;Fatal;Error;Warn;Info;Debug;Verbose]
+        override self.ToString() =
+            match self with
+            | Silent->"Silent"
+            | Fatal->"Fatal"
+            | Error->"Error"
+            | Warn->"Warn"
+            | Info->"Info"
+            | Debug->"Debug"
+            | Verbose->"Verbose"
+        static member FromString(str) =
+            match str with
+            | "Silent"|"S"|"1"->Silent
+            | "Fatal"|"F"|"2"->Fatal
+            | "Error"|"E"|"3"->Error
+            | "Warn"|"W"|"4"->Warn
+            | "Info"|"I"|"5"->Info
+            | "Debug"|"D"|"6"->Debug
+            | "Verbose"|"V"|"7"->Verbose
+            |_->Error // If I don't know what you want, I'm only reporting Errors or better
+
     //
     // Program Command Line Config Settings
     //
@@ -69,7 +105,7 @@
     /// Parameterized type to allow command-line argument processing without a lot of extra coder work
     /// Instantiate the type with the type of value you want. Make a default entry in case nothing is found
     /// Then call the populate method. Will pull from args and return a val and args with the found value (if any consumed)
-    type ConfigEntry<'A> =
+    type ConfigEntryType<'A> =
         {
             commandLineParameterSymbol:string
             commandLineParameterName:string
@@ -83,34 +119,34 @@
                 this.parameterHelpText |> Seq.iter(System.Console.WriteLine)
             member this.swapInNewValue x =
                 {this with parameterValue=x}
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<Verbosity>), (args:string[])):ConfigEntry<Verbosity>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<Verbosity>), (args:string[])):ConfigEntryType<Verbosity>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
-                        let parsedNumValue = System.Int32.Parse("0" + parmValue.Value)
-                        let parsedVerbosityValue = enum<Verbosity>(parsedNumValue)
+                        //let parsedNumValue = System.Int32.Parse("0" + parmValue.Value)
+                        let parsedVerbosityValue = Verbosity.FromString(parmValue.Value)
                         defaultConfig.swapInNewValue parsedVerbosityValue
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<string>), (args:string[])):ConfigEntry<string>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<string>), (args:string[])):ConfigEntryType<string>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
                         defaultConfig.swapInNewValue parmValue.Value
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<DirectoryParm>), (args:string[])):ConfigEntry<DirectoryParm>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<DirectoryParm>), (args:string[])):ConfigEntryType<DirectoryParm>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
                         if System.IO.Directory.Exists(parmValue.Value)
-                            then 
+                            then
                                 let tempDirectoryInfoOption = Some(System.IO.DirectoryInfo(parmValue.Value))
                                 defaultConfig.swapInNewValue ({DirectoryName=parmValue.Value; DirectoryInfoOption=tempDirectoryInfoOption})
                             else defaultConfig.swapInNewValue ({DirectoryName=parmValue.Value; DirectoryInfoOption=Option.None})
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<FileParm>), (args:string[])):ConfigEntry<FileParm>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<FileParm>), (args:string[])):ConfigEntryType<FileParm>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
@@ -122,7 +158,7 @@
                                 defaultConfig.swapInNewValue ({FileName=parmValue.Value; FileInfoOption=Option.None})
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<bool>), (args:string[])):ConfigEntry<bool> =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<bool>), (args:string[])):ConfigEntryType<bool> =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
@@ -133,7 +169,7 @@
                                 defaultConfig.swapInNewValue true
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<int>), (args:string[])):ConfigEntry<int>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<int>), (args:string[])):ConfigEntryType<int>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
@@ -141,21 +177,21 @@
                         defaultConfig.swapInNewValue parmInt
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<System.Uri>), (args:string[])):ConfigEntry<System.Uri>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<System.Uri>), (args:string[])):ConfigEntryType<System.Uri>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
                         defaultConfig.swapInNewValue (new System.Uri(parmValue.Value))
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<System.DateTime>), (args:string[])):ConfigEntry<System.DateTime>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<System.DateTime>), (args:string[])):ConfigEntryType<System.DateTime>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 if parmValue.IsSome
                     then
                         defaultConfig.swapInNewValue (System.DateTime.Parse(parmValue.Value))
                     else
                         defaultConfig
-            static member populateValueFromCommandLine ((defaultConfig:ConfigEntry<SortOrder>), (args:string[])):ConfigEntry<SortOrder>  =
+            static member populateValueFromCommandLine ((defaultConfig:ConfigEntryType<SortOrder>), (args:string[])):ConfigEntryType<SortOrder>  =
                 let parmValue = getValuePartOfMostRelevantCommandLineMatch args defaultConfig.commandLineParameterSymbol
                 let newVal=if parmValue.IsNone then defaultConfig.parameterValue else
                             let tp=SortOrder.TryParse parmValue.Value
@@ -164,42 +200,42 @@
     /// A type so that programs can report what they're doing as they do it
     // This was the programmer can decide what to do with it instead of the OS
     [<NoComparison>]
-    type InterimProgress =
+    type InterimProgressType =
         {
-            items:System.Collections.Generic.Dictionary<string, System.Text.StringBuilder>
+            Items:System.Collections.Generic.Dictionary<string, System.Text.StringBuilder>
         } with
-        member this.addItem key (vl:string) =
-            let lookup = 
-                if this.items.ContainsKey key then this.items.Item(key)
+        member this.AddItem key (vl:string) =
+            let lookup =
+                if this.Items.ContainsKey key then this.Items.Item(key)
                     else
                         let newItem = new System.Text.StringBuilder(65535)
-                        this.items.Add(key,newItem)
+                        this.Items.Add(key,newItem)
                         newItem
             lookup.Append("\r\n" + vl) |> ignore
-        member this.getItem key  =
-            if this.items.ContainsKey key
+        member this.GetItem key  =
+            if this.Items.ContainsKey key
                 then
-                    this.items.Item(key).ToString()
+                    this.Items.Item(key).ToString()
                 else
                     ""
     // All programs have at least this configuration on the command line
     [<NoComparison>]
     type ConfigBase =
         {
-            programName:string
-            programTagLine:string
-            programHelpText:string[]
-            verbose:ConfigEntry<Verbosity>
-            interimProgress:InterimProgress
+            ProgramName:string
+            ProgramTagLine:string
+            ProgramHelpText:string[]
+            Verbosity:ConfigEntryType<Verbosity>
+            InterimProgress:InterimProgressType
         }
-        member this.printProgramDescription =
-            this.programHelpText |> Seq.iter(System.Console.WriteLine)
-        member this.printThis =
-            printfn "%s" this.programName
-            this.programHelpText |> Seq.iter(System.Console.WriteLine)
+        member this.PrintProgramDescription =
+            this.ProgramHelpText |> Seq.iter(System.Console.WriteLine)
+        member this.PrintThis =
+            printfn "%s" this.ProgramName
+            this.ProgramHelpText |> Seq.iter(System.Console.WriteLine)
 
-    let directoryExists (dir:ConfigEntry<DirectoryParm>) = dir.parameterValue.DirectoryInfoOption.IsSome
-    let fileExists (dir:ConfigEntry<FileParm>) = dir.parameterValue.FileInfoOption.IsSome
+    let directoryExists (dir:ConfigEntryType<DirectoryParm>) = dir.parameterValue.DirectoryInfoOption.IsSome
+    let fileExists (dir:ConfigEntryType<FileParm>) = dir.parameterValue.FileInfoOption.IsSome
 
 
 
@@ -208,50 +244,47 @@
     let commandLinePrintWhileEnter (opts:ConfigBase) fnPrintMe =
                 // Entering program command line report
             let nowString = string System.DateTime.Now
-            match opts.verbose.parameterValue with
-                | Verbosity.Silent ->
+            match opts.Verbosity.parameterValue with
+                | Silent|Fatal|Error|Warn ->
                     ()
-                | Verbosity.Normal ->
-                    printfn "%s. %s" opts.programName opts.programTagLine
+                | Info->
+                    printfn "%s. %s" opts.ProgramName opts.ProgramTagLine
                     printfn "Begin: %s" (nowString)
-                    printfn "Verbosity: Normal" 
-                | Verbosity.Anal ->
-                    printfn "%s. %s" opts.programName opts.programTagLine
+                    printfn "Verbosity: Normal"
+                | Debug |Verbose->
+                    printfn "%s. %s" opts.ProgramName opts.ProgramTagLine
                     printfn "Begin: %s" (nowString)
                     fnPrintMe()
                 |_ ->
-                    printfn "%s. %s" opts.programName opts.programTagLine
+                    printfn "%s. %s" opts.ProgramName opts.ProgramTagLine
                     printfn "Begin: %s" (nowString)
                     fnPrintMe()
 
     /// Exiting program command line report. Detail level is based on verbosity setting
     let commandLinePrintWhileExit (baseOptions:ConfigBase) =
         let nowString = string System.DateTime.Now
-        match baseOptions.verbose.parameterValue with
-            | Verbosity.Silent ->
+        match baseOptions.Verbosity.parameterValue with
+            | Silent|Fatal|Error|Warn|Info ->
                 ()
-            | Verbosity.Normal ->
+            | Verbosity.Debug|Verbose ->
                 printfn "End:   %s" (nowString)
-            | Verbosity.Anal ->
-                printfn "End:   %s" (nowString)
-            |_ ->
                 ()
 
     let defaultVerbosity  =
         {
             commandLineParameterSymbol="V"
             commandLineParameterName="Verbosity"
-            parameterHelpText=[|"/V:[0-9]           -> Amount of trace info to report. 0=none, 5=normal, 9=max."|]           
-            parameterValue=Verbosity.Normal
+            parameterHelpText=[|"/V:[1-7]           -> Amount of trace info to report. Silent|Fatal|Error|Warn|Info|Debug|Verbose"|]
+            parameterValue=Info
         }
 
     let createNewBaseOptions programName programTagLine programHelpText verbose =
         {
-            programName = programName
-            programTagLine = programTagLine
-            programHelpText=programHelpText
-            verbose = verbose
-            interimProgress = {items=new System.Collections.Generic.Dictionary<string, System.Text.StringBuilder>()}
+            ProgramName = programName
+            ProgramTagLine = programTagLine
+            ProgramHelpText=programHelpText
+            Verbosity = verbose
+            InterimProgress = {Items=new System.Collections.Generic.Dictionary<string, System.Text.StringBuilder>()}
         }
 
     let createNewConfigEntry commandlineSymbol commandlineParameterName parameterHelpText initialValue =

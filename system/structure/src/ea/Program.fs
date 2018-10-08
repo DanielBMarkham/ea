@@ -10,11 +10,8 @@ open EAAppUtilities
 open System
 open SystemTypeExtensions
 open SystemUtilities
-
-
+open Util
 
 
 [<EntryPoint>]
-let main argv =
-  // normal console app boilerplate;
-  0
+let main argv = newMain argv
