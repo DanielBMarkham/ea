@@ -15,10 +15,11 @@ namespace EA
     open Logary.Configuration
     open Logary.Configuration.Transformers
     open Expecto
+    open Logary
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Persist"; "EAPersist" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
+    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
     Console.WriteLine "whoa"
     // For folks on anal mode, log the module being exited.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Exit")|> Logger.logSimple moduleLogger
+    Logary.Message.eventFormat (Verbose, "Module Exit")|> Logger.logSimple moduleLogger

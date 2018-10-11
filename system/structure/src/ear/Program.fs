@@ -18,11 +18,12 @@
     open Logary.Configuration
     open Logary.Configuration.Transformers
     open Expecto
+    open Logary
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EAR"; "Main"; "EARTest"; "Main" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
-    Console.WriteLine "whoa"
+    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
+
 
     /// This file should only
     /// Handle bare-metal O/S stuff
@@ -31,7 +32,7 @@
     [<EntryPoint>]
     let main argv =
         // Swap stdout and sterr, since nobody seems to write to the correct place
-        Logary.Message.eventFormat (Info, "main Enter")|> Logger.logSimple moduleLogger
+        Logary.Message.eventFormat (Verbose, "main Enter")|> Logger.logSimple moduleLogger
         let oldStdout=System.Console.Out
         let oldStdin=System.Console.In
         let oldStdErr=System.Console.Error
@@ -42,10 +43,10 @@
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
         let cts = new CancellationTokenSource()
         let ret=newMain argv cts mre
-        Console.Error.WriteLine "Press Ctrl-C to terminate program"
+        //Console.Error.WriteLine "Press Ctrl-C to terminate program"
         mre.Wait(cts.Token)
 
         System.Console.SetError oldStdErr
         System.Console.SetOut oldStdout
-        Logary.Message.eventFormat (Info, "main Exit Normal Path")|> Logger.logSimple moduleLogger
+        Logary.Message.eventFormat (Verbose, "main Exit Normal Path")|> Logger.logSimple moduleLogger
         ret

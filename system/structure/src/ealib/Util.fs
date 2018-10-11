@@ -18,7 +18,7 @@ namespace EA.Core
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Core"; "EALib"; "Util" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
+    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
     Console.WriteLine "whoa"
     // For folks on anal mode, log the module being exited.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Exit")|> Logger.logSimple moduleLogger
+    Logary.Message.eventFormat (Verbose, "Module Exit")|> Logger.logSimple moduleLogger

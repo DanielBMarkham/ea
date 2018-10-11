@@ -22,7 +22,6 @@
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Test"; "EARTest"; "Main" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
-    Console.WriteLine "whoa"
 
     /// This file should only
     /// Handle bare-metal O/S stuff
@@ -40,7 +39,7 @@
         use mre = new System.Threading.ManualResetEventSlim(false)
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
         let cts = new CancellationTokenSource()
-        Console.Error.WriteLine "Press Ctrl-C to terminate program"
+        //Console.Error.WriteLine "Press Ctrl-C to terminate program"
         let ret=newMain argv cts mre
         mre.Wait(cts.Token)
 

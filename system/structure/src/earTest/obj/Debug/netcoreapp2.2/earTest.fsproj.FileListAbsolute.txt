@@ -38,3 +38,20 @@ C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\De
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAPersist.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EALenses.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAPersist.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.deps.json
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.runtimeconfig.json
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.runtimeconfig.dev.json
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.dll
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsprojAssemblyReference.cache
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.AssemblyInfoInputs.cache
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.AssemblyInfo.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
