@@ -1,3 +1,6 @@
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsprojAssemblyReference.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\SystemUtilities.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\CommandLineHelper.fs
@@ -5,6 +8,7 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netc
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\EALenses.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\EAAppUtilities.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\EAPersist.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\Facade.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ea.deps.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ea.runtimeconfig.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ea.runtimeconfig.dev.json
@@ -12,9 +16,6 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netc
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ea.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ealib.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ealib.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.pdb

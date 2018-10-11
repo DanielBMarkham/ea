@@ -14,6 +14,13 @@ open Expecto
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
+//Yes, I'm repeating several modules in my include list, in seemingly-random order. Don't touch it, moron!
+open Logary
+open Logary.Configuration
+open Logary.Targets
+open Logary.Configuration
+open Logary.Configuration.Transformers
+open Expecto
 
 // Logging all the things!
 // Logging code must come before anything else in order to use logging
@@ -24,11 +31,10 @@ let logary =
     |> Config.build
     |> run
 Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
-let moduleLogger = logary.getLogger (PointName [| "EA"; "Types" |])
-
-
-// Logary.Message.eventFormat (Info, "{userName} logged in", "adam")
-//     |> Logger.logSimple moduleLogger
+// Tag-list for the logger is namespace, project name, file name
+let moduleLogger = logary.getLogger (PointName [| "EA"; "Types"; "EATypeExtensions" |])
+// For folks on anal mode, log the module being entered.  NounVerb Proper Case
+Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
 
 let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
 let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
@@ -131,3 +137,6 @@ let loadEARConfigFromCommandLine:GetEARProgramConfigType = (fun args->
     let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
     {ConfigBase = newConfigBase}
     )
+
+// For folks on anal mode, log the module being exited. NounVerb Proper Case
+Logary.Message.eventFormat (Info, "Module Exit")|> Logger.logSimple moduleLogger

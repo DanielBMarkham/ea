@@ -6041,8 +6041,8 @@
     },
     "ealib/1.0.0": {
       "type": "project",
-      "path": "../eaLib/ealib.fsproj",
-      "msbuildProject": "../eaLib/ealib.fsproj"
+      "path": "../ealib/ealib.fsproj",
+      "msbuildProject": "../ealib/ealib.fsproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6089,8 +6089,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj": {
-              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj"
+            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
+              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
             }
           }
         }

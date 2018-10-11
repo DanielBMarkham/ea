@@ -1,32 +1,37 @@
-module EATypeExtensions
+namespace EA
+module Types=
+
+open System
+
+open Hopac
+open Logary
+open Logary.Configuration
+open Logary.Targets
+open Logary.Configuration
+open Logary.Configuration.Transformers
+open Expecto
+
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-//open Logary
-open System
 
-//open Expecto
-//open Expecto.Logging
-//open Expecto.Logging.Message
-//open System
-open Logary // normal usage
-open Logary.Message // normal usage
-open Logary.Configuration // conf
-//open Logary
-//open Logary.Configuration
-
-
-//let testingLogger = Logary.Log.create "EA_TEST"
-//let appLogger = Logary.Facade.Log.create "EA"
-
-//let logary = 
-//    Config.create "EA" "localhost"
-//    |> Config.target (LiterateConsole.create LiterateConsole.empty "console")
-//    |> Config.processing (Events.events |> Events.sink ["console";])
-//    |> Config.build
-//    |> Hopac.Hopac.run
+// Logging all the things!
+// Logging code must come before anything else in order to use logging
+let logary =
+    Config.create "EA.Logs" "localhost"
+    |> Config.targets [ LiterateConsole.create LiterateConsole.empty "console" ]
+    |> Config.processing (Events.events |> Events.sink ["console";])
+    |> Config.build
+    |> run
+Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
+let moduleLogger = logary.getLogger (PointName [| "EA"; "Types" |])
 
 
+// Logary.Message.eventFormat (Info, "{userName} logged in", "adam")
+//     |> Logger.logSimple moduleLogger
+
+let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
+let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
 
 // DATA types
 type EAConfigType =

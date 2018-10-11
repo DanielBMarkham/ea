@@ -6,7 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
+     <Compile Include="..\AppCommon\Facade.fs">
+      <Link>Facade.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+   <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>

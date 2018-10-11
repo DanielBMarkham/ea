@@ -1,4 +1,5 @@
-﻿module EarTest
+﻿namespace EA.EAR
+module EarTest
 open Expecto
 
 [<EntryPoint>]

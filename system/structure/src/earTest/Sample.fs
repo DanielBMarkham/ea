@@ -1,4 +1,5 @@
-module Tests
+namespace EA.EAR
+module Sample=
 
 open Expecto
 open Hopac

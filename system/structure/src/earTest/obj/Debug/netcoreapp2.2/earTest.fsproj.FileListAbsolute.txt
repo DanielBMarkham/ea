@@ -1,11 +1,9 @@
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\expecto.visualstudio.dotnetcore.testadapter.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EALenses.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAUtilities.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.deps.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.runtimeconfig.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\earTest.runtimeconfig.dev.json
@@ -16,11 +14,6 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ear.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ear.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.pdb
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\expecto.visualstudio.dotnetcore.testadapter.dll
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
@@ -44,3 +37,4 @@ C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\De
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAPersist.fs

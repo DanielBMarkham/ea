@@ -1,15 +1,15 @@
-﻿module Main
+﻿namespace EA.EAR
+module Main=
+open System
+
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
-open EALenses
-open EAPersist
-open EAAppUtilities
+open EA.Types
+open EA.Lenses
+open EA.Persist
+open EA.Utilities
 
-open System
-open SystemTypeExtensions
-open SystemUtilities
 open Util
 
 

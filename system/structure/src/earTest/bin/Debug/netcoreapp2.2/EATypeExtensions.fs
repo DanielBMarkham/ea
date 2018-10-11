@@ -1,15 +1,37 @@
-module EATypeExtensions
+namespace EA
+module Types=
+
+open System
+
+open Hopac
+open Logary
+open Logary.Configuration
+open Logary.Targets
+open Logary.Configuration
+open Logary.Configuration.Transformers
+open Expecto
+
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open System
 
-open Expecto
-open Expecto.Logging
-open Expecto.Logging.Message
+// Logging all the things!
+// Logging code must come before anything else in order to use logging
+let logary =
+    Config.create "EA.Logs" "localhost"
+    |> Config.targets [ LiterateConsole.create LiterateConsole.empty "console" ]
+    |> Config.processing (Events.events |> Events.sink ["console";])
+    |> Config.build
+    |> run
+Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
+let moduleLogger = logary.getLogger (PointName [| "EA"; "Types" |])
 
-let appLogger = Log.create "EA"
 
+// Logary.Message.eventFormat (Info, "{userName} logged in", "adam")
+//     |> Logger.logSimple moduleLogger
+
+let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
+let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
 
 // DATA types
 type EAConfigType =
@@ -17,20 +39,20 @@ type EAConfigType =
     ConfigBase:ConfigBase
     }
     with member this.PrintThis() =
-        appLogger.info(
-            eventX "EasyAMConfig Parameters Provided"
-        )
-        //System.printfn "EasyAMConfig Parameters Provided"
+        //testingLogger.info(
+        //    eventX "EasyAMConfig Parameters Provided"
+        //)
+        System.Console.WriteLine "EasyAMConfig Parameters Provided"
 
 type EARConfigType =
     {
     ConfigBase:ConfigBase
     }
     with member this.PrintThis() =
-        appLogger.info(
-            eventX "EARConfig Parameters Provided"
-        )
-        //System.printfn "EasyAMConfig Parameters Provided"
+        //testingLogger.info(
+        //    eventX "EARConfig Parameters Provided"
+        //)
+        System.Console.WriteLine "EasyAMConfig Parameters Provided"
 
 type CompilationUnitType = {
     Info:System.IO.FileInfo
@@ -73,10 +95,12 @@ let EAProgramHelp = [|"EasyAM. An analysis compiler. It compiles freeform notes 
 //createNewBaseOptions programName programTagLine programHelpText verbose
 let defaultEABaseOptions = createNewBaseOptions "ea" "The world's first analysis compiler" EAProgramHelp defaultVerbosity
 let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args->
+    //appLogger.verbose(eventX "Entering loadEAConfigFromCommandLine")
     if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
     let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
     let newConfigBase = {defaultEABaseOptions with Verbosity=defaultVerbosity}
     let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
+    //appLogger.verbose(eventX "Leaving loadEAConfigFromCommandLine")
     {ConfigBase = newConfigBase}
     )
 

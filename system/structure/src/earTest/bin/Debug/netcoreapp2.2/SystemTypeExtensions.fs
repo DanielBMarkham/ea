@@ -60,7 +60,7 @@
         member this.TrimLeft (iCount:int) =
             this.Substring(iCount, this.Length - iCount)
         member this.TrimRight (iCount:int) =
-            this.Substring(0, this.Length - iCount)    
+            this.Substring(0, this.Length - iCount)
         member this.TrimBoth (iLeft:int) (iRight:int) =
             if iLeft + iRight > this.Length
                 then

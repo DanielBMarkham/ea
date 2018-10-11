@@ -1,5 +1,6 @@
-module EALenses
+namespace EA
+module Lenses=
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
+open EA.Types
