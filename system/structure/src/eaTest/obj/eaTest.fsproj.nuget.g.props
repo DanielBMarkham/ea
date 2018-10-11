@@ -14,8 +14,5 @@
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="C:\PROGRAM FILES\DOTNET\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.2.0-preview2-26905-02\build\netcoreapp2.2\Microsoft.NETCore.App.props" Condition="Exists('C:\PROGRAM FILES\DOTNET\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.2.0-preview2-26905-02\build\netcoreapp2.2\Microsoft.NETCore.App.props')" />
-    <Import Project="$(NuGetPackageRoot)yolodev.expecto.testsdk\0.5.0\build\netcoreapp2.0\YoloDev.Expecto.TestSdk.props" Condition="Exists('$(NuGetPackageRoot)yolodev.expecto.testsdk\0.5.0\build\netcoreapp2.0\YoloDev.Expecto.TestSdk.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.codecoverage\15.8.0\build\netstandard1.0\Microsoft.CodeCoverage.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codecoverage\15.8.0\build\netstandard1.0\Microsoft.CodeCoverage.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.net.test.sdk\15.8.0\build\netcoreapp1.0\Microsoft.Net.Test.Sdk.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.test.sdk\15.8.0\build\netcoreapp1.0\Microsoft.Net.Test.Sdk.props')" />
   </ImportGroup>
 </Project>

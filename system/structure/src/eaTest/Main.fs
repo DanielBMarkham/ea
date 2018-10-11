@@ -1,4 +1,5 @@
-﻿module EaTest
+﻿namespace EA.Test
+module Main=
 open Expecto
 open Expecto.Logging
 open Expecto.Logging.Message

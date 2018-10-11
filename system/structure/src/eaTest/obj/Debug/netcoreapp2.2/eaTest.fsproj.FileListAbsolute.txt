@@ -27,8 +27,6 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EALenses.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\expecto.visualstudio.dotnetcore.testadapter.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.deps.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.json
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.dev.json
@@ -44,3 +42,4 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAPersist.fs

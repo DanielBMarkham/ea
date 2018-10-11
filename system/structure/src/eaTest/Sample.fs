@@ -1,4 +1,5 @@
-module Tests
+namespace EA.Tests
+module Sample=
 
 open Expecto
 open Expecto.Logging

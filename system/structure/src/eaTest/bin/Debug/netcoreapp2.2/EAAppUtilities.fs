@@ -1,7 +1,7 @@
-module EAAppUtilities
+namespace EA
+module Utilities=
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
-open EALenses
-
+open EA.Types
+open EA.Lenses
