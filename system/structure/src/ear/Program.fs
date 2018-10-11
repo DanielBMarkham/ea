@@ -1,8 +1,17 @@
-﻿// Learn more about F# at http://fsharp.org
+﻿module Main
+open SystemTypeExtensions
+open SystemUtilities
+open CommandLineHelper
+open EATypeExtensions
+open EALenses
+open EAPersist
+open EAAppUtilities
 
 open System
+open SystemTypeExtensions
+open SystemUtilities
+open Util
+
 
 [<EntryPoint>]
-let main argv =
-    printfn "Hello World from F#!"
-    0 // return an integer exit code
+let main argv = Util.newMain argv

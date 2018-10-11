@@ -1,0 +1,10 @@
+here we are
+
+[14:25:07 FTL] COW <EA>
+[14:25:07 ERR] LIKES <EA>
+[14:25:07 INF] MOO <EA>
+[14:25:07 INF] AND <EA>
+[14:25:07 WRN] GRASS <EA>
+[14:25:07 INF] MOO <EA>
+here we go
+

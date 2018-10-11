@@ -1,14 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\business",
-    "\\meta",
     "\\system",
     "\\system\\structure",
-    "\\system\\structure\\ea",
-    "\\system\\structure\\ealib",
+    "\\system\\structure\\src",
+    "\\system\\structure\\src\\AppCommon",
+    "\\system\\structure\\src\\ea",
     "\\system\\supplementals"
   ],
-  "SelectedNode": "\\system\\structure\\ea\\Program.fs",
+  "SelectedNode": "\\system\\structure\\src\\ea\\Program.fs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,15 @@
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\SystemTypeExtensions.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\SystemUtilities.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\CommandLineHelper.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EATypeExtensions.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EALenses.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EAAppUtilities.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EAPersist.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\ealib.deps.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\ealib.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\ealib.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.fsprojAssemblyReference.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfo.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.pdb

@@ -1,17 +1,36 @@
-﻿module Main
+﻿namespace EA.Compiler
+module Main=
+open System
+open System.Threading
+
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
-open EALenses
-open EAPersist
-open EAAppUtilities
+open EA.Types
+open EA.Lenses
+open EA.Persist
+open EA.Utilities
 
-open System
-open SystemTypeExtensions
-open SystemUtilities
-open Util
+open EA.Compiler.Util
 
-
+/// Handles bare-metal O/S stuff
+/// Threading and pipes. Nothing else
 [<EntryPoint>]
-let main argv = newMain argv
+let main argv =
+    // Swap stdout and sterr, since nobody seems to write to the correct place
+    let oldStdout=System.Console.Out
+    let oldStdin=System.Console.In
+    let oldStdErr=System.Console.Error
+    System.Console.SetOut oldStdErr
+    System.Console.SetError oldStdout
+
+    use mre = new System.Threading.ManualResetEventSlim(false)
+    use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
+    let cts = new CancellationTokenSource()
+    let ret=newMain argv cts mre
+    Console.Error.WriteLine "Press Ctrl-C to terminate program"
+    mre.Wait(cts.Token)
+
+    System.Console.SetError oldStdErr
+    System.Console.SetOut oldStdout
+    ret

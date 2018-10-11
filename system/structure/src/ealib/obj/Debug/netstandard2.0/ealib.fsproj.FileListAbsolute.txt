@@ -21,18 +21,8 @@ C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debu
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EALenses.fs
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAAppUtilities.fs
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\SystemTypeExtensions.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\SystemUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\CommandLineHelper.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EATypeExtensions.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EALenses.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAAppUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\EAUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\ealib.deps.json
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\ealib.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netstandard2.0\ealib.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.AssemblyInfo.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.fsprojAssemblyReference.cache
+D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.AssemblyInfoInputs.cache
+D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.AssemblyInfo.fs
+D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.dll
+D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netstandard2.0\ealib.pdb

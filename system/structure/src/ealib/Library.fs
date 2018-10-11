@@ -1,13 +1,13 @@
-﻿namespace ealib
+﻿namespace EA.Core
 
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
-open EALenses
-open EAPersist
-open EAAppUtilities
-open Util
+open EA.Types
+open EA.Lenses
+open EA.Persist
+open EA.Utilities
+open EA.Core.Util
 
 module Say =
     let hello name =

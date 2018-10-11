@@ -1,8 +1,9 @@
-module Util
+namespace EA.Core
+module Util=
 open SystemTypeExtensions
 open SystemUtilities
 open CommandLineHelper
-open EATypeExtensions
-open EALenses
-open EAPersist
-open EAAppUtilities
+open EA.Types
+open EA.Lenses
+open EA.Persist
+open EA.Utilities
