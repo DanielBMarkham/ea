@@ -23,7 +23,7 @@
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Test"; "EATest"; "Main" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
-    Console.WriteLine "whoa"
+
 
     /// This file should only
     /// Handle bare-metal O/S stuff

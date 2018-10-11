@@ -77,28 +77,3 @@ namespace EA.EAR
                         1
     // For folks on anal mode, log the module being exited.  NounVerb Proper Case
     Logary.Message.eventFormat (Verbose, "Module Exit")|> Logger.logSimple moduleLogger
-
-
-
-
-
-
-// #nowarn "0067"
-// let newMain (argv:string[]):int  =
-//     try
-//         loadEARConfigFromCommandLine argv |> inputStuff  |> doStuff |> outputStuff
-//     with
-//         | :? UserNeedsHelp as hex ->
-//             defaultEARBaseOptions.PrintThis
-//             0
-//         | ex ->
-//             System.Console.WriteLine ("Program terminated abnormally " + ex.Message)
-//             System.Console.WriteLine (ex.StackTrace)
-//             if ex.InnerException = null
-//                 then
-//                     1
-//                 else
-//                     System.Console.WriteLine("---   Inner Exception   ---")
-//                     System.Console.WriteLine (ex.InnerException.Message)
-//                     System.Console.WriteLine (ex.InnerException.StackTrace)
-//                     1

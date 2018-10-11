@@ -20,7 +20,7 @@ namespace EA.Test
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Test";  "EATest"; "Util" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
-    Console.WriteLine "whoa"
+
     #nowarn "0067"
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) =
         Logary.Message.eventFormat (Verbose, "newMain Enter")|> Logger.logSimple moduleLogger
