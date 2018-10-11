@@ -1,5 +1,6 @@
 namespace EA.EAR.Test
   module Util=
+    open System
     open SystemTypeExtensions
     open SystemUtilities
     open CommandLineHelper
@@ -24,7 +25,7 @@ namespace EA.EAR.Test
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) =
         Logary.Message.eventFormat (Info, "newMain Enter")|> Logger.logSimple moduleLogger
         try
-            let ret=loadEAConfigFromCommandLine argv |> inputStuff  |> doStuff |> outputStuff
+            let ret=0 //oadEAConfigFromCommandLine argv |> inputStuff  |> doStuff |> outputStuff
 
             // I'm done (since I'm a single-threaded function, I know this)
             // take a few seconds to catch up, then you may run until you quit

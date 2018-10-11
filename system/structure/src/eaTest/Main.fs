@@ -19,7 +19,7 @@
     open Logary.Configuration.Transformers
     open Expecto
     // Tag-list for the logger is namespace, project name, file name
-    let moduleLogger = logary.getLogger (PointName [| "EA"; "Test"; "EAETest"; "Main" |])
+    let moduleLogger = logary.getLogger (PointName [| "EA"; "Test"; "EATest"; "Main" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Info, "Module Enter")|> Logger.logSimple moduleLogger
     Console.WriteLine "whoa"
