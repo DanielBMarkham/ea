@@ -1,56 +1,65 @@
 namespace EA.Tests
-module Sample=
+  module Sample=
+    open System
+    open System.Threading
 
-open Expecto
-open Expecto.Logging
-open Expecto.Logging.Message
+    open SystemTypeExtensions
+    open SystemUtilities
+    open CommandLineHelper
+    open EA.Types
+    open EA.Lenses
+    open EA.Persist
+    open EA.Utilities
+    open Expecto
+    open Expecto.Logging
+    open Expecto.Logging.Message
+    open Logary
+    let logger = Log.create "MyTests"
+    [<Tests>]
+    let tests =
+      testList "samples" [
+        testCase "universe exists (╭ರᴥ•́)" <| fun _ ->
+          let subject = true
+          Expect.isTrue subject "I compute, therefore I am."
 
-let logger = Log.create "MyTests"
+        testCase "when true is not (should fail)" <| fun _ ->
+          let subject = false
+          Expect.isTrue subject "I should fail because the subject is false"
 
-[<Tests>]
-let tests =
-  testList "samples" [
-    testCase "universe exists (╭ರᴥ•́)" <| fun _ ->
-      let subject = true
-      Expect.isTrue subject "I compute, therefore I am."
+        testCase "reading prop" <| fun _ ->
+          //let subject = MyComponent()
+          // this will output to the right test context:
+          Message.eventFormat (
+            Info,
+            "Has prop moo cow")
+            |> Logger.logSimple testingLogger
+          Expect.equal "duck quck" "Goodbye" "duck quack goodbye"
+        testCase "reading prop" <| fun _ ->
+          //let subject = MyComponent()
+          // this will output to the right test context:
+          logger.info(
+            eventX "Has prop {property}"
+            >> setField "property" "mouse")
+          Expect.equal "mouse" "Goodbye" "Should have goodbye as its property"
 
-    testCase "when true is not (should fail)" <| fun _ ->
-      let subject = false
-      Expect.isTrue subject "I should fail because the subject is false"
+        testCase "I'm skipped (should skip)" <| fun _ ->
+          Tests.skiptest "Yup, waiting for a sunny day..."
 
-    // testCase "reading prop" <| fun _ ->
-    //   let subject = MyComponent()
-    //   // this will output to the right test context:
-    //   logger.info(
-    //     eventX "Has prop {property}"
-    //     >> setField "property" subject.property)
-    //   Expect.equal subject.property "Goodbye" "Should have goodbye as its property"
-    testCase "reading prop" <| fun _ ->
-      //let subject = MyComponent()
-      // this will output to the right test context:
-      logger.info(
-        eventX "Has prop {property}"
-        >> setField "property" "mouse")
-      Expect.equal "mouse" "Goodbye" "Should have goodbye as its property"
+        testCase "I'm always fail (should fail)" <| fun _ ->
+          Tests.failtest "This was expected..."
 
-    testCase "I'm skipped (should skip)" <| fun _ ->
-      Tests.skiptest "Yup, waiting for a sunny day..."
+        testCase "contains things" <| fun _ ->
+          Expect.containsAll [| 2; 3; 4 |] [| 2; 4 |]
+                             "This is the case; {2,3,4} contains {2,4}"
 
-    testCase "I'm always fail (should fail)" <| fun _ ->
-      Tests.failtest "This was expected..."
+        testCase "contains things (should fail)" <| fun _ ->
+          Expect.containsAll [| 2; 3; 4 |] [| 2; 4; 1 |]
+                             "Expecting we have one (1) in there"
 
-    testCase "contains things" <| fun _ ->
-      Expect.containsAll [| 2; 3; 4 |] [| 2; 4 |]
-                         "This is the case; {2,3,4} contains {2,4}"
+        testCase "Sometimes I want to ༼ノಠل͟ಠ༽ノ ︵ ┻━┻" <| fun _ ->
+          Expect.equal "abcdëf" "abcdef" "These should equal"
 
-    testCase "contains things (should fail)" <| fun _ ->
-      Expect.containsAll [| 2; 3; 4 |] [| 2; 4; 1 |]
-                         "Expecting we have one (1) in there"
-
-    testCase "Sometimes I want to ༼ノಠل͟ಠ༽ノ ︵ ┻━┻" <| fun _ ->
-      Expect.equal "abcdëf" "abcdef" "These should equal"
-
-    test "I am (should fail)" {
-      "╰〳 ಠ 益 ಠೃ 〵╯" |> Expect.equal true false
-    }
-  ]
+        test "I am (should fail)" {
+          "╰〳 ಠ 益 ಠೃ 〵╯" |> Expect.equal true false
+        }
+      ]

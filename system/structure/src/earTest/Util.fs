@@ -26,6 +26,8 @@ namespace EA.EAR.Test
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) =
         Logary.Message.eventFormat (Verbose, "newMain Enter")|> Logger.logSimple moduleLogger
         try
+            Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
+            Tests.runTestsInAssembly defaultConfig argv
             let ret=0 //oadEAConfigFromCommandLine argv |> inputStuff  |> doStuff |> outputStuff
 
             // I'm done (since I'm a single-threaded function, I know this)
@@ -55,4 +57,4 @@ namespace EA.EAR.Test
 
 
     // For folks on anal mode, log the module being exited.  NounVerb Proper Case
-    Logary.Message.eventFormat (Info, "Module Exit")|> Logger.logSimple moduleLogger
+    Logary.Message.eventFormat (Verbose, "Module Exit")|> Logger.logSimple moduleLogger

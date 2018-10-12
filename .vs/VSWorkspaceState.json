@@ -1,12 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\business\\behavior",
+    "\\meta",
+    "\\meta\\analysis",
     "\\system",
     "\\system\\structure",
     "\\system\\structure\\src",
-    "\\system\\structure\\src\\AppCommon",
-    "\\system\\structure\\src\\ea",
-    "\\system\\supplementals"
+    "\\system\\structure\\src\\ealib",
+    "\\system\\structure\\src\\ear",
+    "\\system\\structure\\src\\earTest",
+    "\\system\\structure\\src\\eaTest"
   ],
   "SelectedNode": "\\system\\structure\\src\\ea\\Program.fs",
   "PreviewInSolutionExplorer": false

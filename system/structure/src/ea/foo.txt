@@ -1,0 +1,8 @@
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\Util.fs(47,5): warning FS0236: Directives inside modules are ignored [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+C:\Users\Daniel_Main\Dropbox\aa-source\SystemCommon\SystemUtilities.fs(180,15): warning FS0067: This type test or downcast will always hold [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+C:\Users\Daniel_Main\Dropbox\aa-source\SystemCommon\SystemUtilities.fs(180,15): warning FS0067: This type test or downcast will always hold [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+C:\Users\Daniel_Main\Dropbox\aa-source\SystemCommon\SystemUtilities.fs(230,11): warning FS0067: This type test or downcast will always hold [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+C:\Users\Daniel_Main\Dropbox\aa-source\SystemCommon\SystemUtilities.fs(230,11): warning FS0067: This type test or downcast will always hold [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+C:\Users\Daniel_Main\Dropbox\aa-source\SystemCommon\CommandLineHelper.fs(258,18): warning FS0026: This rule will never be matched [C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\ea.fsproj]
+whoa
+This is your file! Isn't it exciting!
