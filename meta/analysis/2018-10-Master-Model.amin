@@ -1,3 +1,6 @@
+NOTES
+  * the link directive should be able to coordinate the reference with any web-based tooling system that allows deeplinks. It doesn't do data movement or translation, of course, only location. Also works with GitHub code/version stuff. Would make for a nice demo
+  * I should strive to have this file compiling ASAP. It'd make the blog/video series more realistic
 META SUPPLEMENTALS
   Must be able to consume anything it produces without the model changing
   Must allow markdown language anywhere text is used
