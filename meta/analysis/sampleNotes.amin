@@ -1,0 +1,42 @@
+NOTES
+  * the link directive should be able to coordinate the reference with any web-based tooling system that allows deeplinks. It doesn't do data movement or translation, of course, only location. Also works with GitHub code/version stuff. Would make for a nice demo
+  * I should strive to have this file compiling ASAP. It'd make the blog/video series more realistic
+META SUPPLEMENTALS
+  Must be able to consume anything it produces without the model changing
+  Must allow markdown language anywhere text is used
+  Must be useable from the command line just like GCC
+  Must use latest version of dotnet
+  Philosophies to use: microservices, unix philosohphy, pure FP, DDD
+
+META BEHAVIOR
+  Record item titles in any of the three buckets
+  Create sprint stories by matching titles
+  Change story details (title, ac, etc)
+  Create sprint story cards
+  Type in the code that creates the compiler and it compiles
+
+BUSINESS BEHAVIOR
+ Squash conversation notes
+
+BUSINESS SUPPLEMENTALS
+  Be easy-to-use
+    Work like linux
+    Run fast
+    Run anywhere
+    Log stuff if you need to
+    Run everywhere
+
+SYSTEM SUPPLEMENTALS
+  Support a command-line verbosity switch
+SYSTEM BEHAVIOR
+  Concatenate files  
+
+USER STORIES
+  Process files without doing anything 
+    PARENT 
+	  Concatenate files
+	  Be easy-to-use
+  Process files and concatenate by filename
+    PARENT 
+	  Concatenate files
+	  Be easy-to-use

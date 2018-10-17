@@ -8,9 +8,9 @@
     "\\system\\structure\\src",
     "\\system\\structure\\src\\AppCommon",
     "\\system\\structure\\src\\ea",
-    "\\system\\structure\\src\\ealib",
-    "\\system\\structure\\src\\earTest"
+    "\\system\\structure\\src\\ear",
+    "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\earTest\\Sample.fs",
+  "SelectedNode": "\\system\\structure\\src\\eaTest\\Main.fs",
   "PreviewInSolutionExplorer": false
 }

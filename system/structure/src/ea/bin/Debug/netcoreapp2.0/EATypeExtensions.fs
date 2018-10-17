@@ -8,12 +8,11 @@ namespace EA
     open Logary
     // Logging all the things!
     // Logging code must come before anything else in order to use logging
-    let oldStdout=System.Console.Out
-    let oldStdin=System.Console.In
-    let oldStdErr=System.Console.Error
-    System.Console.SetOut oldStdErr
-    System.Console.SetError oldStdout
+    // let incomingStuff:string=pipedStreamIncoming()
+
     // Need to know this when logging
+    let inputIsBeingRedirectedFromSomewhere=System.Console.IsInputRedirected
+    let theresStuffComing=try System.Console.KeyAvailable with |_->(System.Console.In.Peek() <> 0)
     let mutable CommandLineArgumentsHaveBeenProcessed=false
     type LogEventParms=LogLevel*string*Logary.Logger
     let loggingBacklog = new System.Collections.Generic.Queue<LogEventParms>()
@@ -36,13 +35,32 @@ namespace EA
             else loggingBacklog.Enqueue(lvl, msg, lggr)
     let turnOnLogging() =
         CommandLineArgumentsHaveBeenProcessed<-true
+        let oldStdout=System.Console.Out
+        let oldStdErr=System.Console.Error
+        System.Console.SetOut oldStdErr
+        System.Console.SetError oldStdout
         loggingBacklog|>Seq.iter(fun x-> 
             let lvl, msg, lggr = x
             logEvent lvl msg lggr)
     logEvent Verbose "Module enter...." moduleLogger
 
-    //let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
-    //let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
+    let pipedStreamIncoming=
+      try
+        logEvent Verbose "Method pipedStreamIncoming beginning....." moduleLogger
+        if inputIsBeingRedirectedFromSomewhere && theresStuffComing
+            then
+                logEvent Verbose "..... Method pipedStreamIncoming ending. Stream being read." moduleLogger
+                let ret=System.Console.In.ReadToEnd()
+                logEvent Verbose ("Method pipedStreamIncoming Stream data length = " + ret.Length.ToString()) moduleLogger
+                ret
+            else
+                logEvent Verbose ("Method pipedStreamIncoming: KeyAvailable = " + theresStuffComing.ToString()) moduleLogger
+                logEvent Verbose ("Method pipedStreamIncoming: InputIsBeingRedirectedFromSomewhere = " + inputIsBeingRedirectedFromSomewhere.ToString()) moduleLogger
+                logEvent Verbose "..... Method pipedStreamIncoming ending. No stream to read. Returning nothing." moduleLogger
+                ""
+      with _->
+        logEvent Verbose "..... Method pipedStreamIncoming ending. Error in trying to read stream. Returning nothing." moduleLogger
+        ""
 
     // DATA types
     type EAConfigType =
@@ -118,20 +136,21 @@ namespace EA
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEABaseOptions = createNewBaseOptions "ea" "The world's first analysis compiler" EAProgramHelp defaultVerbosity
     let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args->
-        logEvent Verbose "Method loadEAConfigFromCommandLine beginning....." moduleLogger
-        if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
-        let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
-        let newConfigBase = {defaultEABaseOptions with Verbosity=defaultVerbosity}
-        let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
-        if newVerbosity.parameterValue<>defaultVerbosity.parameterValue
-          then
-            logEvent Info ("New Verbosity set in loadEAConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
-            logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
-          else ()
-        logEvent Verbose "..... Method loadEAConfigFromCommandLine ending. Normal Path." moduleLogger
-        turnOnLogging()
-        {ConfigBase = newConfigBase}
-      )
+      logEvent Verbose "Method loadEAConfigFromCommandLine beginning....." moduleLogger
+      if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
+      let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
+      let newConfigBase = {defaultEABaseOptions with Verbosity=defaultVerbosity}
+      let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
+      if newVerbosity.parameterValue<>defaultVerbosity.parameterValue
+        then
+          logEvent Info ("New Verbosity set in loadEAConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
+          logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
+        else ()
+      logEvent Verbose "..... Method loadEAConfigFromCommandLine ending. Normal Path." moduleLogger
+      //logEvent Debug ("incomingStuff = " + pipedStreamIncoming()) moduleLogger
+      turnOnLogging()
+      {ConfigBase = newConfigBase}
+    )
     /// Process any args you can from the command line
     /// Get rid of any junk
     type GetEARProgramConfigType=string []->EARConfigType
