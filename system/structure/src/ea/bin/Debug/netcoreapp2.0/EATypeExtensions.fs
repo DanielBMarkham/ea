@@ -8,25 +8,41 @@ namespace EA
     open Logary
     // Logging all the things!
     // Logging code must come before anything else in order to use logging
-
+    let oldStdout=System.Console.Out
+    let oldStdin=System.Console.In
+    let oldStdErr=System.Console.Error
+    System.Console.SetOut oldStdErr
+    System.Console.SetError oldStdout
+    // Need to know this when logging
+    let mutable CommandLineArgumentsHaveBeenProcessed=false
+    type LogEventParms=LogLevel*string*Logary.Logger
+    let loggingBacklog = new System.Collections.Generic.Queue<LogEventParms>()
     let logary =
         Logary.Configuration.Config.create "EA.Logs" "localhost"
         |> Logary.Configuration.Config.targets [ Logary.Targets.LiterateConsole.create Logary.Targets.LiterateConsole.empty "console" ]
-        |> Logary.Configuration.Config.loggerMinLevel "" Logary.LogLevel.Verbose
+        |> Logary.Configuration.Config.loggerMinLevel "" Logary.LogLevel.Debug
         |> Logary.Configuration.Config.processing (Logary.Configuration.Events.events |> Logary.Configuration.Events.sink ["console";])
         |> Logary.Configuration.Config.build
         |> Hopac.Hopac.run
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Types"; "EATypeExtensions" |])
+    // DIDNT NEED. WILD GOOSE CHASE USING THIS FROM HELP FILES
     //Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
-    // For folks on anal mode, log the module being entered.  NounVerb Proper Case
+    
     /// ErrorLevel, Message to display, and logger to send it to
-    let logEvent (lvl:Logary.LogLevel) msg lggr =
-        Logary.Message.eventFormat (lvl, msg)|> Logger.logSimple lggr
+    let logEvent (lvl:LogLevel) msg lggr =
+        if CommandLineArgumentsHaveBeenProcessed
+            then Logary.Message.eventFormat (lvl, msg)|> Logger.logSimple lggr
+            else loggingBacklog.Enqueue(lvl, msg, lggr)
+    let turnOnLogging() =
+        CommandLineArgumentsHaveBeenProcessed<-true
+        loggingBacklog|>Seq.iter(fun x-> 
+            let lvl, msg, lggr = x
+            logEvent lvl msg lggr)
     logEvent Verbose "Module enter...." moduleLogger
 
-    let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
-    let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
+    //let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
+    //let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
 
     // DATA types
     type EAConfigType =
@@ -78,7 +94,7 @@ namespace EA
     type Verbosity with
       member this.ToLogLevel()=
         match this with
-          | Verbosity.Silent->LogLevel.Fatal
+          | Verbosity.Silent->LogLevel.Fatal // Silent is fatal but eat everything. don't throw
           | Verbosity.Fatal->LogLevel.Fatal
           | Verbosity.Error->LogLevel.Error
           | Verbosity.Warn->LogLevel.Warn
@@ -102,17 +118,18 @@ namespace EA
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEABaseOptions = createNewBaseOptions "ea" "The world's first analysis compiler" EAProgramHelp defaultVerbosity
     let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args->
-        Message.eventFormat (Verbose, "loadEAConfigFromCommandLine: Enter") |> Logger.logSimple moduleLogger
+        logEvent Verbose "Method loadEAConfigFromCommandLine beginning....." moduleLogger
         if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
         let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
         let newConfigBase = {defaultEABaseOptions with Verbosity=defaultVerbosity}
         let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
         if newVerbosity.parameterValue<>defaultVerbosity.parameterValue
           then
-            Message.eventFormat (Info, ("New Verbosity set in loadEAConfigFromCommandLine: " + newVerbosity.parameterValue.ToString())) |> Logger.logSimple moduleLogger
+            logEvent Info ("New Verbosity set in loadEAConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
             logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
           else ()
-        Message.eventFormat (Verbose, "loadEAConfigFromCommandLine: Exit") |> Logger.logSimple moduleLogger
+        logEvent Verbose "..... Method loadEAConfigFromCommandLine ending. Normal Path." moduleLogger
+        turnOnLogging()
         {ConfigBase = newConfigBase}
       )
     /// Process any args you can from the command line
@@ -136,17 +153,18 @@ namespace EA
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEARBaseOptions = createNewBaseOptions "ear" "The reporting engine for EasyAM" EARProgramHelp defaultVerbosity
     let loadEARConfigFromCommandLine:GetEARProgramConfigType = (fun args->
-        Message.eventFormat (Verbose, "loadEARConfigFromCommandLine: Enter") |> Logger.logSimple moduleLogger
+        logEvent Verbose "Method loadEARConfigFromCommandLine beginning....." moduleLogger
         if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
         let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
         let newConfigBase = {defaultEARBaseOptions with Verbosity=defaultVerbosity}
         let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
         if newVerbosity.parameterValue<>defaultVerbosity.parameterValue
           then
-            Message.eventFormat (Info, ("New Verbosity set in loadEARConfigFromCommandLine: " + newVerbosity.parameterValue.ToString())) |> Logger.logSimple moduleLogger
+            logEvent Info ("New Verbosity set in loadEARConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
             logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
           else ()
-        Message.eventFormat (Verbose, "loadEARConfigFromCommandLine: Exit") |> Logger.logSimple moduleLogger
+        logEvent Verbose "..... Method loadEARConfigFromCommandLine ending. Normal Path." moduleLogger
+        turnOnLogging()
         {ConfigBase = newConfigBase}
         )
 

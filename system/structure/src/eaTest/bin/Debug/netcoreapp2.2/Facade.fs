@@ -833,7 +833,7 @@ module internal LiterateFormatting =
         if currentColour <> colour then
           Console.ForegroundColor <- colour
           currentColour <- colour
-        Console.Write(text)
+        Console.Error.Write(text)
       )
       if currentColour <> originalColour then
         Console.ForegroundColor <- originalColour
@@ -1164,7 +1164,7 @@ module Message =
   let event level value =
     create Map.empty level Array.empty value
 
-  /// Create a new event log message – like `event` but with parameters flipped.
+  /// Create a new event log message ï¿½ like `event` but with parameters flipped.
   /// E.g. `logger.verbose (eventX "Returned {code}" >> setField "code" 24)`
   let eventX template level =
     event level template

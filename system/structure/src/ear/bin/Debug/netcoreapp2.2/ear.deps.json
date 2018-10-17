@@ -15,7 +15,8 @@
           "Logary": "5.0.0-beta.26",
           "Logary.Adapters.Facade": "5.0.0-beta.26",
           "Markdig": "0.15.3",
-          "Newtonsoft.Json": "11.0.2"
+          "Newtonsoft.Json": "11.0.2",
+          "ealib": "1.0.0"
         },
         "runtime": {
           "ear.dll": {}
@@ -1167,6 +1168,21 @@
             "fileVersion": "4.6.24705.1"
           }
         }
+      },
+      "ealib/1.0.0": {
+        "dependencies": {
+          "Expecto": "8.4.2",
+          "FParsec": "1.0.3",
+          "FSharp.Core": "4.5.2",
+          "HtmlAgilityPack": "1.8.9",
+          "Logary": "5.0.0-beta.26",
+          "Logary.Adapters.Facade": "5.0.0-beta.26",
+          "Markdig": "0.15.3",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "ealib.dll": {}
+        }
       }
     }
   },
@@ -1826,6 +1842,11 @@
       "sha512": "sha512-A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "ealib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

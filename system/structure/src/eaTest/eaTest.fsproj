@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\AppCommon\Facade.fs">
+      <Link>Facade.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -35,8 +39,8 @@
       <Link>EAPersist.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Util.fs" />
     <Compile Include="Sample.fs" />
+    <Compile Include="Util.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

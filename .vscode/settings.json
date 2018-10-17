@@ -1,4 +1,5 @@
 {
     "editor.tabSize": 2,
     "dotnet-test-explorer.testProjectPath" : "system\\structure\\src\\earTest"
+    "FSharp.fsacRuntime": "netcore"
 }

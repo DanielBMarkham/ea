@@ -53,3 +53,9 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EALenses.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EAPersist.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete

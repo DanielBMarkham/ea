@@ -21,9 +21,8 @@
     open Logary
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Test"; "EATest"; "Main" |])
-    // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
-
+    // folks on anal mode, log the module being entered.  NounVerb Proper Case
+    logEvent Verbose "Module enter...." moduleLogger
 
     /// This file should only
     /// Handle bare-metal O/S stuff
@@ -31,21 +30,18 @@
     /// It answers the question: can you run at all?
     [<EntryPoint>]
     let main argv =
-        // Swap stdout and sterr, since nobody seems to write to the correct place
-        Logary.Message.eventFormat (Verbose, "main Enter")|> Logger.logSimple moduleLogger
-        let oldStdout=System.Console.Out
-        let oldStdin=System.Console.In
-        let oldStdErr=System.Console.Error
-        System.Console.SetOut oldStdErr
-        System.Console.SetError oldStdout
+        logEvent Verbose "Method main beginning....." moduleLogger
         use mre = new System.Threading.ManualResetEventSlim(false)
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
         let cts = new CancellationTokenSource()
-        //Console.Error.WriteLine "Press Ctrl-C to terminate program"
-        let ret=newMain argv cts mre
+        Console.Out.WriteLine "Press Ctrl-C to terminate program"
+        // As long as we're a single-thread on a console app, we can
+        // use a mutable cell for a return value, allowing whatever
+        // threading mechanis m we use for everything else the job of returning an int back
+        // to send to the O/S (In other words, this is a special case,
+        // if you start spinning threads off directly in main or newMain,
+        // this will not work.)
+        let mutable ret=0
+        newMain argv cts mre &ret
         mre.Wait(cts.Token)
-
-        System.Console.SetError oldStdErr
-        System.Console.SetOut oldStdout
-        Logary.Message.eventFormat (Verbose, "main Exit Normal Path")|> Logger.logSimple moduleLogger
         ret

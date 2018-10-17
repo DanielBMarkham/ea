@@ -21,29 +21,6 @@ C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Deb
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 C:\Users\Daniel Markham\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EALenses.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.deps.json
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.json
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.dev.json
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ea.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ealib.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ealib.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ea.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfo.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAPersist.fs
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eatest\bin\Debug\netcoreapp2.2\Facade.fs
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
@@ -67,3 +44,26 @@ D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTe
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsprojAssemblyReference.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfo.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\Facade.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\CommandLineHelper.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EALenses.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAAppUtilities.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EAPersist.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.deps.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.runtimeconfig.dev.json
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\eaTest.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ea.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ealib.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ealib.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ea.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb

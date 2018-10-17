@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\AppCommon\Facade.fs">
+      <Link>Facade.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -46,7 +50,10 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.8.9" />
     <PackageReference Include="Markdig" Version="0.15.3" />
     <PackageReference Include="NewtonSoft.Json" Version="11.0.2" />
+  </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ealib\ealib.fsproj" />
   </ItemGroup>
 
 </Project>

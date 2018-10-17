@@ -1811,6 +1811,26 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "ealib/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.0",
+        "dependencies": {
+          "Expecto": "8.4.2",
+          "FParsec": "1.0.3",
+          "FSharp.Core": "4.5.2",
+          "HtmlAgilityPack": "1.8.9",
+          "Logary": "5.0.0-beta.26",
+          "Logary.Adapters.Facade": "5.0.0-beta.26",
+          "Markdig": "0.15.3",
+          "NewtonSoft.Json": "11.0.2"
+        },
+        "compile": {
+          "bin/placeholder/ealib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ealib.dll": {}
+        }
       }
     }
   },
@@ -6011,6 +6031,11 @@
         "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "ealib/1.0.0": {
+      "type": "project",
+      "path": "../ealib/ealib.fsproj",
+      "msbuildProject": "../ealib/ealib.fsproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6023,7 +6048,8 @@
       "Logary.Adapters.Facade >= 5.0.0-beta.26",
       "Markdig >= 0.15.3",
       "Microsoft.NETCore.App >= 2.2.0-preview2-26905-02",
-      "NewtonSoft.Json >= 11.0.2"
+      "NewtonSoft.Json >= 11.0.2",
+      "ealib >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6055,7 +6081,11 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj": {
+              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj"
+            }
+          }
         }
       }
     },

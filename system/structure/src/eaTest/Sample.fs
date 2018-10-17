@@ -1,20 +1,7 @@
 namespace EA.Tests
   module Sample=
-    open System
-    open System.Threading
-
-    open SystemTypeExtensions
-    open SystemUtilities
-    open CommandLineHelper
-    open EA.Types
-    open EA.Lenses
-    open EA.Persist
-    open EA.Utilities
     open Expecto
-    open Expecto.Logging
-    open Expecto.Logging.Message
     open Logary
-    let logger = Log.create "MyTests"
     [<Tests>]
     let tests =
       testList "samples" [
@@ -27,19 +14,6 @@ namespace EA.Tests
           Expect.isTrue subject "I should fail because the subject is false"
 
         testCase "reading prop" <| fun _ ->
-          //let subject = MyComponent()
-          // this will output to the right test context:
-          Message.eventFormat (
-            Info,
-            "Has prop moo cow")
-            |> Logger.logSimple testingLogger
-          Expect.equal "duck quck" "Goodbye" "duck quack goodbye"
-        testCase "reading prop" <| fun _ ->
-          //let subject = MyComponent()
-          // this will output to the right test context:
-          logger.info(
-            eventX "Has prop {property}"
-            >> setField "property" "mouse")
           Expect.equal "mouse" "Goodbye" "Should have goodbye as its property"
 
         testCase "I'm skipped (should skip)" <| fun _ ->

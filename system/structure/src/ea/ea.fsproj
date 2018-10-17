@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-     <Compile Include="..\AppCommon\Facade.fs">
+    <Compile Include="..\AppCommon\Facade.fs">
       <Link>Facade.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-   <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
+    <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -43,10 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ealib\ealib.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Expecto" Version="8.4.2" />
     <PackageReference Include="Logary" Version="5.0.0-beta.26" />
     <PackageReference Include="Logary.Adapters.Facade" Version="5.0.0-beta.26" />
@@ -54,6 +50,10 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.8.9" />
     <PackageReference Include="Markdig" Version="0.15.3" />
     <PackageReference Include="NewtonSoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ealib\ealib.fsproj" />
   </ItemGroup>
 
 </Project>
