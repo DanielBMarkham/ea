@@ -6,8 +6,12 @@
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
+   <ItemGroup>
+    <Compile Include="..\AppCommon\Facade.fs">
+      <Link>Facade.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+   <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -23,20 +27,8 @@
       <Link>EATypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\AppCommon\EALenses.fs">
-      <Link>EALenses.fs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="..\AppCommon\EAAppUtilities.fs">
-      <Link>EAAppUtilities.fs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="..\AppCommon\EAPersist.fs">
-      <Link>EAPersist.fs</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Util.fs" />
     <Compile Include="Sample.fs" />
+    <Compile Include="Util.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

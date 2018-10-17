@@ -2,27 +2,6 @@
   module Main=
     open System
     open System.Threading
-    open Logary
-    open SystemTypeExtensions
-    open SystemUtilities
-    open CommandLineHelper
-    open EA.Types
-    open EA.Lenses
-    open EA.Persist
-    open EA.Utilities
-    open EA.EAR.Util
-    //Yes, I'm repeating several modules in my include list, in seemingly-random order. Don't touch it, moron!
-    open Logary
-    open Logary.Configuration
-    open Logary.Targets
-    open Logary.Configuration
-    open Logary.Configuration.Transformers
-    open Expecto
-    open Logary
-    // Tag-list for the logger is namespace, project name, file name
-    let moduleLogger = logary.getLogger (PointName [| "EAR"; "Main"; "EARTest"; "Main" |])
-    // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
 
 
     /// This file should only
@@ -32,7 +11,6 @@
     [<EntryPoint>]
     let main argv =
         // Swap stdout and sterr, since nobody seems to write to the correct place
-        Logary.Message.eventFormat (Verbose, "main Enter")|> Logger.logSimple moduleLogger
         let oldStdout=System.Console.Out
         let oldStdin=System.Console.In
         let oldStdErr=System.Console.Error
@@ -48,5 +26,4 @@
 
         System.Console.SetError oldStdErr
         System.Console.SetOut oldStdout
-        Logary.Message.eventFormat (Verbose, "main Exit Normal Path")|> Logger.logSimple moduleLogger
         ret

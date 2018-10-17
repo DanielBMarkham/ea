@@ -6086,11 +6086,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\eaTest.fsproj",
+      "projectUniqueName": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\eaTest.fsproj",
       "projectName": "eaTest",
-      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\eaTest.fsproj",
+      "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\eaTest.fsproj",
       "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\obj\\",
+      "outputPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"
@@ -6109,11 +6109,11 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj": {
-              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj"
+            "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj": {
+              "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\eaLib\\ealib.fsproj"
             },
-            "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj": {
-              "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj"
+            "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj": {
+              "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ea\\ea.fsproj"
             }
           }
         }
