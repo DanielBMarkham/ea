@@ -1,40 +1,29 @@
+
 namespace EA
   module Types=
     open System
-    open Hopac
-    open Logary
-    open Logary.Configuration
-    open Logary.Targets
-    open Logary.Configuration
-    open Logary.Configuration.Transformers
-    open Expecto
-
     open SystemTypeExtensions
     open SystemUtilities
     open CommandLineHelper
-    //Yes, I'm repeating several modules in my include list, in seemingly-random order. Don't touch it, moron!
     open Logary
-    open Logary.Configuration
-    open Logary.Targets
-    open Logary.Configuration
-    open Logary.Configuration.Transformers
-    open Expecto
-    open Logary
-
     // Logging all the things!
     // Logging code must come before anything else in order to use logging
+
     let logary =
-        Config.create "EA.Logs" "localhost"
-        |> Config.targets [ LiterateConsole.create LiterateConsole.empty "console" ]
-        |> Config.loggerMinLevel "" Debug
-        |> Config.processing (Events.events |> Events.sink ["console";])
-        |> Config.build
-        |> run
-    Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
+        Logary.Configuration.Config.create "EA.Logs" "localhost"
+        |> Logary.Configuration.Config.targets [ Logary.Targets.LiterateConsole.create Logary.Targets.LiterateConsole.empty "console" ]
+        |> Logary.Configuration.Config.loggerMinLevel "" Logary.LogLevel.Verbose
+        |> Logary.Configuration.Config.processing (Logary.Configuration.Events.events |> Logary.Configuration.Events.sink ["console";])
+        |> Logary.Configuration.Config.build
+        |> Hopac.Hopac.run
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Types"; "EATypeExtensions" |])
+    //Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
+    /// ErrorLevel, Message to display, and logger to send it to
+    let logEvent (lvl:Logary.LogLevel) msg lggr =
+        Logary.Message.eventFormat (lvl, msg)|> Logger.logSimple lggr
+    logEvent Verbose "Module enter...." moduleLogger
 
     let applicationLogger = logary.getLogger (PointName [| "EA"; "Program"; "main" |])
     let testingLogger = logary.getLogger (PointName [| "EA_TEST"; "Program"; "main" |])
@@ -162,4 +151,4 @@ namespace EA
         )
 
     // For folks on anal mode, log the module being exited. NounVerb Proper Case
-    Logary.Message.eventFormat (Verbose, "Module Exit")|> Logger.logSimple moduleLogger
+    logEvent Verbose "....Module exit" moduleLogger

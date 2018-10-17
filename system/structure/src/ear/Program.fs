@@ -2,7 +2,7 @@
   module Main=
     open System
     open System.Threading
-
+    open EA.EAR.Util
 
     /// This file should only
     /// Handle bare-metal O/S stuff
