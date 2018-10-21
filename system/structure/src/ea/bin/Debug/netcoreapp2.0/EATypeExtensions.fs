@@ -87,6 +87,8 @@ namespace EA
     // Main compilation happens here. It can fail but it can't crash, so no (direct) IO
     type RunCompilationType=(EAConfigType * CompilationUnitType[])->(EAConfigType * CompilationResultType)
 
+    type CompileType=CompilationUnitType[]->CompilationResultType
+
     /// Final stage. Writes out model to persistent storage. It can fail, but it doesn't matter,
     /// since any failure in simple IO would prevent us from telling anybody
     type WriteOutCompiledModelType=(EAConfigType * CompilationResultType)->int

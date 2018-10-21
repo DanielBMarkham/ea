@@ -8,10 +8,11 @@ namespace EA.Compiler
     open EA.Lenses
     open EA.Persist
     open EA.Utilities
-    open EA.Core
+    //open EA.Core
     open Logary // needed at bottom to give right "Level" lookup for logging
     open System.Drawing
     open System.Diagnostics
+    open System.IO
 
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Compiler"; "EA"; "Util" |])
@@ -62,12 +63,12 @@ namespace EA.Compiler
 
     let doStuff:RunCompilationType = (fun (opts, compilationUnitArray)->
       logEvent Logary.Debug ("Method doStuff beginning..... " + compilationUnitArray.Length.ToString() + " Compilation Units coming in with " + (compilationUnitArray |> Seq.sumBy(fun x->x.FileContents.Length)).ToString() + " total lines") moduleLogger
-      let squishedText:string[] = Array.concat (compilationUnitArray |> Array.map(fun x->x.FileContents))
-      logEvent Logary.Debug ("Method doStuff squished text linecount = " + squishedText.Length.ToString()) moduleLogger
-
-      let ret={MasterModelText=squishedText}
+      // shared type files not working across projects. need to fix. later.
+      let primitives=compilationUnitArray|>Array.map(fun x->(x.Info, x.FileContents))
+      let ret2:string[]=EA.Core.Util.Compile(primitives)
+      let ret={MasterModelText=ret2}
       logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
-      (opts, ret)
+      (opts,ret)
     )
 
     let outputStuff:WriteOutCompiledModelType = (fun (opts, transformedModel)->
@@ -82,6 +83,9 @@ namespace EA.Compiler
         then
             failwith "MODEL LOOPBACK FAILURE"
         else
+            transformedModel.MasterModelText |> Array.iteri(fun i x->
+              Console.Error.WriteLine(x)
+              )
       logEvent Logary.Debug "..... Method outputStuff ending. Normal Path." moduleLogger
       0 //  it's always successful as far as the O/S is concerned
     )
