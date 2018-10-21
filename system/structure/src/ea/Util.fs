@@ -10,6 +10,8 @@ namespace EA.Compiler
     open EA.Utilities
     open EA.Core
     open Logary // needed at bottom to give right "Level" lookup for logging
+    open System.Drawing
+    open System.Diagnostics
 
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Compiler"; "EA"; "Util" |])
@@ -18,36 +20,82 @@ namespace EA.Compiler
 
 
     let inputStuff:GetCompileDataType = (fun opts->
-      logEvent Debug "Method inputStuff beginning....." moduleLogger
-      logEvent Debug "..... Method inputStuff ending. Normal Path." moduleLogger
-      (opts, [||])
+      logEvent Logary.Debug "Method inputStuff beginning....." moduleLogger
+      let didTheUserProvideAnyCLIFiles=opts.FileListFromCommandLine.Length>0 
+      let isThereAFileStreamGBeingPipedToUs=(opts.IncomingStream |> Seq.length)>0
+      let areKeystrokesQueuedUpAndWaitingToBeProcessed = try System.Console.KeyAvailable with |_->false
+      logEvent Verbose ("Method inputStuff FILES REFERENCED ON CLI: " + opts.FileListFromCommandLine.Length.ToString()) moduleLogger
+      let incomingPipedFileContents = opts.IncomingStream |>Seq.toArray
+      let streamFileParm={Info=getFakeFileInfo(); FileContents=incomingPipedFileContents}
+      let loadAllCLIFiles=
+        let incomingCLIContents = 
+            opts.FileListFromCommandLine |>
+                Array.map(fun x->
+                let (fileName:string),(fileInfo:System.IO.FileInfo)=x
+                let fileContents=
+                    try System.IO.File.ReadAllLines(fileName) with |_->[||]
+                logEvent Verbose ("Method inputStuff file " + fileName + " line count = " + fileContents.Length.ToString()) moduleLogger
+                (fileInfo,fileContents)
+                )
+        let collapsedMap=incomingCLIContents |> Array.map(fun (x,y)->{Info=x;FileContents=y})
+        collapsedMap
+      let compilationUnitsToReturn =
+          match isThereAFileStreamGBeingPipedToUs, didTheUserProvideAnyCLIFiles
+            with
+                | true, true->
+                    logEvent Verbose "Method inputStuff FileStream: YES, Extra CLI files: YES." moduleLogger
+                    let ret = loadAllCLIFiles |> Array.append [|streamFileParm|]
+                    ret
+                | true,false->
+                    logEvent Verbose "Method inputStuff FileStream: YES, Extra CLI files: NO." moduleLogger
+                    [|streamFileParm|]
+                | false,true->
+                    logEvent Verbose "Method inputStuff FileStream: NO, Extra CLI files: YES." moduleLogger
+                    loadAllCLIFiles
+                | false,false->
+                    logEvent Verbose "Method inputStuff FileStream: NO, Extra CLI files: NO." moduleLogger
+                    [||]
+            
+      logEvent Logary.Debug "..... Method inputStuff ending. Normal Path." moduleLogger
+      (opts, compilationUnitsToReturn)
     )
 
-    let doStuff:RunCompilationType = (fun (opts, masterModel)->
-      logEvent Debug "Method doStuff beginning....." moduleLogger
-      logEvent Debug "..... Method doStuff ending. Normal Path." moduleLogger
-      // Console.Error.WriteLine()
-      // Console.Error.WriteLine(incomingStuff)
-      (opts, {MasterModelText=[||]})
+    let doStuff:RunCompilationType = (fun (opts, compilationUnitArray)->
+      logEvent Logary.Debug ("Method doStuff beginning..... " + compilationUnitArray.Length.ToString() + " Compilation Units coming in with " + (compilationUnitArray |> Seq.sumBy(fun x->x.FileContents.Length)).ToString() + " total lines") moduleLogger
+      let squishedText:string[] = Array.concat (compilationUnitArray |> Array.map(fun x->x.FileContents))
+      logEvent Logary.Debug ("Method doStuff squished text linecount = " + squishedText.Length.ToString()) moduleLogger
+
+      let ret={MasterModelText=squishedText}
+      logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
+      (opts, ret)
     )
 
     let outputStuff:WriteOutCompiledModelType = (fun (opts, transformedModel)->
-      logEvent Debug "Method outputStuff beginning....." moduleLogger
-      Console.Error.Write(EA.Types.pipedStreamIncoming)
-      logEvent Debug "..... Method outputStuff ending. Normal Path." moduleLogger
+      logEvent Logary.Debug "Method outputStuff beginning....." moduleLogger
+      // Our first test -- actually part of prod code -- should compile the results again with same result
+      // If the loop-through check fails, we're not writing out
+      let initialOutput=transformedModel
+      let newFakeInfo=getFakeFileInfo()
+      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=initialOutput.MasterModelText}|]
+      let opts,secondTimeThrough=(opts,newParm) |> doStuff
+      if initialOutput<>secondTimeThrough
+        then
+            failwith "MODEL LOOPBACK FAILURE"
+        else
+      logEvent Logary.Debug "..... Method outputStuff ending. Normal Path." moduleLogger
       0 //  it's always successful as far as the O/S is concerned
     )
 
     #nowarn "0067"
-    let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (ret:int byref) =
+    let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (incomingStream:seq<string>) (ret:int byref) =
         try
           logEvent Verbose "Method newMain beginning....." moduleLogger
-          let incomingStream=EA.Types.pipedStreamIncoming
-          logEvent Debug ("incomingStuff = " + incomingStream) moduleLogger
+          //logEvent Logary.Debug ("Method newMain incomingStuff lineCount = " + (incomingStream |> Seq.length).ToString()) moduleLogger
 
           // Error is the new Out. Write here so user can pipe places
           //Console.Error.WriteLine "I am here. yes."
-          let mutable ret=loadEAConfigFromCommandLine argv |> inputStuff |> doStuff |> outputStuff
+         // incomingStream |> Seq.iter(fun x->Console.Error.Write(x))
+          let mutable ret=loadEAConfigFromCommandLine argv incomingStream |> inputStuff |> doStuff |> outputStuff
           // I'm done (since I'm a single-threaded function, I know this)
           // take a few seconds to catch up, then you may run until you quit
           logEvent Verbose "..... Method newMain ending. Normal Path." moduleLogger
@@ -57,7 +105,7 @@ namespace EA.Compiler
         with
             | :? UserNeedsHelp as hex ->
                 defaultEARBaseOptions.PrintThis
-                logEvent Debug "..... Method newMain ending. User requested help." moduleLogger
+                logEvent Logary.Debug "..... Method newMain ending. User requested help." moduleLogger
                 manualResetEvent.Set()
                 ()
             | ex ->
@@ -66,7 +114,7 @@ namespace EA.Compiler
                 logEvent Error (ex.StackTrace)
                 if ex.InnerException = null
                     then
-                        Logary.Message.eventFormat (Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
                         manualResetEvent.Set()
                         ()
@@ -74,7 +122,7 @@ namespace EA.Compiler
                         System.Console.WriteLine("---   Inner Exception   ---")
                         System.Console.WriteLine (ex.InnerException.Message)
                         System.Console.WriteLine (ex.InnerException.StackTrace)
-                        Logary.Message.eventFormat (Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
                         manualResetEvent.Set()
                         ()
