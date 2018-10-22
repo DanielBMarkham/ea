@@ -13,7 +13,14 @@ namespace EA.EAR.Test
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
-    #nowarn "0067"
+    // We need this type constructor to cross the DLL boundary to the library
+    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
+      let translatedInput:EA.Core.Util.CompilationUnitType[] =
+        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
+      let compileResult=EA.Core.Util.Compile(translatedInput)
+      let translatedResult={MasterModelText=compileResult.MasterModelText}
+      translatedResult
+
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (ret:int byref) =
         try
             logEvent Verbose "Method newMain beginning....." moduleLogger
@@ -30,27 +37,32 @@ namespace EA.EAR.Test
             ()
         with
             | :? UserNeedsHelp as hex ->
-                logEvent Debug "..... Method newMain ending. User requested help." moduleLogger
-                defaultEABaseOptions.PrintThis
-                ret<-0
+                defaultEARBaseOptions.PrintThis
+                logEvent Logary.Debug "..... Method newMain ending. User requested help." moduleLogger
+                manualResetEvent.Set()
                 ()
             | ex ->
                 logEvent Error "..... Method newMain ending. Exception." moduleLogger
-                logEvent Error ("Program terminated abnormally " + ex.Message)
-                logEvent Error (ex.StackTrace)
+                logEvent Error ("Program terminated abnormally " + ex.Message) moduleLogger
+                logEvent Error (ex.StackTrace) moduleLogger
                 if ex.InnerException = null
                     then
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
+                        manualResetEvent.Set()
                         ()
                     else
-                        logEvent Error "---   Inner Exception   ---"
-                        logEvent Error ex.InnerException.Message
-                        logEvent Error ex.InnerException.StackTrace
+                        System.Console.WriteLine("---   Inner Exception   ---")
+                        System.Console.WriteLine (ex.InnerException.Message)
+                        System.Console.WriteLine (ex.InnerException.StackTrace)
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
+                        manualResetEvent.Set()
                         ()
-    logEvent Verbose "....Module exit" moduleLogger
 
 
 
 //logEvent Verbose "Method XXXXX beginning....." moduleLogger
+//logEvent Verbose "..... Method XXXXX ending. Normal Path." moduleLogger
+
 //logEvent Verbose "..... Method XXXXX ending. Normal Path." moduleLogger

@@ -9,10 +9,11 @@ namespace EA
     // Logging all the things!
     // Logging code must come before anything else in order to use logging
     // let incomingStuff:string=pipedStreamIncoming()
-
     // Need to know this when logging
-    let inputIsBeingRedirectedFromSomewhere=System.Console.IsInputRedirected
-    let theresStuffComing=try System.Console.KeyAvailable with |_->(System.Console.In.Peek() <> 0)
+
+
+    let oldStdout=System.Console.Out
+    let oldStdErr=System.Console.Error
     let mutable CommandLineArgumentsHaveBeenProcessed=false
     type LogEventParms=LogLevel*string*Logary.Logger
     let loggingBacklog = new System.Collections.Generic.Queue<LogEventParms>()
@@ -35,8 +36,6 @@ namespace EA
             else loggingBacklog.Enqueue(lvl, msg, lggr)
     let turnOnLogging() =
         CommandLineArgumentsHaveBeenProcessed<-true
-        let oldStdout=System.Console.Out
-        let oldStdErr=System.Console.Error
         System.Console.SetOut oldStdErr
         System.Console.SetError oldStdout
         loggingBacklog|>Seq.iter(fun x-> 
@@ -44,28 +43,12 @@ namespace EA
             logEvent lvl msg lggr)
     logEvent Verbose "Module enter...." moduleLogger
 
-    let pipedStreamIncoming=
-      try
-        logEvent Verbose "Method pipedStreamIncoming beginning....." moduleLogger
-        if inputIsBeingRedirectedFromSomewhere && theresStuffComing
-            then
-                logEvent Verbose "..... Method pipedStreamIncoming ending. Stream being read." moduleLogger
-                let ret=System.Console.In.ReadToEnd()
-                logEvent Verbose ("Method pipedStreamIncoming Stream data length = " + ret.Length.ToString()) moduleLogger
-                ret
-            else
-                logEvent Verbose ("Method pipedStreamIncoming: KeyAvailable = " + theresStuffComing.ToString()) moduleLogger
-                logEvent Verbose ("Method pipedStreamIncoming: InputIsBeingRedirectedFromSomewhere = " + inputIsBeingRedirectedFromSomewhere.ToString()) moduleLogger
-                logEvent Verbose "..... Method pipedStreamIncoming ending. No stream to read. Returning nothing." moduleLogger
-                ""
-      with _->
-        logEvent Verbose "..... Method pipedStreamIncoming ending. Error in trying to read stream. Returning nothing." moduleLogger
-        ""
-
     // DATA types
     type EAConfigType =
         {
         ConfigBase:ConfigBase
+        FileListFromCommandLine:(string*System.IO.FileInfo)[]
+        IncomingStream:seq<string>
         }
         with member this.PrintThis() =()
             //testingLogger.info(
@@ -81,7 +64,6 @@ namespace EA
             //)
 
 
-
     type CompilationUnitType = {
         Info:System.IO.FileInfo
         FileContents:string[]
@@ -90,10 +72,11 @@ namespace EA
         MasterModelText:string[]
         }
 
+
     // FUNCTION TYPES
     /// Process any args you can from the command line
     /// Get rid of any junk
-    type GetEAProgramConfigType=string []->EAConfigType
+    type GetEAProgramConfigType=string [] -> seq<string>->EAConfigType
     /// Process any args you can from the command line
     /// Get rid of any junk
 
@@ -103,6 +86,8 @@ namespace EA
 
     // Main compilation happens here. It can fail but it can't crash, so no (direct) IO
     type RunCompilationType=(EAConfigType * CompilationUnitType[])->(EAConfigType * CompilationResultType)
+
+    type CompileType=CompilationUnitType[]->CompilationResultType
 
     /// Final stage. Writes out model to persistent storage. It can fail, but it doesn't matter,
     /// since any failure in simple IO would prevent us from telling anybody
@@ -135,7 +120,7 @@ namespace EA
     let EAProgramHelp = [|"EasyAM. An analysis compiler. It compiles freeform notes to useful project stuff."|]
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEABaseOptions = createNewBaseOptions "ea" "The world's first analysis compiler" EAProgramHelp defaultVerbosity
-    let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args->
+    let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args incomingStream->
       logEvent Verbose "Method loadEAConfigFromCommandLine beginning....." moduleLogger
       if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
       let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
@@ -146,10 +131,26 @@ namespace EA
           logEvent Info ("New Verbosity set in loadEAConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
           logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
         else ()
+      // Go through the arg list. If it's a file, add to list.
+      // If it's a directory, add files in the directory to the list
+      let fileList=args |> Array.filter(fun x->
+        let newFile=System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)
+        //logEvent Verbose ("Method loadEAConfigFromCommandLine file exists: " + newFile + " = " + System.IO.File.Exists(newFile).ToString()) moduleLogger
+        System.IO.File.Exists(newFile)
+        )
+      //logEvent Verbose ("Method loadEAConfigFromCommandLine fileList length: " + fileList.Length.ToString()) moduleLogger
+      let directoriesList=args |> Array.filter(fun x->System.IO.Directory.Exists(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)))
+      //logEvent Verbose ("Method loadEAConfigFromCommandLine directories length: " + directoriesList.Length.ToString()) moduleLogger
+      let filesFromDirectories=directoriesList |> Array.map(fun x->System.IO.Directory.GetFiles(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x))) |> Array.concat
+      let filesReferenced=fileList|>Array.append filesFromDirectories
+      let newFilesReferncedFromTheCommandLine = filesReferenced |> Array.map(fun x->
+            let newFile=System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)
+            (newFile, System.IO.FileInfo(newFile))
+        )
       logEvent Verbose "..... Method loadEAConfigFromCommandLine ending. Normal Path." moduleLogger
       //logEvent Debug ("incomingStuff = " + pipedStreamIncoming()) moduleLogger
       turnOnLogging()
-      {ConfigBase = newConfigBase}
+      {ConfigBase = newConfigBase; IncomingStream=incomingStream; FileListFromCommandLine=newFilesReferncedFromTheCommandLine}
     )
     /// Process any args you can from the command line
     /// Get rid of any junk

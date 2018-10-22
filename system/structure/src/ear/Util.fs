@@ -15,6 +15,14 @@ namespace EA.EAR
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
+    // We need this type constructor to cross the DLL boundary to the library
+    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
+      let translatedInput:EA.Core.Util.CompilationUnitType[] =
+        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
+      let compileResult=EA.Core.Util.Compile(translatedInput)
+      let translatedResult={MasterModelText=compileResult.MasterModelText}
+      translatedResult
+
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
 
@@ -37,7 +45,6 @@ namespace EA.EAR
       0 //  it's always successful as far as the O/S is concerned
     )
 
-    #nowarn "0067"
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (ret:int byref) =
         try
           logEvent Verbose "Method newMain beginning....." moduleLogger
@@ -54,16 +61,16 @@ namespace EA.EAR
         with
             | :? UserNeedsHelp as hex ->
                 defaultEARBaseOptions.PrintThis
-                logEvent Debug "..... Method newMain ending. User requested help." moduleLogger
+                logEvent Logary.Debug "..... Method newMain ending. User requested help." moduleLogger
                 manualResetEvent.Set()
                 ()
             | ex ->
                 logEvent Error "..... Method newMain ending. Exception." moduleLogger
-                logEvent Error ("Program terminated abnormally " + ex.Message)
-                logEvent Error (ex.StackTrace)
+                logEvent Error ("Program terminated abnormally " + ex.Message) moduleLogger
+                logEvent Error (ex.StackTrace) moduleLogger
                 if ex.InnerException = null
                     then
-                        Logary.Message.eventFormat (Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
                         manualResetEvent.Set()
                         ()
@@ -71,7 +78,7 @@ namespace EA.EAR
                         System.Console.WriteLine("---   Inner Exception   ---")
                         System.Console.WriteLine (ex.InnerException.Message)
                         System.Console.WriteLine (ex.InnerException.StackTrace)
-                        Logary.Message.eventFormat (Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
+                        Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger
                         ret<-1
                         manualResetEvent.Set()
                         ()

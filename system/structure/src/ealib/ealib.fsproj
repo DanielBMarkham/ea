@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+
+  <PropertyGroup>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\AppCommon\Facade.fs">
       <Link>Facade.fs</Link>
@@ -19,6 +24,10 @@
     </Compile>
     <Compile Include="..\..\..\..\..\SystemCommon\CommandLineHelper.fs">
       <Link>CommandLineHelper.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EATypeExtensions.fsi">
+      <Link>EATypeExtensions.fsi</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="..\AppCommon\EATypeExtensions.fs">

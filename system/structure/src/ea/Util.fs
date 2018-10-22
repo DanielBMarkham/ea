@@ -19,6 +19,13 @@ namespace EA.Compiler
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
+    // We need this type constructor to cross the DLL boundary to the library
+    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
+      let translatedInput:EA.Core.Util.CompilationUnitType[] =
+        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
+      let compileResult=EA.Core.Util.Compile(translatedInput)
+      let translatedResult={MasterModelText=compileResult.MasterModelText}
+      translatedResult
 
     let inputStuff:GetCompileDataType = (fun opts->
       logEvent Logary.Debug "Method inputStuff beginning....." moduleLogger
@@ -63,10 +70,14 @@ namespace EA.Compiler
 
     let doStuff:RunCompilationType = (fun (opts, compilationUnitArray)->
       logEvent Logary.Debug ("Method doStuff beginning..... " + compilationUnitArray.Length.ToString() + " Compilation Units coming in with " + (compilationUnitArray |> Seq.sumBy(fun x->x.FileContents.Length)).ToString() + " total lines") moduleLogger
-      // shared type files not working across projects. need to fix. later.
-      let primitives=compilationUnitArray|>Array.map(fun x->(x.Info, x.FileContents))
-      let ret2:string[]=EA.Core.Util.Compile(primitives)
-      let ret={MasterModelText=ret2}
+      let ret=compile(compilationUnitArray)
+      //let primitives=compilationUnitArray|>Array.map(fun x->(x.Info, x.FileContents))
+      //let ret2:string[]=EA.Core.Util.Compile(primitives)
+      //let ret={MasterModelText=ret2}
+      //let newin:EA.Core.Util.CompilationUnitType[]=compilationUnitArray|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
+      //let foo:EA.Core.Util.CompilationResultType=EA.Core.Util.CompileFunction(newin)
+      //logEvent Logary.Debug ("Foo ") moduleLogger
+      ////logEvent Verbose ("FOO = " + foo.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
       logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
       (opts,ret)
     )
@@ -90,7 +101,6 @@ namespace EA.Compiler
       0 //  it's always successful as far as the O/S is concerned
     )
 
-    #nowarn "0067"
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (incomingStream:seq<string>) (ret:int byref) =
         try
           logEvent Verbose "Method newMain beginning....." moduleLogger
@@ -114,8 +124,8 @@ namespace EA.Compiler
                 ()
             | ex ->
                 logEvent Error "..... Method newMain ending. Exception." moduleLogger
-                logEvent Error ("Program terminated abnormally " + ex.Message)
-                logEvent Error (ex.StackTrace)
+                logEvent Error ("Program terminated abnormally " + ex.Message) moduleLogger
+                logEvent Error (ex.StackTrace) moduleLogger
                 if ex.InnerException = null
                     then
                         Logary.Message.eventFormat (Logary.Debug, "newMain Exit System Exception")|> Logger.logSimple moduleLogger

@@ -177,7 +177,7 @@
             | :? System.IO.IOException as iox->
                 printfn "iox Exception %s" iox.Message
                 ""
-            | :? System.Exception as ex ->
+            | ex ->
                 System.Console.WriteLine("Exception in Utils.http trying to load " + url)
                 System.Console.WriteLine(ex.Message)
                 System.Console.WriteLine(ex.StackTrace)
@@ -227,7 +227,7 @@
             tOut.Enabled<-false
             tOut.Dispose()
             ""
-        | :? System.Exception as ex ->
+        | ex ->
             printfn "System Exception trying to use Browser Load - %s" ex.Message
             tOut.Stop()
             tOut.Enabled<-false

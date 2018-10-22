@@ -255,10 +255,6 @@
                     printfn "%s. %s" opts.ProgramName opts.ProgramTagLine
                     printfn "Begin: %s" (nowString)
                     fnPrintMe()
-                |_ ->
-                    printfn "%s. %s" opts.ProgramName opts.ProgramTagLine
-                    printfn "Begin: %s" (nowString)
-                    fnPrintMe()
 
     /// Exiting program command line report. Detail level is based on verbosity setting
     let commandLinePrintWhileExit (baseOptions:ConfigBase) =

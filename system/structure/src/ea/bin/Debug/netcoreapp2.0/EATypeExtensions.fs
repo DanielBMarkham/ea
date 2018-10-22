@@ -64,7 +64,6 @@ namespace EA
             //)
 
 
-
     type CompilationUnitType = {
         Info:System.IO.FileInfo
         FileContents:string[]
@@ -72,6 +71,7 @@ namespace EA
     type CompilationResultType = {
         MasterModelText:string[]
         }
+
 
     // FUNCTION TYPES
     /// Process any args you can from the command line
