@@ -1,0 +1,20 @@
+# These are the stories for Episode 3
+
+They should work fine by themselves
+
+USER STORIES
+  Recognize and sort lines by line type
+    PARENT
+	  Organize files by line type
+	  Be easy-to-use
+  Print out project To-Do items
+    PARENT
+	  Organize files by line type
+	  Be easy-to-use
+
+TO-DO
+  * Create a DU type to handle all the line types
+  * Look into using FParsec to sort between line types and return the DU and text
+  * Decide what I mean when I say "print out"
+
+*This is both the sprint backlog and the test data*

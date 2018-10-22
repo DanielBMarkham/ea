@@ -60,3 +60,8 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\Facade.fs
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.dll
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\bin\Debug\netcoreapp2.2\ealib.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete

@@ -68,3 +68,4 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi

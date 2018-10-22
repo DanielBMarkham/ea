@@ -24,10 +24,12 @@
         // downstream they'll exepct a sequence, and that's the best thing to
         // use, but we need to free up resources to clarify any threading issues
         // so we'll fake out a seq for now
+        // * Piping continued to be fun. Worked on it right up until last tests were passing
+        // * Each environment acted differently. Yay!
         let incomingFileStream=
-          try 
+          try
             if System.Console.IsInputRedirected && System.Console.KeyAvailable && System.Console.In.Peek() <>(-1) // && System.Console.KeyAvailable
-                then 
+                then
                     let getAll=Seq.initInfinite(fun _ -> Console.ReadLine()) |>  Seq.takeWhile (fun line -> line <> null)
                     let newVal=getAll |> Seq.toArray |> Array.toSeq
                     newVal
@@ -48,9 +50,10 @@
         // to send to the O/S (In other words, this is a special case,
         // if you start spinning threads off directly in main or newMain,
         // this will not work.)
+        // * Mutable variables FTW! I think.
         let mutable ret=0
         // This needs to be a sequence since it represents possibly realtime streams of strings arriving
-        let incomingFileStreams = 
+        let incomingFileStreams =
             if (incomingFileStream |> Seq.length >0) then incomingFileStream else Seq.empty
         newMain argv cts mre (incomingFileStreams) &ret
         mre.Wait(cts.Token)

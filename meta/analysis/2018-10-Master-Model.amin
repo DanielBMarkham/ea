@@ -29,14 +29,18 @@ BUSINESS SUPPLEMENTALS
 SYSTEM SUPPLEMENTALS
   Support a command-line verbosity switch
 SYSTEM BEHAVIOR
-  Concatenate files  
+  Concatenate files
 
 USER STORIES
-  Process files without doing anything 
-    PARENT 
+  Process files without doing anything
+    PARENT
 	  Concatenate files
 	  Be easy-to-use
   Process files and concatenate by filename
-    PARENT 
+    PARENT
 	  Concatenate files
 	  Be easy-to-use
+
+* Where are we?
+* Stories are props for Meta development
+* Should first tests be Bash or Expecto? Yes!

@@ -10,9 +10,8 @@ namespace EA.Compiler
     open EA.Utilities
     //open EA.Core
     open Logary // needed at bottom to give right "Level" lookup for logging
-    open System.Drawing
-    open System.Diagnostics
-    open System.IO
+    // * Opens have gotten fewer. Still working through my code-build-debug cycle
+    // * Have yet to use the debugger (!)
 
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Compiler"; "EA"; "Util" |])

@@ -36,6 +36,7 @@ rm -f "$TEST1MODELOUT"
 cd src/ea
 touch "$TEST1MODELOUT"
 
+# * The BASH escape from hell section
 # The following code is a BASH escape/DOS timebomb. Don't screw with it unless you like quotes
 # Do all combinations of piping and file listing to make sure nothing comes out
 $(dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\$EMPTYFILE ) > $TEST1MODELOUT

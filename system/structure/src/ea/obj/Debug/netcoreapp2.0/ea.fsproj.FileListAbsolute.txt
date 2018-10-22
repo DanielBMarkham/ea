@@ -41,3 +41,4 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netc
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\EATypeExtensions.fsi
