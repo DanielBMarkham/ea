@@ -26,13 +26,15 @@
         // so we'll fake out a seq for now
         let incomingFileStream=
           try 
-            if System.Console.IsInputRedirected// && System.Console.KeyAvailable
+            if System.Console.IsInputRedirected && System.Console.KeyAvailable && System.Console.In.Peek() <>(-1) // && System.Console.KeyAvailable
                 then 
                     let getAll=Seq.initInfinite(fun _ -> Console.ReadLine()) |>  Seq.takeWhile (fun line -> line <> null)
                     let newVal=getAll |> Seq.toArray |> Array.toSeq
                     newVal
-                else ["INPUT NOT REDIRECTED"]:>seq<string>
-            with |ex->[ex.Message]:>seq<string>
+                else
+                    []:>seq<string>
+            //with |ex->[ex.Message]:>seq<string>
+            with |ex->[]:>seq<string>
         logEvent Verbose "Method main beginning....." moduleLogger
         use mre = new System.Threading.ManualResetEventSlim(false)
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())

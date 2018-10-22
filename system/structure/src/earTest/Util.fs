@@ -25,7 +25,7 @@ namespace EA.EAR.Test
         try
             logEvent Verbose "Method newMain beginning....." moduleLogger
             // Error is the new Out. Write here so user can pipe places
-            Console.Error.WriteLine "I am here. yes."
+            //Console.Error.WriteLine "I am here. yes."
             // Returns a non-zero if any tests failed
             ret<-Expecto.Tests.runTestsInAssembly Expecto.Impl.ExpectoConfig.defaultConfig argv
 
