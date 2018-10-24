@@ -28,14 +28,14 @@ namespace EA.Compiler
 
     let inputStuff:GetCompileDataType = (fun opts->
       logEvent Logary.Debug "Method inputStuff beginning....." moduleLogger
-      let didTheUserProvideAnyCLIFiles=opts.FileListFromCommandLine.Length>0 
+      let didTheUserProvideAnyCLIFiles=opts.FileListFromCommandLine.Length>0
       let isThereAFileStreamGBeingPipedToUs=(opts.IncomingStream |> Seq.length)>0
       let areKeystrokesQueuedUpAndWaitingToBeProcessed = try System.Console.KeyAvailable with |_->false
       logEvent Verbose ("Method inputStuff FILES REFERENCED ON CLI: " + opts.FileListFromCommandLine.Length.ToString()) moduleLogger
       let incomingPipedFileContents = opts.IncomingStream |>Seq.toArray
       let streamFileParm={Info=getFakeFileInfo(); FileContents=incomingPipedFileContents}
       let loadAllCLIFiles=
-        let incomingCLIContents = 
+        let incomingCLIContents =
             opts.FileListFromCommandLine |>
                 Array.map(fun x->
                 let (fileName:string),(fileInfo:System.IO.FileInfo)=x
@@ -62,7 +62,6 @@ namespace EA.Compiler
                 | false,false->
                     logEvent Verbose "Method inputStuff FileStream: NO, Extra CLI files: NO." moduleLogger
                     [||]
-            
       logEvent Logary.Debug "..... Method inputStuff ending. Normal Path." moduleLogger
       (opts, compilationUnitsToReturn)
     )
@@ -93,6 +92,8 @@ namespace EA.Compiler
         then
             failwith "MODEL LOOPBACK FAILURE"
         else
+            let totalCharacters = transformedModel.MasterModelText |> Array.sumBy(fun x->x.Length)
+            logEvent Logary.Debug ("..... Method outputStuff totalCharacters = " + totalCharacters.ToString()) moduleLogger
             transformedModel.MasterModelText |> Array.iteri(fun i x->
               Console.Error.WriteLine(x)
               )
@@ -116,6 +117,9 @@ namespace EA.Compiler
           manualResetEvent.Set()
           ()
         with
+            | :? System.NotSupportedException as nse->
+                logEvent Logary.Debug ("..... Method newMain ending. NOT SUPPORTED EXCEPTION = " + nse.Message) moduleLogger
+                ()
             | :? UserNeedsHelp as hex ->
                 defaultEARBaseOptions.PrintThis
                 logEvent Logary.Debug "..... Method newMain ending. User requested help." moduleLogger

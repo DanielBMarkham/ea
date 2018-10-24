@@ -16,7 +16,7 @@ namespace EA
     let oldStdErr=System.Console.Error
     let mutable CommandLineArgumentsHaveBeenProcessed=false
     type LogEventParms=LogLevel*string*Logary.Logger
-    let loggingBacklog = new System.Collections.Generic.Queue<LogEventParms>()
+    let loggingBacklog = new System.Collections.Generic.Queue<LogEventParms>(4096)
     let logary =
         Logary.Configuration.Config.create "EA.Logs" "localhost"
         |> Logary.Configuration.Config.targets [ Logary.Targets.LiterateConsole.create Logary.Targets.LiterateConsole.empty "console" ]
