@@ -83,8 +83,8 @@
         |ex->
           (logEvent Debug ("FILE STREAM COMING IN BUT SOME ERROR = " + ex.Message) moduleLogger)
         // Some oddball break while we were working. Need to decide whether to continue or not
-        | :? ThreadInterruptedException as tie->
-            (logEvent Debug "FILE STREAM COMING IN BUT THREADS DIED" moduleLogger)
+        //| :? ThreadInterruptedException as tie->
+        //    (logEvent Debug "FILE STREAM COMING IN BUT THREADS DIED" moduleLogger)
 
 
     /// This file should only

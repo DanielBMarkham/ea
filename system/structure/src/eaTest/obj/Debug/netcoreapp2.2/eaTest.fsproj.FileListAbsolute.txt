@@ -44,6 +44,7 @@ D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTe
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 D:\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\Facade.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\SystemUtilities.fs
@@ -68,4 +69,3 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
-D:\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi

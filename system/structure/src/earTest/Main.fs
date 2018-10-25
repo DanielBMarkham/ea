@@ -16,24 +16,7 @@
     /// It answers the question: can you run at all?
     [<EntryPoint>]
     let main argv =
-        let incomingStream =
-            try
-                if System.Console.IsInputRedirected
-                    then
-                        let mutable peekCharacter=(-1)
-                        try 
-                          if System.Console.KeyAvailable
-                            then
-                                peekCharacter<-System.Console.In.Peek()
-                                let ret= System.Console.In.ReadToEnd()
-                                logEvent Debug ("Peek character = " + peekCharacter.ToString()) moduleLogger
-                                logEvent Debug ("Method main incoming stream data length = " + ret.Length.ToString()) moduleLogger
-                                ret
-                            else
-                                ""
-                        with |_ ->""
-                    else ""
-              with |_->""
+        logary.switchLoggerLevel("",Info)
         logEvent Debug "Method main beginning....." moduleLogger
         use mre = new System.Threading.ManualResetEventSlim(false)
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())

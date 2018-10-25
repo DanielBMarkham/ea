@@ -26,37 +26,7 @@ LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
-# First we smoke test from the outside
-VERBOSITY=7
-EMPTYFILE=EMPTYLEAVEHEREFORTESTING.amin
-TEST1='Nothing-in-IMPLIES-Nothing-out'
-TEST1MODELOUT="$TEST1".amout
-rm -f "$TEST1MODELOUT"
-
 cd src/ea
-touch "$TEST1MODELOUT"
-rm "$TEST1MODELOUT"
-touch "$TEST1MODELOUT"
-
-#rm  "$TEST1MODELOUT".1
-#rm  "$TEST1MODELOUT".2
-#rm  "$TEST1MODELOUT".3
-
-
-# * The BASH escape from hell section
-# The following code is a BASH escape/DOS timebomb. Don't screw with it unless you like quotes
-# Do all combinations of piping and file listing to make sure nothing comes out
-
-#echo '$(dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\'"$EMPTYFILE"' ) > '"$TEST1MODELOUT".1
-#echo 'cat Util.fs | (dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\'$EMPTYFILE' ) >> '"$TEST1MODELOUT".2
-#echo 'cat Util.fs | (dotnet run --no-build -- -v:1 ) >> '"$TEST1MODELOUT".3 
-
-#(dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\$EMPTYFILE ) > "$TEST1MODELOUT".1
-#cat Util.fs | (dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\$EMPTYFILE ) >> "$TEST1MODELOUT".2
-#cat Util.fs | (dotnet run --no-build -- -v:1 ) >> "$TEST1MODELOUT".3 
-
-
-#TEST1RESULT=$(wc -l < "$TEST1MODELOUT")
 # function takes a message a a bool representing pass/fail
 # remember: 0=true 1=fail
 function report()
@@ -124,6 +94,7 @@ TESTNAME_RESULT="$TESTNAME"_Result
 
 #report "$TEST_DESCRIPTION" $testResult 
 
+# SMOKE TESTS FROM OUTSIDE THE APP
 TESTNAME=NothingProvidedProducesNoResult
 TESTNAMEFILE="XX_$TESTNAME"
 touch "$TESTNAMEFILE" && rm "$TESTNAMEFILE" && (dotnet run --no-build -- -v:1 ) > "$TESTNAMEFILE"
@@ -149,7 +120,7 @@ testFileLineCount $TESTNAME "Bad FileName Provided On The Command Line Produces 
 TESTNAME=EmptyFileProvidedOnTheCommandLineProducesEmptyFile
 TESTNAMEFILE="XX_$TESTNAME"
 touch "$TESTNAMEFILE" && rm "$TESTNAMEFILE" && (dotnet run --no-build -- -v:1 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\EMPTYLEAVEHEREFORTESTING.amin ) > "$TESTNAMEFILE"
-testFileLineCount $TESTNAME "Empyt File Provided On The Command Line Produces Empty File" "$TESTNAMEFILE" 1 
+testFileLineCount $TESTNAME "Empty File Provided On The Command Line Produces Empty File" "$TESTNAMEFILE" 1 
 
 TESTNAME=EmptyFileProducesEmptyFilePiped
 TESTNAMEFILE="XX_$TESTNAME"
@@ -178,10 +149,12 @@ touch "$TESTNAMEFILE" && rm "$TESTNAMEFILE" && cat ../../../../meta/analysis/TEN
 testFileLineCount $TESTNAME "Ten Line File Provided On The Command Line And Piped In Produces Twenty Line File" "$TESTNAMEFILE" 20 
 
 
+# UNIT/TDD TESTS
+cd ../eaTest
+dotnet run --no-build
 
-#dotnet run --no-build
+cd ../earTest
+dotnet run --no-build
 
-#cd ../earTest
-#dotnet run --no-build
 # rm Nothing-in-IMPLIES-Nothing-out.amout.1 && (dotnet run --no-build -- -v:7 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\TENLINEFORTESTING.amin ) > Nothing-in-IMPLIES-Nothing-out.amout.1 && cat Nothing-in-IMPLIES-Nothing-out.amout.1
 # rm Nothing-in-IMPLIES-Nothing-out.amout.2 && cat Util.fs | (dotnet run --no-build -- -v:7 ..\\..\\..\\..\\..\\..\\..\\meta\\analysis\\TENLINEFORTESTING.amin ) >> Nothing-in-IMPLIES-Nothing-out.amout.2 && cat Nothing-in-IMPLIES-Nothing-out.amout.2

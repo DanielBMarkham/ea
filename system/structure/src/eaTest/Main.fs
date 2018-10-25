@@ -30,30 +30,12 @@
     /// It answers the question: can you run at all?
     [<EntryPoint>]
     let main argv =
-        let incomingStream =
-            try
-                if System.Console.IsInputRedirected
-                    then
-                        let mutable peekCharacter=(-1)
-                        try 
-                          if System.Console.KeyAvailable
-                            then
-                                peekCharacter<-System.Console.In.Peek()
-                                let ret= System.Console.In.ReadToEnd()
-                                logEvent Debug ("Peek character = " + peekCharacter.ToString()) moduleLogger
-                                logEvent Debug ("Method main incoming stream data length = " + ret.Length.ToString()) moduleLogger
-                                ret
-                            else
-                                ""
-                        with |_ ->""
-                    else ""
-              with |_->""
-        EA.Types.turnOnLogging()
+        logary.switchLoggerLevel("",Info)
         logEvent Verbose "Method main beginning....." moduleLogger
         use mre = new System.Threading.ManualResetEventSlim(false)
         use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
         let cts = new CancellationTokenSource()
-        Console.Out.WriteLine "Press Ctrl-C to terminate program"
+        //Console.Out.WriteLine "Press Ctrl-C to terminate program"
         // As long as we're a single-thread on a console app, we can
         // use a mutable cell for a return value, allowing whatever
         // threading mechanis m we use for everything else the job of returning an int back
