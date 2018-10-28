@@ -17,14 +17,15 @@ BUSINESS ABSTRACT SUPPLEMENTALS
       * We never take longer than 3 seconds to provide them results
       * This does not inlude OS issues because we can't help those things
 
-BUSINESS ABSTRACT BEHAVIOR
-  * Organize a set of notes I took today
-    ASA Person trying to learn about this thing we want to build
-    WHEN I'm talking to the other guys and the customer
-    INEEDTO Organize all of my notes according to Structured Analysis
-    SOTHAT
-      * I can find stuff easily later
-      * I can organize and prioritize important questions for the next time we start chatting
+namespace EasyAM2
+  BUSINESS ABSTRACT BEHAVIOR
+    * Organize a set of notes I took today
+      ASA Person trying to learn about this thing we want to build
+      WHEN I'm talking to the other guys and the customer
+      INEEDTO Organize all of my notes according to Structured Analysis
+      SOTHAT
+        * I can find stuff easily later
+        * I can organize and prioritize important questions for the next time we start chatting
 
   USER STORIES
       @episode=2 @status=done @testscript=test_episode2.sh

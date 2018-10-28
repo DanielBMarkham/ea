@@ -1,4 +1,3 @@
-
 namespace EA
   module Types=
     open System
@@ -6,6 +5,10 @@ namespace EA
     open SystemUtilities
     open CommandLineHelper
     open Logary
+    open System.Data
+    //open System.Web.Configuration
+
+
     // Logging all the things!
     // Logging code must come before anything else in order to use logging
     // let incomingStuff:string=pipedStreamIncoming()
@@ -63,12 +66,13 @@ namespace EA
             //    eventX "EasyAMConfig Parameters Provided"
             //)
 
-
-    type CompilationUnitType = {
+    /// The Compilation Unit (files coming in) type used by clients of EALib
+    type EACompilationUnitType = {
         Info:System.IO.FileInfo
         FileContents:string[]
     }
-    type CompilationResultType = {
+    /// The compilation Result that's owned by clients of EALib
+    type EACompilationResultType = {
         MasterModelText:string[]
         }
 
@@ -82,16 +86,16 @@ namespace EA
 
     /// Responsible only for getting a list of strings and associated files to compile. Nothing else
     /// Any failure results in an empty string and an INFO message back to the caller (but okay result)
-    type GetCompileDataType=EAConfigType->(EAConfigType * CompilationUnitType[])
+    type GetCompileDataType=EAConfigType->(EAConfigType * EACompilationUnitType[])
 
     // Main compilation happens here. It can fail but it can't crash, so no (direct) IO
-    type RunCompilationType=(EAConfigType * CompilationUnitType[])->(EAConfigType * CompilationResultType)
+    type RunCompilationType=(EAConfigType * EACompilationUnitType[])->(EAConfigType * EACompilationResultType)
 
-    type CompileType=CompilationUnitType[]->CompilationResultType
+    type CompileType=EACompilationUnitType[]->EACompilationResultType
 
     /// Final stage. Writes out model to persistent storage. It can fail, but it doesn't matter,
     /// since any failure in simple IO would prevent us from telling anybody
-    type WriteOutCompiledModelType=(EAConfigType * CompilationResultType)->int
+    type WriteOutCompiledModelType=(EAConfigType * EACompilationResultType)->int
 
 
     type Verbosity with
@@ -157,14 +161,14 @@ namespace EA
     type GetEARProgramConfigType=string []->EARConfigType
     /// Load the master file
     /// Any failure results in an empty string and an INFO message back to the caller (but okay result)
-    type LoadMasterFile=EARConfigType->(EARConfigType * CompilationResultType)
+    type LoadMasterFile=EARConfigType->(EARConfigType * EACompilationResultType)
 
     /// Do the slicing and dicing
     /// Note that the model comes in and leaves in the same format
-    type RunTransformsAndFilters=(EARConfigType * CompilationResultType)->(EARConfigType * CompilationResultType)
+    type RunTransformsAndFilters=(EARConfigType * EACompilationResultType)->(EARConfigType * EACompilationResultType)
 
     /// Take whatever model we now have and send it wherever it's supposed to go
-    type WriteOutModelReportType=(EARConfigType * CompilationResultType)->int
+    type WriteOutModelReportType=(EARConfigType * EACompilationResultType)->int
 
 
 
@@ -186,6 +190,70 @@ namespace EA
         logEvent Verbose "..... Method loadEARConfigFromCommandLine ending. Normal Path." moduleLogger
         turnOnLogging()
         {ConfigBase = newConfigBase}
+        )
+
+    type EasyAMLineTypes =
+        |FileBegin
+        |FileEnd
+        |EmptyLine
+        |FreeFormText
+        |CompilerSectionDirective
+        |CompilerNamespaceDirective
+        |CompilerTagDirective
+        |CompilerSectionDirectiveWithItem
+        |CompilerNamespaceDirectiveWithItem
+        |CompilerTagDirectiveWithItem
+        |CompilerJoinTypeWithItem
+        |NewSectionItem
+        |NewJoinedItem
+        |NewItemJoinCombination
+
+    type CompilerRuleType =
+        |FileBeginType of AllowedNextLinesType
+        |FileEndType of AllowedNextLinesType
+        |EmptyLineType of AllowedNextLinesType
+        |FreeFormTextType of AllowedNextLinesType
+        |CompilerSectionDirectiveType of AllowedNextLinesType
+        |CompilerNamespaceDirectiveType of AllowedNextLinesType
+        |CompilerTagDirectiveType of AllowedNextLinesType
+        |CompilerSectionDirectiveWithItemType of AllowedNextLinesType
+        |CompilerNamespaceDirectiveWithItemType of AllowedNextLinesType
+        |CompilerTagDirectiveWithItemType of AllowedNextLinesType
+        |CompilerJoinTypeWithItemType of AllowedNextLinesType
+        |NewSectionItemType of AllowedNextLinesType
+        |NewJoinedItemType of AllowedNextLinesType
+        |NewItemJoinCombinationType of AllowedNextLinesType
+    and AllowedNextLinesType = AllowedNextLines of (EasyAMLineTypes list)
+    
+    let makeRule (ruleName) (nextLinesAllowed:EasyAMLineTypes list) = (ruleName)(AllowedNextLines(nextLinesAllowed))
+    let fileBeginRule = makeRule FileBeginType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let fileEndRule = makeRule FileEndType []
+    let emptyLineRule= makeRule EmptyLineType [FileEnd; EmptyLine;FreeFormText;CompilerSectionDirective;NewSectionItem]
+    let freeformTextRule= makeRule FreeFormTextType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let compilerSectionDirectiveRule = makeRule CompilerSectionDirectiveType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let newSectionItemRule = makeRule NewSectionItemType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+
+    let CompilerRules =
+        [
+            fileBeginRule
+            ;fileEndRule
+            ;emptyLineRule
+            ;freeformTextRule
+            ;compilerSectionDirectiveRule
+            ;newSectionItemRule
+        ]
+    let isThisLineAllowedNext (previousLineType:EasyAMLineTypes) (lineTypeToTest:EasyAMLineTypes)=
+      let rulesThatApply=
+        CompilerRules|>List.filter(fun x->
+          match x with 
+            | previousLineType->true 
+            |_-> false
+          ) 
+
+      rulesThatApply |> List.exists (fun x->
+        match x with
+          | currentLineType->true
+          |_->false
         )
 
     // For folks on anal mode, log the module being exited. NounVerb Proper Case

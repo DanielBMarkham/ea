@@ -8,7 +8,8 @@ namespace EA.Compiler
     open EA.Lenses
     open EA.Persist
     open EA.Utilities
-    //open EA.Core
+    open EA.Core.Util
+    open EA.Core.Compiler
     open Logary // needed at bottom to give right "Level" lookup for logging
     // * Opens have gotten fewer. Still working through my code-build-debug cycle
     // * Have yet to use the debugger (!)
@@ -18,13 +19,15 @@ namespace EA.Compiler
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
-    // We need this type constructor to cross the DLL boundary to the library
-    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
-      let translatedInput:EA.Core.Util.CompilationUnitType[] =
-        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
-      let compileResult=EA.Core.Util.Compile(translatedInput)
-      let translatedResult={MasterModelText=compileResult.MasterModelText}
-      translatedResult
+    /// Perform the translation across the client/dll boundary
+    /// Yep, there are other ways to do this. I prefer to think of
+    /// the boundary as another outside of the onion. Trust no one. :)
+    let EALibCompile (localCompilationUnits:EA.Types.EACompilationUnitType[]):EA.Types.EACompilationResultType =
+      let libraryCompilationUnits:EA.Core.Compiler.CompilationUnitType[] =
+        localCompilationUnits |> Array.map(fun x->{Info=x.Info; FileContents=x.FileContents})
+      let libraryRet:EA.Core.Compiler.CompilationResultType=Compile(libraryCompilationUnits)
+      let translatedRet:EACompilationResultType={MasterModelText=libraryRet.MasterModelText}
+      translatedRet
 
     let inputStuff:GetCompileDataType = (fun opts->
       logEvent Logary.Debug "Method inputStuff beginning....." moduleLogger
@@ -33,8 +36,8 @@ namespace EA.Compiler
       let areKeystrokesQueuedUpAndWaitingToBeProcessed = try System.Console.KeyAvailable with |_->false
       logEvent Verbose ("Method inputStuff FILES REFERENCED ON CLI: " + opts.FileListFromCommandLine.Length.ToString()) moduleLogger
       let incomingPipedFileContents = opts.IncomingStream |>Seq.toArray
-      let streamFileParm={Info=getFakeFileInfo(); FileContents=incomingPipedFileContents}
-      let loadAllCLIFiles=
+      let streamFileParm:EACompilationUnitType={Info=getFakeFileInfo(); FileContents=incomingPipedFileContents}
+      let loadAllCLIFiles:EACompilationUnitType[]=
         let incomingCLIContents =
             opts.FileListFromCommandLine |>
                 Array.map(fun x->
@@ -44,9 +47,9 @@ namespace EA.Compiler
                 logEvent Verbose ("Method inputStuff file " + fileName + " line count = " + fileContents.Length.ToString()) moduleLogger
                 (fileInfo,fileContents)
                 )
-        let collapsedMap=incomingCLIContents |> Array.map(fun (x,y)->{Info=x;FileContents=y})
+        let collapsedMap:EACompilationUnitType[]=incomingCLIContents |> Array.map(fun (x,y)->{Info=x;FileContents=y})
         collapsedMap
-      let compilationUnitsToReturn =
+      let compilationUnitsToReturn:EACompilationUnitType[] =
           match isThereAFileStreamGBeingPipedToUs, didTheUserProvideAnyCLIFiles
             with
                 | true, true->
@@ -68,14 +71,7 @@ namespace EA.Compiler
 
     let doStuff:RunCompilationType = (fun (opts, compilationUnitArray)->
       logEvent Logary.Debug ("Method doStuff beginning..... " + compilationUnitArray.Length.ToString() + " Compilation Units coming in with " + (compilationUnitArray |> Seq.sumBy(fun x->x.FileContents.Length)).ToString() + " total lines") moduleLogger
-      let ret=compile(compilationUnitArray)
-      //let primitives=compilationUnitArray|>Array.map(fun x->(x.Info, x.FileContents))
-      //let ret2:string[]=EA.Core.Util.Compile(primitives)
-      //let ret={MasterModelText=ret2}
-      //let newin:EA.Core.Util.CompilationUnitType[]=compilationUnitArray|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
-      //let foo:EA.Core.Util.CompilationResultType=EA.Core.Util.CompileFunction(newin)
-      //logEvent Logary.Debug ("Foo ") moduleLogger
-      ////logEvent Verbose ("FOO = " + foo.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
+      let ret=EALibCompile(compilationUnitArray)
       logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
       (opts,ret)
     )
@@ -86,7 +82,7 @@ namespace EA.Compiler
       // If the loop-through check fails, we're not writing out
       let initialOutput=transformedModel
       let newFakeInfo=getFakeFileInfo()
-      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=initialOutput.MasterModelText}|]
+      let newParm:EACompilationUnitType[]=[|{Info=newFakeInfo; FileContents=initialOutput.MasterModelText}|]
       let opts,secondTimeThrough=(opts,newParm) |> doStuff
       if initialOutput<>secondTimeThrough
         then

@@ -15,13 +15,15 @@ namespace EA.Test
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
-    // We need this type constructor to cross the DLL boundary to the library
-    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
-      let translatedInput:EA.Core.Util.CompilationUnitType[] =
-        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
-      let compileResult=EA.Core.Util.Compile(translatedInput)
-      let translatedResult={MasterModelText=compileResult.MasterModelText}
-      translatedResult
+    /// Perform the translation across the client/dll boundary
+    /// Yep, there are other ways to do this. I prefer to think of
+    /// the boundary as another outside of the onion. Trust no one. :)
+    let EALibCompile (localCompilationUnits:EA.Types.EACompilationUnitType[]):EA.Types.EACompilationResultType =
+      let libraryCompilationUnits:EA.Core.Compiler.CompilationUnitType[] =
+        localCompilationUnits |> Array.map(fun x->{Info=x.Info; FileContents=x.FileContents})
+      let libraryRet:EA.Core.Compiler.CompilationResultType=Compile(libraryCompilationUnits)
+      let translatedRet:EACompilationResultType={MasterModelText=libraryRet.MasterModelText}
+      translatedRet
 
     [<Tests>]
     let tests =
