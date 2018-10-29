@@ -5,4 +5,5 @@ nuget Expecto.BenchmarkDotNet
 nuget Expecto.FsCheck
 nuget Expecto.Hopac
 nuget Logary.Adapters.Facade prerelease
+nuget Microsoft.NET.Test.Sdk
 nuget Expecto.VisualStudio.TestAdapter version_in_path: true

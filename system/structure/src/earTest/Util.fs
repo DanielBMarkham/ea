@@ -8,18 +8,24 @@ namespace EA.EAR.Test
     open EA.Lenses
     open EA.Persist
     open EA.Core
+    open EA.Core.Util
+    open EA.Core.Compiler
+
     open Logary // needed at bottom to give right "Level" lookup for logging
     let moduleLogger = logary.getLogger (Logary.PointName [| "EA"; "EAR"; "Test"; "Util" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
-    // We need this type constructor to cross the DLL boundary to the library
-    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
-      let translatedInput:EA.Core.Util.CompilationUnitType[] =
-        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
-      let compileResult=EA.Core.Util.Compile(translatedInput)
-      let translatedResult={MasterModelText=compileResult.MasterModelText}
-      translatedResult
+    /// Perform the translation across the client/dll boundary
+    /// Yep, there are other ways to do this. I prefer to think of
+    /// the boundary as another outside of the onion. Trust no one. :)
+    let EALibCompile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
+      let libraryCompilationUnits:CompilationUnitType[] =
+        localCompilationUnits |> Array.map(fun x->{Info=x.Info; FileContents=x.FileContents})
+      let libraryRet:CompilationResultType=Compile(libraryCompilationUnits)
+      let translatedRet:CompilationResultType={MasterModelText=libraryRet.MasterModelText}
+      translatedRet
+
 
     let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (ret:int byref) =
         try

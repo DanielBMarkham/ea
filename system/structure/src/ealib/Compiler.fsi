@@ -7,16 +7,22 @@ namespace EA.Core
     open EA.Types
     open EA.Lenses
     open EA.Persist
+    open EA.Core.Util
     
-    // * I only needed two types and a function sig
-    // * Stick with MA! She'll look after you
-    // * YAGNI
-    type CompilationUnitType = {
-      Info:System.IO.FileInfo
-      FileContents:string[]
+    type CompilationLine =
+      {
+      ShortFileName:string
+      FullFileName:string
+      CompilationUnitNumber:int
+      LineNumber:int 
+      LineType:EasyAMLineTypes
+      LineText:string
+      TextStartColumn:int
       }
-    type CompilationResultType = {
-      MasterModelText:string[]
-      }
+    type CompilationStream = CompilationLine []
+
 
     val Compile:CompilationUnitType[]->CompilationResultType
+    val translateIncomingIntoOneStream:CompilationUnitType[]->CompilationStream
+    val lineIdentification:CompilationStream->CompilationStream
+

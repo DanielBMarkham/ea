@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "bdb380e55a841a2a69ea4420d4924dda1b2180d9"
+    "signature": "0b8b1f9f9abb3ea65a93816a2dcce5b35abef059"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,6 +9,7 @@
       "eaTest/1.0.0": {
         "dependencies": {
           "Expecto": "8.4.2",
+          "Expecto.VisualStudio.TestAdapter": "10.0.0",
           "FParsec": "1.0.3",
           "FSharp.Core": "4.5.2",
           "HtmlAgilityPack": "1.8.9",
@@ -68,6 +69,7 @@
           }
         }
       },
+      "Expecto.VisualStudio.TestAdapter/10.0.0": {},
       "FParsec/1.0.3": {
         "dependencies": {
           "FSharp.Core": "4.5.2"
@@ -1243,6 +1245,13 @@
       "sha512": "sha512-9cmQeFySUKRjzlwJHHbOq/OBorjY/pi7Budl5MGJbE7WO44qXG7pIs0WkZLZC67vgypQ2gxJh2ca3TVZFV8Qvw==",
       "path": "expecto/8.4.2",
       "hashPath": "expecto.8.4.2.nupkg.sha512"
+    },
+    "Expecto.VisualStudio.TestAdapter/10.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d2Ug5tNKRoOS0Ua4ChiyAwK5tF32GVSb9XrGG6Ax/GaUSpHz/cKhzrfG0CQAxpeSgZQwgUERPGoXcRXJX1z+Vw==",
+      "path": "expecto.visualstudio.testadapter/10.0.0",
+      "hashPath": "expecto.visualstudio.testadapter.10.0.0.nupkg.sha512"
     },
     "FParsec/1.0.3": {
       "type": "package",

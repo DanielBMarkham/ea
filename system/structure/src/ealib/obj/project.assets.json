@@ -6064,11 +6064,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
+      "projectUniqueName": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
       "projectName": "ealib",
-      "projectPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
+      "projectPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\ealib.fsproj",
       "packagesPath": "C:\\Users\\Daniel_Main\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\obj\\",
+      "outputPath": "c:\\Users\\Daniel_Main\\Dropbox\\aa-source\\ea\\system\\structure\\src\\ealib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\PROGRAM FILES\\DOTNET\\sdk\\NuGetFallbackFolder"

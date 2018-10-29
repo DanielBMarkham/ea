@@ -9,22 +9,29 @@ namespace EA.EAR
     open EA.Persist
     open EA.Utilities
     open EA.Core
+    open EA.Core.Util
+    open EA.Core.Compiler
     open Logary // needed at bottom to give right "Level" lookup for logging
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "EAR"; "EAR"; "Util" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
-    // We need this type constructor to cross the DLL boundary to the library
-    let compile (localCompilationUnits:CompilationUnitType[]):CompilationResultType =
-      let translatedInput:EA.Core.Util.CompilationUnitType[] =
-        localCompilationUnits|>Array.map(fun x->{Info=x.Info;FileContents=x.FileContents})
-      let compileResult=EA.Core.Util.Compile(translatedInput)
-      let translatedResult={MasterModelText=compileResult.MasterModelText}
-      translatedResult
-
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     Logary.Message.eventFormat (Verbose, "Module Enter")|> Logger.logSimple moduleLogger
+
+    /// Load the master file
+    /// Any failure results in an empty string and an INFO message back to the caller (but okay result)
+    type LoadMasterFile=EARConfigType->(EARConfigType * CompilationResultType)
+
+    /// Do the slicing and dicing
+    /// Note that the model comes in and leaves in the same format
+    type RunTransformsAndFilters=(EARConfigType * CompilationResultType)->(EARConfigType * CompilationResultType)
+
+    /// Take whatever model we now have and send it wherever it's supposed to go
+    type WriteOutModelReportType=(EARConfigType * CompilationResultType)->int
+
+
 
 
     let inputStuff:LoadMasterFile = (fun opts->

@@ -6,11 +6,9 @@
     "\\system",
     "\\system\\structure",
     "\\system\\structure\\src",
-    "\\system\\structure\\src\\AppCommon",
-    "\\system\\structure\\src\\ea",
-    "\\system\\structure\\src\\ealib",
+    "\\system\\structure\\src\\ear\\.paket",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\AppCommon\\EATypeExtensions.fs",
+  "SelectedNode": "\\ea.sln",
   "PreviewInSolutionExplorer": false
 }

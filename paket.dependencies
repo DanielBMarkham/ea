@@ -1,1 +1,11 @@
 source https://www.nuget.org/api/v2
+nuget FSharp.Core
+nuget Microsoft.TestPlatform.ObjectModel
+nuget Mono.Cecil
+nuget Newtonsoft.Json
+nuget Expecto
+nuget Expecto.BenchmarkDotNet
+nuget Expecto.FsCheck
+nuget Expecto.Hopac
+nuget Logary.Adapters.Facade prerelease
+nuget Expecto.VisualStudio.TestAdapter version_in_path: true

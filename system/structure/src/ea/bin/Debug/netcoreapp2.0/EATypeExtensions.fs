@@ -5,6 +5,8 @@ namespace EA
     open SystemUtilities
     open CommandLineHelper
     open Logary
+    open System.Data
+    //open System.Web.Configuration
 
 
     // Logging all the things!
@@ -64,17 +66,6 @@ namespace EA
             //    eventX "EasyAMConfig Parameters Provided"
             //)
 
-    /// The Compilation Unit (files coming in) type used by clients of EALib
-    type EACompilationUnitType = {
-        Info:System.IO.FileInfo
-        FileContents:string[]
-    }
-    /// The compilation Result that's owned by clients of EALib
-    type EACompilationResultType = {
-        MasterModelText:string[]
-        }
-
-
     // FUNCTION TYPES
     /// Process any args you can from the command line
     /// Get rid of any junk
@@ -82,18 +73,6 @@ namespace EA
     /// Process any args you can from the command line
     /// Get rid of any junk
 
-    /// Responsible only for getting a list of strings and associated files to compile. Nothing else
-    /// Any failure results in an empty string and an INFO message back to the caller (but okay result)
-    type GetCompileDataType=EAConfigType->(EAConfigType * EACompilationUnitType[])
-
-    // Main compilation happens here. It can fail but it can't crash, so no (direct) IO
-    type RunCompilationType=(EAConfigType * EACompilationUnitType[])->(EAConfigType * EACompilationResultType)
-
-    type CompileType=EACompilationUnitType[]->EACompilationResultType
-
-    /// Final stage. Writes out model to persistent storage. It can fail, but it doesn't matter,
-    /// since any failure in simple IO would prevent us from telling anybody
-    type WriteOutCompiledModelType=(EAConfigType * EACompilationResultType)->int
 
 
     type Verbosity with
@@ -154,22 +133,10 @@ namespace EA
       turnOnLogging()
       {ConfigBase = newConfigBase; IncomingStream=incomingStream; FileListFromCommandLine=newFilesReferncedFromTheCommandLine}
     )
+
     /// Process any args you can from the command line
     /// Get rid of any junk
     type GetEARProgramConfigType=string []->EARConfigType
-    /// Load the master file
-    /// Any failure results in an empty string and an INFO message back to the caller (but okay result)
-    type LoadMasterFile=EARConfigType->(EARConfigType * EACompilationResultType)
-
-    /// Do the slicing and dicing
-    /// Note that the model comes in and leaves in the same format
-    type RunTransformsAndFilters=(EARConfigType * EACompilationResultType)->(EARConfigType * EACompilationResultType)
-
-    /// Take whatever model we now have and send it wherever it's supposed to go
-    type WriteOutModelReportType=(EARConfigType * EACompilationResultType)->int
-
-
-
     // A couple of prototype EAR types to begin thinking about what goes here
     let EARProgramHelp = [|"EasyAM Reporting (EAR). Takes EasyAM master files and translates output."|]
     //createNewBaseOptions programName programTagLine programHelpText verbose
@@ -189,53 +156,6 @@ namespace EA
         turnOnLogging()
         {ConfigBase = newConfigBase}
         )
-
-    type TextLineType =
-        |FileBegin of AllowedNextLinesType
-        |FileEnd of AllowedNextLinesType
-        |EmptyLine of AllowedNextLinesType
-        |FreeFormText of AllowedNextLinesType
-        |CompilerSectionDirective of AllowedNextLinesType
-        |CompilerNamespaceDirective of AllowedNextLinesType
-        |CompilerTagDirective of AllowedNextLinesType
-        |CompilerSectionDirectiveWithItem of AllowedNextLinesType
-        |CompilerNamespaceDirectiveWithItem of AllowedNextLinesType
-        |CompilerTagDirectiveWithItem of AllowedNextLinesType
-        |CompilerJoinTypeWithItem of AllowedNextLinesType
-        |NewSectionItem of AllowedNextLinesType
-        |NewJoinedItem of AllowedNextLinesType
-        |NewItemJoinCombination of AllowedNextLinesType
-    and AllowedNextLinesType = AllowedNextLines of (TextLineType list) option
-    type CompilerRule = RuleTemplate of TextLineType
-
-    // The all caps versions represent the end of recursion
-    // It's only one level deep (for now)
-    let END=AllowedNextLines(None)
-    // I could do all sorts of syntactic sugar around this. But not now. Maybe just a little bit :)
-    let FILEEND=FileEnd(END)
-    let EMPTYLINE=EmptyLine(END)
-    let FREEFORMTEXT=FreeFormText(END)
-    let COMPILERSECTIONDIRECTIVE=CompilerSectionDirective(END)
-    let NEWSECTIONITEM=NewSectionItem(END)
-    // Helper function
-    let makeRule (RuleName ) (lines:TextLineType list) = RuleTemplate((RuleName) (AllowedNextLines(Some lines)))
-
-    let fileBeginRule = makeRule FileBegin [FILEEND; EMPTYLINE; FREEFORMTEXT; COMPILERSECTIONDIRECTIVE; NEWSECTIONITEM]
-    let fileEndRule=RuleTemplate(FileEnd(END))
-    let emptyLineRule=makeRule EmptyLine [FILEEND; EMPTYLINE; FREEFORMTEXT; COMPILERSECTIONDIRECTIVE; NEWSECTIONITEM]
-    let freeformTextRule=makeRule FreeFormText [FILEEND; EMPTYLINE; FREEFORMTEXT; COMPILERSECTIONDIRECTIVE; NEWSECTIONITEM]
-    let compilerSectionDirectiveRule=makeRule CompilerSectionDirective [FILEEND; EMPTYLINE; FREEFORMTEXT; COMPILERSECTIONDIRECTIVE; NEWSECTIONITEM]
-    let newSectionItemRule=makeRule NewSectionItem [FILEEND; EMPTYLINE; FREEFORMTEXT; COMPILERSECTIONDIRECTIVE; NEWSECTIONITEM]
-
-    let CompilerRules =
-        [
-            fileBeginRule
-            ;fileEndRule
-            ;emptyLineRule
-            ;freeformTextRule
-            ;compilerSectionDirectiveRule
-            ;newSectionItemRule
-        ]
 
 
     // For folks on anal mode, log the module being exited. NounVerb Proper Case

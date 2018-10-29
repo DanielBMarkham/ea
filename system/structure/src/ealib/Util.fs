@@ -13,22 +13,90 @@ namespace EA.Core
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
 
+    type EasyAMLineTypes =
+        |Unprocessed
+        |FileBegin
+        |FileEnd
+        |EmptyLine
+        |FreeFormText
+        |CompilerSectionDirective
+        |CompilerNamespaceDirective
+        |CompilerTagDirective
+        |CompilerSectionDirectiveWithItem
+        |CompilerNamespaceDirectiveWithItem
+        |CompilerTagDirectiveWithItem
+        |CompilerJoinTypeWithItem
+        |NewSectionItem
+        |NewJoinedItem
+        |NewItemJoinCombination
 
-    //type CompilationUnitType = {
-    //  Info:System.IO.FileInfo
-    //  FileContents:string[]
-    //  }
-    //type CompilationResultType = {
-    //  MasterModelText:string[]
-    //  }    
+    type CompilerRuleType =
+        |FileBeginType of AllowedNextLinesType
+        |FileEndType of AllowedNextLinesType
+        |EmptyLineType of AllowedNextLinesType
+        |FreeFormTextType of AllowedNextLinesType
+        |CompilerSectionDirectiveType of AllowedNextLinesType
+        |CompilerNamespaceDirectiveType of AllowedNextLinesType
+        |CompilerTagDirectiveType of AllowedNextLinesType
+        |CompilerSectionDirectiveWithItemType of AllowedNextLinesType
+        |CompilerNamespaceDirectiveWithItemType of AllowedNextLinesType
+        |CompilerTagDirectiveWithItemType of AllowedNextLinesType
+        |CompilerJoinTypeWithItemType of AllowedNextLinesType
+        |NewSectionItemType of AllowedNextLinesType
+        |NewJoinedItemType of AllowedNextLinesType
+        |NewItemJoinCombinationType of AllowedNextLinesType
+    and AllowedNextLinesType = AllowedNextLines of (EasyAMLineTypes list)
+    
+    let makeRule (ruleName) (nextLinesAllowed:EasyAMLineTypes list) = (ruleName)(AllowedNextLines(nextLinesAllowed))
+    let fileBeginRule = makeRule FileBeginType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let fileEndRule = makeRule FileEndType []
+    let emptyLineRule= makeRule EmptyLineType [FileEnd; EmptyLine;FreeFormText;CompilerSectionDirective;NewSectionItem]
+    let freeformTextRule= makeRule FreeFormTextType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let compilerSectionDirectiveRule = makeRule CompilerSectionDirectiveType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
+    let newSectionItemRule = makeRule NewSectionItemType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem]
 
-    //let Compile:CompilationUnitType[]->CompilationResultType = (fun (incomingCompilationUnits)->
-    //  //let compilationUnitArray=incomingCompileText|>Array.map(fun x->{Info=fst x; FileContents=snd x})
-    //  let squishedText:string[] = Array.concat (incomingCompilationUnits |> Array.map(fun x->x.FileContents))
-    //  logEvent Logary.Debug ("Method doStuff squished text linecount = " + squishedText.Length.ToString()) moduleLogger
-    //  let ret={MasterModelText=squishedText}
-    //  ret
-    //  )
+    let CompilerRules =
+        [
+            fileBeginRule
+            ;fileEndRule
+            ;emptyLineRule
+            ;freeformTextRule
+            ;compilerSectionDirectiveRule
+            ;newSectionItemRule
+        ]
+    let isThisLineAllowedNext (previousLineType:EasyAMLineTypes) (lineTypeToTest:EasyAMLineTypes)=
+      let rulesThatApply=
+        CompilerRules|>List.filter(fun x->
+          match x with 
+            | previousLineType->true 
+            |_-> false
+          ) 
+
+      rulesThatApply |> List.exists (fun x->
+        match x with
+          | currentLineType->true
+          |_->false
+        )
+
+    type CompilationLine =
+      {
+      ShortFileName:string
+      FullFileName:string
+      CompilationUnitNumber:int
+      LineNumber:int 
+      LineType:EasyAMLineTypes
+      LineText:string
+      TextStartColumn:int
+      }
+    type CompilationStream = CompilationLine []
+
+    type CompilationUnitType = {
+      Info:System.IO.FileInfo
+      FileContents:string[]
+      }
+    type CompilationResultType = {
+      MasterModelText:string[]
+      }
 
     logEvent Verbose "....Module exit" moduleLogger
 

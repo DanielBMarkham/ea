@@ -8,6 +8,7 @@ namespace EA.Test
     open EA.Lenses
     open EA.Persist
     open EA.Core
+    open EA.Core.Compiler
     open Expecto
     open Util
     open Logary // needed at bottom to give right "Level" lookup for logging
@@ -18,13 +19,27 @@ namespace EA.Test
 
     [<Tests>]
     let tests =
-      testList "file" [
-        //testCase "Empty files return empty" <| fun _ ->
-        //  let newFakeInfo=getFakeFileInfo()
-        //  let newFakeFileContents=[||]
-        //  let newParm=[|{Info=newFakeInfo; FileContents=newFakeFileContents}|]
-        //  let result=compile(newParm)
-        //  Expect.isTrue (result.MasterModelText.Length=0) "Empty input producing an output"
+      testList "Smoke" [
+        testCase "Empty file return empty" <| fun _ ->
+          let newParm=[|{Info=FakeFile1; FileContents=[||]}|]
+          let result=Compile(newParm)
+          Expect.isTrue (result.MasterModelText.Length=0) "Empty input producing an output"
+
+        testCase "Two empty files return empty" <| fun _ ->
+          let newParm=[|{Info=FakeFile1; FileContents=[||]}; {Info=FakeFile2; FileContents=[||]}|]
+          let result=Compile(newParm)
+          Expect.isTrue (result.MasterModelText.Length=0) "Two empty inputs producing an output"
+
+        testCase "Dummy static file remains the same" <| fun _ ->
+          let newParm=[|StaticTenLineDummyFile|]
+          let result=Compile(newParm)
+          Expect.isTrue (result.MasterModelText.Length=10) "Static 10-line dummy not staying 10 lines"
+      
+        testCase "Two static dummy files concatenate" <| fun _ ->
+          let newParm=[|StaticTenLineDummyFile|]
+          let result=Compile(newParm)
+          Expect.isTrue (result.MasterModelText.Length=10) "Two static 10-line dummy files not equalling 20 lines"
+      
       ]
 
 

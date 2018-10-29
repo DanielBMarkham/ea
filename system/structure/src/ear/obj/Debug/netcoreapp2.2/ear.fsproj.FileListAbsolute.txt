@@ -25,6 +25,11 @@ D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ear.run
 D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ear.runtimeconfig.dev.json
 D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ear.dll
 D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ear.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\Facade.fs
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.dll
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.pdb
+D:\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\Facade.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\SystemUtilities.fs
@@ -42,13 +47,6 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\net
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.pdb
-D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\Facade.fs
-D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EATypeExtensions.fsi
-D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.dll
-D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\ealib.pdb
-D:\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.fsproj.CopyComplete

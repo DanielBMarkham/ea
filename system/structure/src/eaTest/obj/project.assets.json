@@ -50,6 +50,9 @@
           "lib/netstandard2.0/Expecto.dll": {}
         }
       },
+      "Expecto.VisualStudio.TestAdapter/10.0.0": {
+        "type": "package"
+      },
       "FParsec/1.0.3": {
         "type": "package",
         "dependencies": {
@@ -1919,6 +1922,28 @@
         "lib/netstandard2.0/Expecto.dll",
         "lib/netstandard2.0/Expecto.pdb",
         "lib/netstandard2.0/Expecto.xml"
+      ]
+    },
+    "Expecto.VisualStudio.TestAdapter/10.0.0": {
+      "sha512": "d2Ug5tNKRoOS0Ua4ChiyAwK5tF32GVSb9XrGG6Ax/GaUSpHz/cKhzrfG0CQAxpeSgZQwgUERPGoXcRXJX1z+Vw==",
+      "type": "package",
+      "path": "expecto.visualstudio.testadapter/10.0.0",
+      "files": [
+        ".signature.p7s",
+        "expecto.visualstudio.testadapter.10.0.0.nupkg.sha512",
+        "expecto.visualstudio.testadapter.nuspec",
+        "tools/Argu.dll",
+        "tools/Expecto.VisualStudio.TestAdapter.dll",
+        "tools/Expecto.dll",
+        "tools/FSharp.Core.dll",
+        "tools/Microsoft.TestPlatform.CoreUtilities.dll",
+        "tools/Microsoft.TestPlatform.PlatformAbstractions.dll",
+        "tools/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll",
+        "tools/Mono.Cecil.Mdb.dll",
+        "tools/Mono.Cecil.Pdb.dll",
+        "tools/Mono.Cecil.Rocks.dll",
+        "tools/Mono.Cecil.dll",
+        "tools/Newtonsoft.Json.dll"
       ]
     },
     "FParsec/1.0.3": {
@@ -6092,6 +6117,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "Expecto >= 8.4.2",
+      "Expecto.VisualStudio.TestAdapter >= 10.0.0",
       "FParsec >= 1.0.3",
       "FSharp.Core >= 4.5.2",
       "HtmlAgilityPack >= 1.8.9",
@@ -6151,6 +6177,10 @@
           "Expecto": {
             "target": "Package",
             "version": "[8.4.2, )"
+          },
+          "Expecto.VisualStudio.TestAdapter": {
+            "target": "Package",
+            "version": "[10.0.0, )"
           },
           "FParsec": {
             "target": "Package",

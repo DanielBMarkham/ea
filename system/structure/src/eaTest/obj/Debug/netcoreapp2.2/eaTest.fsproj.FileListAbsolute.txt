@@ -64,8 +64,8 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ealib.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\ea.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfo.fs

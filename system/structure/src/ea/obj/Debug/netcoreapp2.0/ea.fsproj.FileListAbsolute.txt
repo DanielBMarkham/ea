@@ -20,9 +20,6 @@ D:\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fspro
 D:\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.dll
 D:\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.pdb
 D:\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\EATypeExtensions.fsi
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsprojAssemblyReference.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfoInputs.cache
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfo.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\Facade.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\SystemUtilities.fs
@@ -39,6 +36,9 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netc
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ea.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ealib.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\bin\Debug\netcoreapp2.0\ealib.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsprojAssemblyReference.cache
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.pdb
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ea\obj\Debug\netcoreapp2.0\ea.AssemblyInfo.fs
