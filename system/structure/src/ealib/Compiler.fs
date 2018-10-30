@@ -8,7 +8,10 @@ namespace EA.Core
     open EA.Lenses
     open EA.Persist
     open EA.Core.Util
+    open EA.Core.Tokens
     open Logary // needed at bottom to give right "Level" lookup for logging
+    open System.Threading
+
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Core"; "Compiler"; "EALib"; "Compiler" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
@@ -26,15 +29,32 @@ namespace EA.Core
       }
     type CompilationStream = CompilationLine []
 
-    //let myLine = {LineType=FileBegin ;LineText=""}
-
     let stripBookEnds (incomingStream:CompilationStream):CompilationStream =
       incomingStream |> Array.filter(fun x->
         x.LineType<>FileBegin && x.LineType<>FileEnd
         )
 
+    let identifyLine (lineToIdentify:CompilationLine) (previousLine:CompilationLine):CompilationLine=
+      if lineToIdentify.LineType=FileBegin || lineToIdentify.LineType=FileEnd 
+        then lineToIdentify
+        else {lineToIdentify with LineType=FreeFormText}
+
+
     let lineIdentification (incomingStream:CompilationStream):CompilationStream =
-      incomingStream
+      if incomingStream.Length=0 
+        then [||] // we need at least 1 element. don't fail on weirdo data
+        else
+          let outputStream = 
+            incomingStream |> Array.mapFold(fun acc x->
+              //if it's the first item in a file, there's nothing for us to do
+              if x.LineNumber=(-1)
+                then
+                  x, acc
+                else
+                  let identifiedLine = (identifyLine x acc) // it becomes both the mapped item and the acc
+                  identifiedLine, identifiedLine
+              ) incomingStream.[0]
+          fst outputStream
 
     let translateIncomingIntoOneStream (filesIn:CompilationUnitType[]):CompilationStream =
       let firstMap = 

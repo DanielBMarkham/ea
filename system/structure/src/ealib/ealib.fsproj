@@ -46,6 +46,8 @@
       <Link>EAPersist.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Tokens.fsi" />
+    <Compile Include="Tokens.fs" />
     <Compile Include="Util.fsi" />
     <Compile Include="Util.fs" />
     <Compile Include="Compiler.fsi" />

@@ -63,5 +63,3 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.fsproj.CopyComplete
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.pdb
-c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.AssemblyInfoInputs.cache
-c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\earTest\obj\Debug\netcoreapp2.2\earTest.AssemblyInfo.fs

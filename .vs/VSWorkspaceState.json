@@ -6,9 +6,11 @@
     "\\system",
     "\\system\\structure",
     "\\system\\structure\\src",
-    "\\system\\structure\\src\\ear\\.paket",
+    "\\system\\structure\\src\\AppCommon",
+    "\\system\\structure\\src\\ealib",
+    "\\system\\structure\\src\\earTest",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\ea.sln",
+  "SelectedNode": "\\system\\structure\\src\\ealib\\Tokens.fsi",
   "PreviewInSolutionExplorer": false
 }

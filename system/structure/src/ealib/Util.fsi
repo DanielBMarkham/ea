@@ -7,24 +7,25 @@ namespace EA.Core
     open EA.Types
     open EA.Lenses
     open EA.Persist
+    open EA.Core.Tokens
 
     // THE HEART OF THE CODE. COMPILER RULES
-    type EasyAMLineTypes =
-        |Unprocessed
-        |FileBegin
-        |FileEnd
-        |EmptyLine
-        |FreeFormText
-        |CompilerSectionDirective
-        |CompilerNamespaceDirective
-        |CompilerTagDirective
-        |CompilerSectionDirectiveWithItem
-        |CompilerNamespaceDirectiveWithItem
-        |CompilerTagDirectiveWithItem
-        |CompilerJoinTypeWithItem
-        |NewSectionItem
-        |NewJoinedItem
-        |NewItemJoinCombination
+    //type EasyAMLineTypes =
+    //    |Unprocessed
+    //    |FileBegin
+    //    |FileEnd
+    //    |EmptyLine
+    //    |FreeFormText
+    //    |CompilerSectionDirective
+    //    |CompilerNamespaceDirective
+    //    |CompilerTagDirective
+    //    |CompilerSectionDirectiveWithItem
+    //    |CompilerNamespaceDirectiveWithItem
+    //    |CompilerTagDirectiveWithItem
+    //    |CompilerJoinTypeWithItem
+    //    |NewSectionItem
+    //    |NewJoinedItem
+    //    |NewItemJoinCombination
     type CompilerRuleType =
         |FileBeginType of AllowedNextLinesType
         |FileEndType of AllowedNextLinesType

@@ -8,6 +8,7 @@ namespace EA.Core
     open EA.Lenses
     open EA.Persist
     open EA.Core.Util
+    open EA.Core.Tokens
     
     type CompilationLine =
       {
