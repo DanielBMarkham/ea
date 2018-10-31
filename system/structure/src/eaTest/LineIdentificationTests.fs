@@ -61,74 +61,135 @@ namespace EA.Test
           Expect.isTrue (result.[2].LineType=FileEnd) "Simple one-line missing file end"
 
       ]
+    //val findFirstCommandTypeMatch:string->EasyAMCommandType 
+    let MatchesLineType (lineType:EasyAMLineTypes) (str:string) (result:RegexMatcherType) = Expect.contains result.PossibleLineTypes lineType str
+    let MatchesCommandType (commandType:EasyAMCommandType) (str:string) (result:LineMatcherType) = Expect.isTrue (result.LineType=commandType) str
+    let lineMatchesCommandInfersLineType (commandType:EasyAMCommandType) (lineType:EasyAMLineTypes) (str:string) (line:string) =
+      let result1=findFirstLineTypeMatch line 
+      let result2=findFirstCommandTypeMatch line 
+      let prefix = "FAILURE: Incoming Line '" + line + "'\n"
+      if (result2.LineType<>commandType)
+        then
+          let regexesThatWereSupposedToMatch:RegexMatcherType[]=getRegExesForACommand commandType 
+          let listOfRegexesThatWereSupposedToMatch = (regexesThatWereSupposedToMatch |> Array.map(fun x->"'" + x.Regex.ToString() + "'\n"))
+          let suffix="\nRegexs that were supposed to match but did not:\n---------------------------------------------\n" + String.Join("", listOfRegexesThatWereSupposedToMatch) + "\nNone of these matched the above line to create a new " + commandType.ToString() + "."
+          Tests.failtest (prefix + str + " results in Command Match Failure. CommandType '" + commandType.ToString() + "' expected but not matched. Instead got '" + result2.LineType.ToString() + "'" + suffix)
+        else ()
+      let suffix = 
+        if (result2.LineType=commandType)
+        then " CommandType '" + commandType.ToString() + "' is correct and expected."
+        else " CommandType '" + commandType.ToString() + "' is not  correct. Instead we got '" + result2.LineType.ToString() + "'"
+      if (result1.PossibleLineTypes |> List.exists(fun x->x=lineType))
+        then ()
+        else Tests.failtest (prefix + str + " results in wrong Line Type. Expected '" + lineType.ToString() + "' but got '[" + (String.Join("', '", result1.PossibleLineTypes)) + "]'" + suffix)
+    /// NEGATIVE TEST. SEND IN WHAT THE CORRECT RESULT IS
+    let OPPOSITElineMatchesCommandInfersLineType (commandType:EasyAMCommandType) (lineType:EasyAMLineTypes) (str:string) (line:string) =
+      let result1=findFirstLineTypeMatch line 
+      let result2=findFirstCommandTypeMatch line 
+      let prefix = "FAILURE: Incoming Line '" + line + "'\n"
+      if (result2.LineType<>commandType)
+        then
+          let regexesThatWereSupposedToMatch:RegexMatcherType[]=getRegExesForACommand commandType 
+          let listOfRegexesThatWereNOTSupposedToMatchBUTDID = (regexesThatWereSupposedToMatch |>Array.filter(fun x->x.Regex.IsMatch(line)) |> Array.map(fun x->"'" + x.Regex.ToString() + "'\n"))
+          let suffix="\nRegexs that were NOT supposed to match but did:\n---------------------------------------------\n" + String.Join("", listOfRegexesThatWereNOTSupposedToMatchBUTDID) + "\nOne of these matched the above line to create a new " + commandType.ToString() + "."
+          Tests.failtest (prefix + str + " results in Command Match Failure. CommandType '" + commandType.ToString() + "' expected but not matched. Instead got '" + result2.LineType.ToString() + "'" + suffix)
+        else ()
+      let suffix = 
+        if (result2.LineType<>commandType)
+        then " CommandType '" + commandType.ToString() + "' is NOT correct and NOT expected."
+        else " CommandType '" + commandType.ToString() + "' is what we wanted. Instead we got '" + result2.LineType.ToString() + "'"
+      if (result1.PossibleLineTypes |> List.exists(fun x->x=lineType))
+        then ()
+        else Tests.failtest (prefix + str + " results in WRONG Line Type. Expected '" + lineType.ToString() + "' but got '[" + (String.Join("', '", result1.PossibleLineTypes)) + "]'" + suffix)
+
+      //|NewItem
+      //|Join
+      //|Namespace
+      //|Tag
+      //|SectionDirective
+      //|EmptyLine
+      //|None
 
     [<Tests>]
     let tests2 =
-      testList "LineMatchingRegex" [
-        testCase "Pass-through smoke test. Empty line falls through to last match" <| fun _ ->
-          let newParm=""
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=EmptyLine) "Line Matching for empty line is not returning empty line"
-        testCase "Markdown: Basic Markdown list item matches 1" <| fun _ ->
-          let newParm="- I love dogs"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Basic Markdown new item working 1"
-        testCase "Markdown: Basic Markdown list item matches 1B" <| fun _ ->
-          let newParm=" * I love cats"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Basic Markdown new item working 1B"
-        testCase "Markdown: Negative markdown test bad newItem does not match 1" <| fun _ ->
-          let newParm=" -I love dogs"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Not a markdown item but thinking it is 1"
-        testCase "Markdown: Negative markdown test bad newItem does not match 1B" <| fun _ ->
-          let newParm="*I love cats"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Not a markdown item but thinking it is 1B"
-        testCase "Markdown: Extended Markdown list item matches 2" <| fun _ ->
-          let newParm="[ ] Yes, I will have some pickles"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown new item working 2"
-        testCase "Markdown: Negative Extended Markdown list item matches 2" <| fun _ ->
-          let newParm="[ ]Yes, I will have some turkey"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Negatve Extended Markdown 2 matching even though it shouldn't"
-        testCase "Markdown: Extended Markdown list item matches 2B" <| fun _ ->
-          let newParm="[x] Yes, I will have some noses"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown new item working 2B"
-        testCase "Markdown: Extended Markdown list item matches 3" <| fun _ ->
-          let newParm="12. Yes, I will have some moose"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown 3 not matching"
-        testCase "Markdown: Negative Extended Markdown list item matches 3" <| fun _ ->
-          let newParm="1.Yes, I will have some cow"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Negatve Extended Markdown 3 matching even though it shouldn't"
-        testCase "Markdown: Extended Markdown list item matches 3B" <| fun _ ->
-          let newParm="12) Yes, I will have some moose"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown 3B not matching when it should"
-        testCase "Markdown: Negative Extended Markdown list item matches 3B" <| fun _ ->
-          let newParm="7)Yes, I will have some cow"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Negatve Extended Markdown 3B matching even though it shouldn't"
-        testCase "Markdown: Extended Markdown list item matches 4" <| fun _ ->
-          let newParm="iZ. Yes, I not like the varmits"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown 4 not matching"
-        testCase "Markdown: Negative Extended Markdown list item matches 4" <| fun _ ->
-          let newParm="iA.No, there are no nulls here"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Negatve Extended Markdown 4 matching even though it shouldn't"
-        testCase "Markdown: Extended Markdown list item matches 5" <| fun _ ->
-          let newParm="XIXCV. Yes, I not like the varmits"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType=NewItem) "Extended Markdown 5 not matching"
-        testCase "Markdown: Negative Extended Markdown list item matches 5" <| fun _ ->
-          let newParm="ii.No, there are no nulls here"
-          let result=findFirstLineTypeMatch newParm
-          Expect.isTrue (result.LineType<>NewItem) "Negatve Extended Markdown 5 matching even though it shouldn't"
+      testList "Line Matching" [
+        testCase "Smoke test. Empty line falls through to last match" <| fun _ ->
+          ""
+            |> lineMatchesCommandInfersLineType EmptyLine EasyAMLineTypes.EmptyLine "Empty Line 1: Matching for empty line"
+          "     "
+            |> lineMatchesCommandInfersLineType EmptyLine EasyAMLineTypes.EmptyLine "Empty Line 2: spaces on line matching for empty line"
+          "  \t \n\t  \t  \r"
+            |> lineMatchesCommandInfersLineType EmptyLine EasyAMLineTypes.EmptyLine "Empty Line 3: mixture of spaces and control codes on line matching for empty line"
+          "'"
+            |> OPPOSITElineMatchesCommandInfersLineType None EasyAMLineTypes.FreeFormText "Empty Line NEG 4: single quote by itself should not be an empty line"
+
+        // group test cases by command line token. Overall name is function. Description is reminder, 
+        // then # for correct regex order, then variation, then NEG (if appl) then long(er) text
+        testCase "Markdown (New Item Command)" <| fun _ ->
+          "- I love dogs" 
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown: 1-1. List item matches"
+          " - I love inside dogs" 
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown: 1-2. List item with indent matches"
+          "-I also love big dogs"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText  "Markdown NEG: 1-3. List indicator with no space between should not match"
+          " -I also love big dogs"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText  "Markdown NEG: 1-4. List indicator indented with no space between should not match"
+          " * I love cats"
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown 1-5: Asterisk list item indicator works"
+          " *I love cats"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown 1-6 NEG: Asterisk squished with item should not be a new item" 
+          "[ ] Yes, I will have some pickles"
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown 2-7: Alternate checkbox new item working"  
+          "[ ]Yes, I will have some turkey"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown 2-8 NEG: Alternate textbox squished with text shouldn't work as a new item"
+          "[x] Yes, I will have some noses"
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown 2-9: Alernate checkbox format with x in the middle works"
+          "12. Yes, I will have some moose" 
+          |> lineMatchesCommandInfersLineType  NewItem NewSectionItem "Markdown 3-10: List item using numbers working"
+          "1.Yes, I will have some cow"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown 3-10 NEG: List item with number squished not working"
+          "12) Yes, I will have some moose"
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown 3-11: List item with number and parens working"
+          "7)Yes, I will have some cow"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown 3-12: List item with parens squished shouldn't match"        
+          "iA.No, there are no nulls here"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown 4-13 NEG: alpha squished with text shouldn't be a new item"
+          "XIXCV. Yes, I not like the varmits"
+            |> lineMatchesCommandInfersLineType NewItem NewSectionItem "Markdown: 5-14: Roman numerals working"
+          "ii.No, there are no nulls here"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown: 5-15 NEG: Romans shouldn't work without the space"
+
+
+        // This is the command by itself. Much more complicated is the 3-part combo deal with two other items, handled above
+        testCase "Setup For Joins (Join Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
+        // Namespace can only exist on a line by itself
+        testCase "New/Modified Namespace (Namespace Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
+        // Tag is a special case because it can only exist on a line by itself - and there can be multiples of different types
+        testCase "New/Modified Tag (Tag Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
+        // Section Directive is tough because of all of the shortcuts. Also the two-parter with a directive and a new/referenced item
+        testCase "New/Modified Tag (Section Directive Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
+        // Are we looking for just spaces to consider a line empty? Control characters? How about unprintable Unicode?
+        testCase "No Nothing (Empty Line Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
+        // None command is the default for any markdown text. It's the fall-through, and should match-up to anything we think should be markdown
+        testCase "FreeForm Markdown (None Command)" <| fun _ ->
+          "## Donkeys rule the world! ##"
+            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+
       ]
 
       //findFirstLineTypeMatch (line:string):LineMatcherType

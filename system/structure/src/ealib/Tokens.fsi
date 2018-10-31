@@ -17,7 +17,9 @@ namespace EA.Core
       |Unprocessed //14 - if parsing fails it defaults here
       |FileBegin
       |FileEnd
-      |NewItem //2  // handles both newSectionItem and newJoinedItem, depending on context and indent
+      |NewSectionItem
+      |NewJoinedItem
+      //|NewItem //2  // handles both newSectionItem and newJoinedItem, depending on context and indent
       |CompilerJoinDirective //11
       |NewItemJoinCombination //1
       |CompilerNamespaceDirectiveWithItem //4
@@ -30,11 +32,29 @@ namespace EA.Core
       |FreeFormText //12
       |EmptyLine //13
         
+    // Not the same as line types. Commands are what we search for. The line type depends on the context
+    type EasyAMCommandType =
+      |NewItem
+      |Join
+      |Namespace
+      |Tag
+      |SectionDirective
+      |EmptyLine
+      |None
 
+
+    type RegexMatcherType = 
+      {
+        Regex:System.Text.RegularExpressions.Regex
+        CaptureGroupsExpected:int
+        PossibleLineTypes:EasyAMLineTypes list
+      }
     type LineMatcherType = 
       {
-        LineType:EasyAMLineTypes;
-        RegexesThatMatch:System.Text.RegularExpressions.Regex []
+        LineType:EasyAMCommandType;
+        MatchTokens:RegexMatcherType []
       }
-    val findFirstLineTypeMatch:string->LineMatcherType 
+    val getRegExesForACommand:EasyAMCommandType->RegexMatcherType[]
+    val findFirstLineTypeMatch:string->RegexMatcherType 
+    val findFirstCommandTypeMatch:string->LineMatcherType 
 

@@ -15,6 +15,7 @@ D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib
 D:\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.pdb
 D:\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\Facade.fs
 D:\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EATypeExtensions.fsi
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaLib\obj\Debug\netcoreapp2.0\ealib.fsprojAssemblyReference.cache
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\Facade.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\SystemTypeExtensions.fs
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\SystemUtilities.fs
@@ -29,4 +30,5 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\n
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\ealib.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.dll
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.pdb
-C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaLib\obj\Debug\netcoreapp2.0\ealib.fsprojAssemblyReference.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaLib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfoInputs.cache
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaLib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfo.fs

@@ -33,12 +33,12 @@ namespace EA.Core
     and AllowedNextLinesType = AllowedNextLines of (EasyAMLineTypes list)
     
     let makeRule (ruleName) (nextLinesAllowed:EasyAMLineTypes list) = (ruleName)(AllowedNextLines(nextLinesAllowed))
-    let fileBeginRule = makeRule FileBeginType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewItem]
+    let fileBeginRule = makeRule FileBeginType [FileEnd; EasyAMLineTypes.EmptyLine; FreeFormText; CompilerSectionDirective; NewJoinedItem; NewSectionItem]
     let fileEndRule = makeRule FileEndType []
-    let emptyLineRule= makeRule EmptyLineType [FileEnd; EmptyLine;FreeFormText;CompilerSectionDirective;NewItem]
-    let freeformTextRule= makeRule FreeFormTextType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewItem]
-    let compilerSectionDirectiveRule = makeRule CompilerSectionDirectiveType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewItem]
-    let newSectionItemRule = makeRule NewSectionItemType [FileEnd; EmptyLine; FreeFormText; CompilerSectionDirective; NewItem]
+    let emptyLineRule= makeRule EmptyLineType [FileEnd; EasyAMLineTypes.EmptyLine;FreeFormText;CompilerSectionDirective;EasyAMLineTypes.NewSectionItem;NewJoinedItem]
+    let freeformTextRule= makeRule FreeFormTextType [FileEnd; EasyAMLineTypes.EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem; NewJoinedItem]
+    let compilerSectionDirectiveRule = makeRule CompilerSectionDirectiveType [FileEnd; EasyAMLineTypes.EmptyLine; FreeFormText; CompilerSectionDirective; NewSectionItem; NewJoinedItem]
+    let newSectionItemRule = makeRule NewSectionItemType [FileEnd; EasyAMLineTypes.EmptyLine; FreeFormText; CompilerSectionDirective; EasyAMLineTypes.NewSectionItem; NewJoinedItem]
 
     let CompilerRules =
         [
