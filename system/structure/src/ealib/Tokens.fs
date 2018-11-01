@@ -168,11 +168,18 @@ namespace EA.Core
             Join;  // handles newJoinSection and item join item
           MatchTokens=
             [|
-              {Regex=new Regex("^(.*|^(?=TO-DO)*)(TO-DOS?:?)(.*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //1
-              ;{Regex=new Regex("^(.*|^(?=QUESTION)*)(QUESTIONS?:?)(.*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //2
-              ;{Regex=new Regex("^(.*|^(?=PARENT)*)(PARENTS?:?)(.*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //2
-              ;{Regex=new Regex("^(.*|^(?=CHILD)*)(CHILDS?:?)(.*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //3
-              ;{Regex=new Regex("^(.*|^(?=CHILDREN)*)(CHILDREN?:?)(.*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //4
+              {Regex=new Regex("^([^(-]*)(TO-DO(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //1
+              ;{Regex=new Regex("^([^(-]*)(QUESTION(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //2
+              ;{Regex=new Regex("^([^(-]*)(PARENT(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //2
+              ;{Regex=new Regex("^([^(-]*)(CHILD(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //3
+              ;{Regex=new Regex("^([^(-]*)(CHILDREN(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //4
+            |];
+            }
+        { LineType=
+            Namespace; 
+          MatchTokens=
+            [| // namespace regex is a little different must have = or space after keyword
+              {Regex=new Regex("^([^(-]*)(NAMESPACE(?:S?:?[=|\s]))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerNamespaceDirective] }    //1
             |];
             }
         //{ LineType=
@@ -183,13 +190,6 @@ namespace EA.Core
         //      ;new Regex("^\s*SPRINT BACKLOG[:]?[:space:]*$")
         //      ;new Regex("^\s*PRODUCT BACKLOG[:]?[:space:]*$")
         //      ;new Regex("^\s*PROJECT BACKLOG[:]?[:space:]*$")
-        //    |];
-        //    };
-        //{ LineType=
-        //    Namespace; 
-        //  MatchTokens=
-        //    [|
-        //      new Regex("^\s*NAMESPACE[S]?[:]?[:space:]*$")
         //    |];
         //    };
         //{ LineType=
@@ -212,7 +212,14 @@ namespace EA.Core
             [|
               {Regex=new Regex("(.?)"); CaptureGroupsExpected=1; PossibleLineTypes=[FreeFormText] }
             |];
-            };
+            }
+        //{ LineType=
+        //    Namespace; 
+        //  MatchTokens=
+        //    [|
+        //      {Regex=new Regex("^\s*NAMESPACE[S]?[:]=(.**)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem] }    //1
+        //    |];
+        //    }
       |]
     let getRegExesForACommand (commandType:EasyAMCommandType):RegexMatcherType[] =
       let firstMatchingItem=GeneGeneTheLineMatchingMachine |> Array.find(fun x->x.LineType=commandType)

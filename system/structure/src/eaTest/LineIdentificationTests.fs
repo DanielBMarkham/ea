@@ -111,7 +111,7 @@ namespace EA.Test
       //|None
 
     [<Tests>]
-    let tests2 =
+    let tests2 = // Might want to match my test lists with my user stories, or not. Haven't decided
       testList "Line Matching" [
         testCase "Smoke test. Empty line falls through to last match" <| fun _ ->
           ""
@@ -160,25 +160,45 @@ namespace EA.Test
             |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Markdown: 5-15 NEG: Romans shouldn't work without the space"
 
 
-        // This is the command by itself. Much more complicated is the 3-part combo deal with two other items, handled above
+        // Gets complicated is the 3-part combo deal with two other items, handled above
         testCase "Setup For Joins (Join Command)" <| fun _ ->
-          "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+          "TO-DO: Wash the dishes"
+            |> lineMatchesCommandInfersLineType Join CompilerJoinTypeWithItem "Joins 1-1: Parses at the beginning of the line"
+          "Weasel hate TO-DO My weasel"
+            |> lineMatchesCommandInfersLineType Join NewItemJoinCombination "Joins 1-2: Parses in the middle of the line"
+          "Unicorns are all around us TO-DO" // THIS IS AN ERROR BUT I DONT THINK ITS HANDLED HERE
+            |> lineMatchesCommandInfersLineType Join CompilerJoinDirective "Joins 1-3: Parses at end of line"
+          "TO-DOTO-DO" // should only be one
+            |> lineMatchesCommandInfersLineType Join CompilerJoinDirective "Joins 1-4: Parses when doubled-up"
+          "*TO-DOS:" // 
+            |> lineMatchesCommandInfersLineType Join CompilerJoinDirective "Joins 1-5: Parses with wacky wrong newline token and with optional endings"
+          "-----TO-DO------" // 
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Joins 1-6 NEG: Does not parse in middle of hyphens"
+          "TO-DO:" // 
+            |> lineMatchesCommandInfersLineType Join CompilerJoinDirective "Joins 1-7: Parses in canonical format"
+          "-----TO-DO" // 
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Joins 1-8 NEG: Does not parse with no space before"
+          "TO-DO-----" // 
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Joins 1-9 NEG: Does not parse with no space after"
 
         // Namespace can only exist on a line by itself
         testCase "New/Modified Namespace (Namespace Command)" <| fun _ ->
-          "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+          "NAMESPACE=Raccoons"
+            |> lineMatchesCommandInfersLineType Namespace CompilerNamespaceDirective "Namespace 1-1: Namespace with an equals"
+          "NAMESPACE Possums"
+            |> lineMatchesCommandInfersLineType Namespace CompilerNamespaceDirective "Namespace 1-2: Namespace with a space"
+          "NAMESPACEMonkeyButt"
+            |> OPPOSITElineMatchesCommandInfersLineType None FreeFormText "Namespace 1-3 NEG: Namespace with no space afterwards shouldn't work"
 
         // Tag is a special case because it can only exist on a line by itself - and there can be multiples of different types
         testCase "New/Modified Tag (Tag Command)" <| fun _ ->
           "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+            |> lineMatchesCommandInfersLineType None FreeFormText "Tags 1-1: "
 
         // Section Directive is tough because of all of the shortcuts. Also the two-parter with a directive and a new/referenced item
-        testCase "New/Modified Tag (Section Directive Command)" <| fun _ ->
+        testCase "New/Modified Section (Section Directive Command)" <| fun _ ->
           "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+            |> lineMatchesCommandInfersLineType None FreeFormText "Sections 1-1: "
 
         // Are we looking for just spaces to consider a line empty? Control characters? How about unprintable Unicode?
         testCase "No Nothing (Empty Line Command)" <| fun _ ->
@@ -190,6 +210,9 @@ namespace EA.Test
           "## Donkeys rule the world! ##"
             |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
 
+        //testCase "New/Modified Namespace (Namespace Command)" <| fun _ ->
+        //  "## Donkeys rule the world! ##"
+        //    |> lineMatchesCommandInfersLineType None FreeFormText "Namespace 1-1:"
       ]
 
       //findFirstLineTypeMatch (line:string):LineMatcherType
