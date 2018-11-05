@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/system/structure/src/ea/bin/Debug/netcoreapp2.2/ea.dll",
+            "program": "${workspaceFolder}/system/structure/src/ea/bin/Debug/netcoreapp2.0/ea.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",

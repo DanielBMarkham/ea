@@ -23,11 +23,13 @@ namespace EA.Core
       |CompilerJoinDirective //11
       |NewItemJoinCombination //1
       |CompilerNamespaceDirectiveWithItem //4
-      |CompilerTagDirectiveWithItem //5
-      |CompilerSectionDirectiveWithItem //6
+      |PoundTagWithItem //5
+      |MentionTagWithItem //6
+      |NameValueTagWithItem //5
+      |CompilerSectionDirectiveWithItem //7
       |CompilerJoinTypeWithItem //7
       |CompilerNamespaceDirective //8
-      |CompilerTagDirective //9
+      |CompilerTagReset
       |CompilerSectionDirective //10
       |FreeFormText //12
       |EmptyLine //13

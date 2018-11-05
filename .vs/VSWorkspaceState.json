@@ -11,6 +11,6 @@
     "\\system\\structure\\src\\earTest",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\ealib\\Tokens.fsi",
+  "SelectedNode": "\\system\\structure\\src\\ealib\\Tokens.fs",
   "PreviewInSolutionExplorer": false
 }

@@ -51,11 +51,13 @@ namespace EA.Core
       |CompilerJoinDirective //11
       |NewItemJoinCombination //1
       |CompilerNamespaceDirectiveWithItem //4
-      |CompilerTagDirectiveWithItem //5
+      |PoundTagWithItem //5
+      |MentionTagWithItem //6
+      |NameValueTagWithItem //5
       |CompilerSectionDirectiveWithItem //6
       |CompilerJoinTypeWithItem //7
       |CompilerNamespaceDirective //8
-      |CompilerTagDirective //9
+      |CompilerTagReset
       |CompilerSectionDirective //10
       |FreeFormText //12
       |EmptyLine //13
@@ -67,11 +69,13 @@ namespace EA.Core
         ;CompilerJoinDirective //11
         ;NewItemJoinCombination //1
         ;CompilerNamespaceDirectiveWithItem //4
-        ;CompilerTagDirectiveWithItem //5
+        ;PoundTagWithItem
+        ;MentionTagWithItem
+        ;NameValueTagWithItem
         ;CompilerSectionDirectiveWithItem //6
         ;CompilerJoinTypeWithItem //7
         ;CompilerNamespaceDirective //8
-        ;CompilerTagDirective //9
+        ;CompilerTagReset
         ;CompilerSectionDirective //10
         ;FreeFormText //12
         ;EmptyLine //13
@@ -98,11 +102,13 @@ namespace EA.Core
           //|CaseMatch "NewItem"->EasyAMLineTypes.NewItem // new sectionItem or new JoinedItem
           |CaseMatch "NewItemJoinCombination"->EasyAMLineTypes.NewItemJoinCombination
           |CaseMatch "CompilerNamespaceDirectiveWithItem"->EasyAMLineTypes.CompilerNamespaceDirectiveWithItem
-          |CaseMatch "CompilerTagDirectiveWithItem"->EasyAMLineTypes.CompilerTagDirectiveWithItem
+          |CaseMatch "PoundTagWithItem"->EasyAMLineTypes.PoundTagWithItem
+          |CaseMatch "MentionTagWithItem"->EasyAMLineTypes.MentionTagWithItem
+          |CaseMatch "NameValueTagWithItem"->EasyAMLineTypes.NameValueTagWithItem
           |CaseMatch "CompilerSectionDirectiveWithItem"->EasyAMLineTypes.CompilerSectionDirectiveWithItem
           |CaseMatch "CompilerJoinTypeWithItem"->EasyAMLineTypes.CompilerJoinTypeWithItem
           |CaseMatch "CompilerNamespaceDirective"->EasyAMLineTypes.CompilerNamespaceDirective
-          |CaseMatch "CompilerTagDirective"->EasyAMLineTypes.CompilerTagDirective
+          |CaseMatch "CompilerTagReset"->EasyAMLineTypes.CompilerTagReset
           |CaseMatch "CompilerSectionDirective"->EasyAMLineTypes.CompilerSectionDirective
           |CaseMatch "CompilerJoinDirective"->EasyAMLineTypes.CompilerJoinDirective
           |CaseMatch "FreeFormText"->EasyAMLineTypes.FreeFormText
@@ -121,11 +127,13 @@ namespace EA.Core
           //|NewItem->"NewItem" // handles both newSectionItem and newJoinedItem, depending on context and indent
           |NewItemJoinCombination->"NewItemJoinCombination"
           |CompilerNamespaceDirectiveWithItem->"CompilerNamespaceDirectiveWithItem"
-          |CompilerTagDirectiveWithItem->"CompilerTagDirectiveWithItem"
+          |PoundTagWithItem->"PoundTagWithItem"
+          |MentionTagWithItem->"MentionTagWithItem"
+          |NameValueTagWithItem->"NameValueTagWithItem"
           |CompilerSectionDirectiveWithItem->"CompilerSectionDirectiveWithItem"
           |CompilerJoinTypeWithItem->"CompilerJoinTypeWithItem"
           |CompilerNamespaceDirective->"CompilerNamespaceDirective"
-          |CompilerTagDirective->"CompilerTagDirective"
+          |CompilerTagReset->"CompilerTagReset"
           |CompilerSectionDirective->"CompilerSectionDirective"
           |CompilerJoinDirective->"CompilerJoinDirective"
           |FreeFormText->"FreeFormText"
@@ -182,23 +190,33 @@ namespace EA.Core
               {Regex=new Regex("^([^(-]*)(NAMESPACE(?:S?:?[=|\s]))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerNamespaceDirective] }    //1
             |];
             }
-        //{ LineType=
-        //    SectionDirective; 
-        //  MatchTokens=
-        //    [|
-        //      new Regex("^\s*USER STORIES[:]?[:space:]*$")
-        //      ;new Regex("^\s*SPRINT BACKLOG[:]?[:space:]*$")
-        //      ;new Regex("^\s*PRODUCT BACKLOG[:]?[:space:]*$")
-        //      ;new Regex("^\s*PROJECT BACKLOG[:]?[:space:]*$")
-        //    |];
-        //    };
-        //{ LineType=
-        //    Tag; 
-        //  MatchTokens=
-        //    [|
-        //      new Regex("^\s*USER STORIES[:]?[:space:]*$")
-        //    |];
-        //    };
+        { LineType=
+            Tag; 
+          MatchTokens=
+            [|
+              // reset ahead of everything else 
+              {Regex=new Regex("\B#@\W"); CaptureGroupsExpected=1; PossibleLineTypes=[CompilerTagReset] }    //2
+              // # tags, both with quoted complex string and single words
+              // quote versions always come first in matching order
+              ;{Regex=new Regex("(?:(?:\B&\")(.+)(?:\"=\"))(.+)(?:\")"); CaptureGroupsExpected=2; PossibleLineTypes=[NameValueTagWithItem] }    //6
+              ;{Regex=new Regex("(?:(?:\B#)(?:\")(.+)(?:\")\B)"); CaptureGroupsExpected=1; PossibleLineTypes=[PoundTagWithItem] }    //1
+              ;{Regex=new Regex("(?:(?:\B@)(\w+))"); CaptureGroupsExpected=1; PossibleLineTypes=[MentionTagWithItem] }    //4
+              ;{Regex=new Regex("(?:(?:\B#)(\w+))"); CaptureGroupsExpected=1; PossibleLineTypes=[PoundTagWithItem] }    //3
+              ;{Regex=new Regex("(?:(?:@)\"([^\"]+)\"\s?)"); CaptureGroupsExpected=1; PossibleLineTypes=[MentionTagWithItem] }    //5
+              ;{Regex=new Regex("(?:(?:\B&)(.+)=(.+))"); CaptureGroupsExpected=2; PossibleLineTypes=[NameValueTagWithItem] }    //7
+            |];
+            };
+        { LineType=
+            SectionDirective; 
+          MatchTokens=
+            [|
+            // ARGHH. MUST TRIPLE QUOTE TO USE SAME REGEX ON WEB TESTING AS HERE
+              {Regex=new Regex("""^(?:\s*)(USER STORIES)\b(?:.*)$"""); CaptureGroupsExpected=1; PossibleLineTypes=[CompilerSectionDirective] }    //1
+              ;{Regex=new Regex("""^(?:\s*)(SPRINT BACKLOG)\b(?:.*)$"""); CaptureGroupsExpected=1; PossibleLineTypes=[CompilerSectionDirective] }    //2
+              ;{Regex=new Regex("""^^(?:\s*)(PRODUCT BACKLOG)\b(?:.*)$"""); CaptureGroupsExpected=1; PossibleLineTypes=[CompilerSectionDirective] }    //3
+              ;{Regex=new Regex("""^(?:\s*)(PROJECT BACKLOG)\b(?:.*)$"""); CaptureGroupsExpected=1; PossibleLineTypes=[CompilerSectionDirective] }    //4
+            |];
+            };
         { LineType=
             EasyAMCommandType.EmptyLine; 
           MatchTokens=

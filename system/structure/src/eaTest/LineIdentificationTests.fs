@@ -102,13 +102,6 @@ namespace EA.Test
         then ()
         else Tests.failtest (prefix + str + " results in WRONG Line Type. Expected '" + lineType.ToString() + "' but got '[" + (String.Join("', '", result1.PossibleLineTypes)) + "]'" + suffix)
 
-      //|NewItem
-      //|Join
-      //|Namespace
-      //|Tag
-      //|SectionDirective
-      //|EmptyLine
-      //|None
 
     [<Tests>]
     let tests2 = // Might want to match my test lists with my user stories, or not. Haven't decided
@@ -192,18 +185,28 @@ namespace EA.Test
 
         // Tag is a special case because it can only exist on a line by itself - and there can be multiples of different types
         testCase "New/Modified Tag (Tag Command)" <| fun _ ->
-          "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "Tags 1-1: "
+          "#\"I talk to doors in my spare time\""
+            |> lineMatchesCommandInfersLineType Tag PoundTagWithItem "Tags 1-1: "
+          "#dontknow"
+            |> lineMatchesCommandInfersLineType Tag PoundTagWithItem "Tags 2-1: "
+          "@joeseven"
+            |> lineMatchesCommandInfersLineType Tag MentionTagWithItem "Tags 4-1: "
+          "@\"joe@hotmail.com\""
+            |> lineMatchesCommandInfersLineType Tag MentionTagWithItem "Tags 5-1: "
+          "&sprint=7"
+            |> lineMatchesCommandInfersLineType Tag NameValueTagWithItem "Tags 6-1: "
+          "&\"the war and peace name $#56 \"=\"nothing to sneeze at!\""
+            |> lineMatchesCommandInfersLineType Tag NameValueTagWithItem "Tags 6-1: "
 
         // Section Directive is tough because of all of the shortcuts. Also the two-parter with a directive and a new/referenced item
         testCase "New/Modified Section (Section Directive Command)" <| fun _ ->
-          "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "Sections 1-1: "
+          "USER STORIES"
+            |> lineMatchesCommandInfersLineType SectionDirective CompilerSectionDirective "Sections 1-1: "
 
         // Are we looking for just spaces to consider a line empty? Control characters? How about unprintable Unicode?
         testCase "No Nothing (Empty Line Command)" <| fun _ ->
-          "## Donkeys rule the world! ##"
-            |> lineMatchesCommandInfersLineType None FreeFormText "FreeForm 1-1: Basic H2 mardown text gets recognized as FreeForm"
+          ""
+            |> lineMatchesCommandInfersLineType EmptyLine EasyAMLineTypes.EmptyLine "Empty 1-1: Nothing means nothing"
 
         // None command is the default for any markdown text. It's the fall-through, and should match-up to anything we think should be markdown
         testCase "FreeForm Markdown (None Command)" <| fun _ ->
@@ -214,6 +217,41 @@ namespace EA.Test
         //  "## Donkeys rule the world! ##"
         //    |> lineMatchesCommandInfersLineType None FreeFormText "Namespace 1-1:"
       ]
+
+
+    let BIG_OLD_SAMPLE_TEXT="""
+#dontknow
+The dogs ate the cat
+[ ] I love my cat
+    [] I love dogs
+NAMESPACE=Dogs
+ #"ankles over the hardtack" 
+-----TO-DO------
+[ ]Yes, I will have some turkey
+I love USER STORIES!
+- I love dogs
+  &"this is a bunch of text with an equals = in it"="Bunch of other text"
+  &"The moon dance is not for everybody = == oreos especially" = "Not a joke"
+TO-DO-----
+-I love dogs
+TO-DO: Wash the dishes
+  #dogs
+NAMESPACEMonkeyButt
+&sprint=9
+Weasel hate TO-DO My weasel
+#nose #@
+@no I do not like hovercrafts
+##@
+#@dfa
+Unicorns are all around us TO-DO
+  USER STORIES
+# I saw the darkness
+TO-DOTO-DO d
+Unicorns are all around us TO-DO
+USER STORIES
+My horns ran occupied by jello #toosad #toobad
+NAMESPACE dogs in the tree
+"""
 
       //findFirstLineTypeMatch (line:string):LineMatcherType
 
