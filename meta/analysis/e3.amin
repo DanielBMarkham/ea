@@ -2,6 +2,11 @@
 
 They should work fine by themselves
 
+TO-DO
+  * Create a DU type to handle all the line types
+  * Look into using FParsec to sort between line types and return the DU and text
+  * Decide what I mean when I say "print out"
+
 USER STORIES
   Recognize and sort lines by line type
     PARENT
@@ -12,9 +17,6 @@ USER STORIES
 	  Organize files by line type
 	  Be easy-to-use
 
-TO-DO
-  * Create a DU type to handle all the line types
-  * Look into using FParsec to sort between line types and return the DU and text
-  * Decide what I mean when I say "print out"
+
 
 *This is both the sprint backlog and the test data*

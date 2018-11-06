@@ -16,6 +16,10 @@ namespace EA.Core
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Core"; "Compiler"; "EALib"; "Compiler" |])
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
     logEvent Verbose "Module enter...." moduleLogger
+    //matchLineWithRecommendedCommand:string->LineMatcherType
+    type LineIdentification =
+      |CommandMatch of LineMatcherType
+      |LineType of EasyAMLineTypes
 
     type CompilationLine =
       {
@@ -23,86 +27,103 @@ namespace EA.Core
       FullFileName:string
       CompilationUnitNumber:int
       LineNumber:int 
-      LineType:EasyAMLineTypes
+      Type:LineIdentification
       LineText:string
       TextStartColumn:int
       }
     type CompilationStream = CompilationLine []
 
+    type TranslateIncomingIntoOneStream=CompilationUnitType[]->CompilationStream
+    type IdentifyCompileStreamByCommandType=CompilationStream->CompilationStream
+    type TranslateCommandStreamIntoLineType=CompilationStream->CompilationStream
+
     let stripBookEnds (incomingStream:CompilationStream):CompilationStream =
       incomingStream |> Array.filter(fun x->
-        x.LineType<>FileBegin && x.LineType<>FileEnd
+        match x.Type with 
+          | LineType(FileBegin) | LineType(FileEnd) ->false
+          |_->true
         )
 
     let identifyLine (lineToIdentify:CompilationLine) (previousLine:CompilationLine):CompilationLine=
-      if lineToIdentify.LineType=FileBegin || lineToIdentify.LineType=FileEnd 
-        then lineToIdentify
-        else {lineToIdentify with LineType=FreeFormText}
+      match lineToIdentify.Type with
+        |LineType(FileBegin) | LineType(FileEnd )->lineToIdentify
+        |_-> {lineToIdentify with Type=LineType(FreeFormText)}
 
 
-    let lineIdentification (incomingStream:CompilationStream):CompilationStream =
-      if incomingStream.Length=0 
-        then [||] // we need at least 1 element. don't fail on weirdo data
-        else
-          let outputStream = 
-            incomingStream |> Array.mapFold(fun acc x->
-              //if it's the first item in a file, there's nothing for us to do
-              if x.LineNumber=(-1)
-                then
-                  x, acc
-                else
-                  let identifiedLine = (identifyLine x acc) // it becomes both the mapped item and the acc
-                  identifiedLine, identifiedLine
-              ) incomingStream.[0]
-          fst outputStream
+    let matchLineToCommandType:IdentifyCompileStreamByCommandType = (fun incomingStream->
+      incomingStream |> Array.map(fun x->
+        let commandMatch=matchLineWithRecommendedCommand x.LineText
+        {x with Type=CommandMatch(commandMatch)}
+        )
+      )
+    let matchLineWithCommandToLineType:TranslateCommandStreamIntoLineType = (fun incomingStream->
+      failwith "NOT IMPLEMENTED YET"
+      incomingStream
+      )
 
-    let translateIncomingIntoOneStream (filesIn:CompilationUnitType[]):CompilationStream =
-      let firstMap = 
-        filesIn
-        |> Array.mapi(fun i x->
-          let tempInfo=x.Info
-          let newContents =
-            x.FileContents
-            |> Array.mapi(fun j y->
-                let leadingWhiteSpaceCount = y.Length - y.TrimStart(' ').Length
-                {
+    let lineIdentification:IdentifyCompileStreamByCommandType = (fun incomingStream ->
+        if incomingStream.Length=0 
+          then [||] // we need at least 1 element. don't fail on weirdo data
+          else
+            let outputStream = 
+              incomingStream |> Array.mapFold(fun acc x->
+                //if it's the first item in a file, there's nothing for us to do
+                if x.LineNumber=(-1)
+                  then
+                    x, acc
+                  else
+                    let identifiedLine = (identifyLine x acc) // it becomes both the mapped item and the acc
+                    identifiedLine, identifiedLine
+                ) incomingStream.[0]
+            fst outputStream
+        )
+    let translateIncomingIntoOneStream:TranslateIncomingIntoOneStream = (fun filesIn->
+        let firstMap = 
+          filesIn
+          |> Array.mapi(fun i x->
+            let tempInfo=x.Info
+            let newContents =
+              x.FileContents
+              |> Array.mapi(fun j y->
+                  let leadingWhiteSpaceCount = y.Length - y.TrimStart(' ').Length
+                  {
+                  ShortFileName=tempInfo.Name
+                  FullFileName=tempInfo.FullName
+                  CompilationUnitNumber=i
+                  LineNumber=j
+                  // At first everything gets tagged LineEnd, which means nothing can come after it
+                  Type=LineType(Unprocessed)
+                  LineText=y
+                  TextStartColumn=leadingWhiteSpaceCount
+                  }
+                )
+            let fileBeginBookend=
+              {
                 ShortFileName=tempInfo.Name
                 FullFileName=tempInfo.FullName
                 CompilationUnitNumber=i
-                LineNumber=j
-                // At first everything gets tagged LineEnd, which means nothing can come after it
-                LineType=Unprocessed
-                LineText=y
-                TextStartColumn=leadingWhiteSpaceCount
-                }
-              )
-          let fileBeginBookend=
-            {
-              ShortFileName=tempInfo.Name
-              FullFileName=tempInfo.FullName
-              CompilationUnitNumber=i
-              LineNumber=(-1)
-              LineType=FileBegin
-              LineText=""
-              TextStartColumn=0
-            }
-          let fileEndBookend=
-            {
-              ShortFileName=tempInfo.Name
-              FullFileName=tempInfo.FullName
-              CompilationUnitNumber=i
-              LineNumber=x.FileContents.Length
-              LineType=FileEnd
-              LineText=""
-              TextStartColumn=0
-            }
-          let contentsWithBookends =
-              ([|fileEndBookend|] |> Array.append newContents) |> Array.append [|fileBeginBookend|]
-          contentsWithBookends
-          )
-      |> Array.concat
-      firstMap
-
+                LineNumber=(-1)
+                Type=LineType(FileBegin)
+                LineText=""
+                TextStartColumn=0
+              }
+            let fileEndBookend=
+              {
+                ShortFileName=tempInfo.Name
+                FullFileName=tempInfo.FullName
+                CompilationUnitNumber=i
+                LineNumber=x.FileContents.Length
+                Type=LineType(FileEnd)
+                LineText=""
+                TextStartColumn=0
+              }
+            let contentsWithBookends =
+                ([|fileEndBookend|] |> Array.append newContents) |> Array.append [|fileBeginBookend|]
+            contentsWithBookends
+            )
+        |> Array.concat
+        firstMap
+      )
 
     let Compile:CompilationUnitType[]->CompilationResultType = (fun (incomingCompilationUnits)->
       //let compilationUnitArray=incomingCompileText|>Array.map(fun x->{Info=fst x; FileContents=snd x})

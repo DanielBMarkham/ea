@@ -59,4 +59,4 @@ namespace EA.Core
     val getRegExesForACommand:EasyAMCommandType->RegexMatcherType[]
     val findFirstLineTypeMatch:string->RegexMatcherType 
     val findFirstCommandTypeMatch:string->LineMatcherType 
-
+    val matchLineWithRecommendedCommand:string->LineMatcherType

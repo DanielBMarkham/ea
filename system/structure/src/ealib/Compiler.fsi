@@ -10,20 +10,30 @@ namespace EA.Core
     open EA.Core.Util
     open EA.Core.Tokens
     
+    type LineIdentification =
+      |CommandMatch of LineMatcherType
+      |LineType of EasyAMLineTypes
+
     type CompilationLine =
       {
       ShortFileName:string
       FullFileName:string
       CompilationUnitNumber:int
       LineNumber:int 
-      LineType:EasyAMLineTypes
+      Type:LineIdentification
       LineText:string
       TextStartColumn:int
       }
     type CompilationStream = CompilationLine []
 
-
     val Compile:CompilationUnitType[]->CompilationResultType
-    val translateIncomingIntoOneStream:CompilationUnitType[]->CompilationStream
-    val lineIdentification:CompilationStream->CompilationStream
+    type TranslateIncomingIntoOneStream=CompilationUnitType[]->CompilationStream
+    type IdentifyCompileStreamByCommandType=CompilationStream->CompilationStream
+    type TranslateCommandStreamIntoLineType=CompilationStream->CompilationStream
 
+    val translateIncomingIntoOneStream:TranslateIncomingIntoOneStream
+    val lineIdentification:IdentifyCompileStreamByCommandType
+
+    // new ones
+    val matchLineToCommandType:IdentifyCompileStreamByCommandType
+    val matchLineWithCommandToLineType:TranslateCommandStreamIntoLineType

@@ -255,6 +255,16 @@ namespace EA.Core
         oneOfTheRegexesMatch
         )
 
+    let matchLineWithRecommendedCommand (line:string):LineMatcherType =
+      let ret = GeneGeneTheLineMatchingMachine |> Array.find(fun x->
+        let oneOfTheRegexesMatch = x.MatchTokens |> Array.exists(fun y->y.Regex.IsMatch(line))
+        oneOfTheRegexesMatch
+        )
+      let matchingRegexes = ret.MatchTokens |> Array.filter(fun x->x.Regex.IsMatch(line))
+      {
+        LineType=ret.LineType
+        MatchTokens=matchingRegexes
+      }
     //
     //
     // PLAEHOLDER FOR ADDING ROLE INFORMATION IF DESIRED LATER
