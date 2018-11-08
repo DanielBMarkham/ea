@@ -37,13 +37,27 @@ namespace EA.EAR
     let inputStuff:LoadMasterFile = (fun opts->
       logEvent Debug "Method inputStuff beginning....." moduleLogger
       logEvent Debug "..... Method inputStuff ending. Normal Path." moduleLogger
-      (opts, {MasterModelText=[||]})
+      let newFakeInfo=getFakeFileInfo()
+      let newFileContents:string[] = [|""|] // FAKE FOR NOW
+        //initialOutput.Results 
+        //|> Array.filter(fun x->isCompilationLineAFileMarker x = false)
+        //|> Array.map(fun x->x.LineText)
+      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFileContents}|]
+      let secondTimeThrough=newParm |> EA.Core.Compiler.Compile
+      (opts, {Results=[||]})
     )
 
     let doStuff:RunTransformsAndFilters = (fun (opts, masterModel)->
       logEvent Debug "Method doStuff beginning....." moduleLogger
       logEvent Debug "..... Method doStuff ending. Normal Path." moduleLogger
-      (opts, {MasterModelText=[||]})
+      let newFakeInfo=getFakeFileInfo()
+      let newFileContents:string[] = [|""|] // FAKE FOR NOW
+        //initialOutput.Results 
+        //|> Array.filter(fun x->isCompilationLineAFileMarker x = false)
+        //|> Array.map(fun x->x.LineText)
+      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFileContents}|]
+      let secondTimeThrough=newParm|> EA.Core.Compiler.Compile
+      (opts, {Results=[||]})
     )
 
     let outputStuff:WriteOutModelReportType = (fun (opts, transformedModel)->

@@ -20,7 +20,6 @@ namespace EA.Test
     logEvent Verbose "Module enter...." moduleLogger
 
 
-//    let translateIncomingIntoOneStream (filesIn:CompilationUnitType[]):CompilationStream =
     
     [<Tests>]
     let tests =
@@ -29,26 +28,26 @@ namespace EA.Test
           let newParm=[|{Info=FakeFile1; FileContents=[||]}|]
           let result=translateIncomingIntoOneStream(newParm)
           Expect.isTrue (result.Length=2) "Empty input producing two bookends"
-          Expect.isTrue (result.[0].LineType=FileBegin) "Empty input produces FileBegin bookend"
-          Expect.isTrue (result.[1].LineType=FileEnd) "Empty input produces FileEnd bookend"
+          Expect.isTrue (isCompilationLineAFileBegin result.[0]) "Empty input produces FileBegin bookend"
+          Expect.isTrue (isCompilationLineAFileEnd result.[1]) "Empty input produces FileEnd bookend"
 
         testCase "Two empty files each get bookends" <| fun _ ->
           let newParm=[|{Info=FakeFile1; FileContents=[||]};{Info=FakeFile2; FileContents=[||]}|]
           let result=translateIncomingIntoOneStream(newParm)
           Expect.isTrue (result.Length=4) "Two empty files produce four bookends"
-          Expect.isTrue (result.[0].LineType=FileBegin) "First empty file does not contain FileBegin bookend"
-          Expect.isTrue (result.[1].LineType=FileEnd) "First empty file does not contain FileEnd bookend"
-          Expect.isTrue (result.[2].LineType=FileBegin) "Second empty file does not contain FileBegin bookend"
-          Expect.isTrue (result.[3].LineType=FileEnd) "Second empty file does not contain FileEnd bookend"
+          Expect.isTrue (isCompilationLineAFileBegin result.[0]) "First empty file does not contain FileBegin bookend"
+          Expect.isTrue (isCompilationLineAFileEnd result.[1]) "First empty file does not contain FileEnd bookend"
+          Expect.isTrue (isCompilationLineAFileBegin result.[2]) "Second empty file does not contain FileBegin bookend"
+          Expect.isTrue (isCompilationLineAFileEnd result.[3]) "Second empty file does not contain FileEnd bookend"
 
         testCase "Two static files are concatentated and each get appropriate bookends" <| fun _ ->
           let newParm=[|StaticTenLineDummyFile;StaticTenLineDummyFile|]
           let result=translateIncomingIntoOneStream(newParm)
           Expect.isTrue (result.Length=24) "Two static files get concatenated"
-          Expect.isTrue (result.[0].LineType=FileBegin) "First static file does not contain FileBegin bookend"
-          Expect.isTrue (result.[11].LineType=FileEnd) "First static file does not contain FileEnd bookend"
-          Expect.isTrue (result.[12].LineType=FileBegin) "Second static file does not contain FileBegin bookend"
-          Expect.isTrue (result.[23].LineType=FileEnd) "Second static file does not contain FileEnd bookend"
+          Expect.isTrue (isCompilationLineAFileBegin result.[0]) "First static file does not contain FileBegin bookend"
+          Expect.isTrue (isCompilationLineAFileEnd result.[11]) "First static file does not contain FileEnd bookend"
+          Expect.isTrue (isCompilationLineAFileBegin result.[12]) "Second static file does not contain FileBegin bookend"
+          Expect.isTrue (isCompilationLineAFileEnd result.[23]) "Second static file does not contain FileEnd bookend"
           Expect.isTrue (result.[3].LineText="2") "First  static file not in right order"
           Expect.isTrue (result.[21].LineText="8") "Second  static file not in right order"
 
@@ -56,9 +55,9 @@ namespace EA.Test
           let newParm=[|{Info=FakeFile1; FileContents=[|"I like ice cream"|]}|]
           let result=newParm |> translateIncomingIntoOneStream |> lineIdentification
           Expect.isTrue (result.Length=3) "Two static files get concatenated"
-          Expect.isTrue (result.[1].LineType=FreeFormText) "Simple one-line file should be freeform text"
-          Expect.isTrue (result.[0].LineType=FileBegin) "Simple one-line missing file begin"
-          Expect.isTrue (result.[2].LineType=FileEnd) "Simple one-line missing file end"
+          Expect.isTrue (isCompilationLineFreeFormText result.[1]) "Simple one-line file should be freeform text"
+          Expect.isTrue (isCompilationLineAFileBegin result.[0]) "Simple one-line missing file begin"
+          Expect.isTrue (isCompilationLineAFileEnd result.[2]) "Simple one-line missing file end"
 
       ]
     //val findFirstCommandTypeMatch:string->EasyAMCommandType 

@@ -79,9 +79,7 @@ namespace EA.Core
       Info:System.IO.FileInfo
       FileContents:string[]
       }
-    type CompilationResultType = {
-      MasterModelText:string[]
-      }
+
 
     logEvent Verbose "....Module exit" moduleLogger
 

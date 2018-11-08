@@ -11,12 +11,22 @@ namespace EA.Core
     open EA.Core.Tokens
     open Logary // needed at bottom to give right "Level" lookup for logging
     open System.Threading
+    //open System.Web.Configuration
 
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Core"; "Compiler"; "EALib"; "Compiler" |])
+    let mutable clientLogBack:(LogLevel->string->unit) option=Option<LogLevel->string->unit>.None
+    let l2 (lvl:LogLevel) (str:string) = logEvent lvl str moduleLogger
+    let mutable logBack = l2
+    let setLogger (cl:LogLevel->string->unit):unit =
+      logBack<-cl
+      //clientLogBack<-Some cl
+      logBack Debug "Remote logger set"
+
     // For folks on anal mode, log the module being entered.  NounVerb Proper Case
-    logEvent Verbose "Module enter...." moduleLogger
+    logBack Verbose "Module enter...."
     //matchLineWithRecommendedCommand:string->LineMatcherType
+
     type LineIdentification =
       |CommandMatch of LineMatcherType
       |LineType of EasyAMLineTypes
@@ -31,7 +41,20 @@ namespace EA.Core
       LineText:string
       TextStartColumn:int
       }
+    // There is a better way of doing this. Just not today. (Or should this be the start of lenses...)
+    let isCompilationLineAFileBegin(line:CompilationLine):bool=
+      match line.Type with |LineType(EasyAMLineTypes.FileBegin)->true |_->false
+    let isCompilationLineAFileEnd(line:CompilationLine):bool=
+      match line.Type with |LineType(EasyAMLineTypes.FileEnd)->true |_->false
+    let isCompilationLineAFileMarker (line:CompilationLine):bool= (isCompilationLineAFileBegin line || isCompilationLineAFileEnd line)
+    let isCompilationLineFreeFormText(line:CompilationLine):bool=
+      match line.Type with |LineType(EasyAMLineTypes.FreeFormText)->true |_->false
+
     type CompilationStream = CompilationLine []
+
+    type CompilationResultType = {
+      Results:CompilationStream
+      }
 
     type TranslateIncomingIntoOneStream=CompilationUnitType[]->CompilationStream
     type IdentifyCompileStreamByCommandType=CompilationStream->CompilationStream
@@ -44,40 +67,25 @@ namespace EA.Core
           |_->true
         )
 
-    let identifyLine (lineToIdentify:CompilationLine) (previousLine:CompilationLine):CompilationLine=
-      match lineToIdentify.Type with
-        |LineType(FileBegin) | LineType(FileEnd )->lineToIdentify
-        |_-> {lineToIdentify with Type=LineType(FreeFormText)}
-
-
     let matchLineToCommandType:IdentifyCompileStreamByCommandType = (fun incomingStream->
-      incomingStream |> Array.map(fun x->
-        let commandMatch=matchLineWithRecommendedCommand x.LineText
-        {x with Type=CommandMatch(commandMatch)}
-        )
+      logBack Logary.Verbose "Method matchLineToCommandType beginning..... "
+      let ret = 
+        incomingStream |> Array.map(fun x->
+          let commandMatch=matchLineWithRecommendedCommand x.LineText
+          {x with Type=CommandMatch(commandMatch)}
+          )
+      logBack Logary.Verbose "..... Method matchLineToCommandType ending"  
+      ret
       )
     let matchLineWithCommandToLineType:TranslateCommandStreamIntoLineType = (fun incomingStream->
+      logBack Logary.Debug "Method matchLineWithCommandToLineType beginning..... "
+      logBack Error "Method matchLineWithCommandToLineType NOTHING HERE "
       failwith "NOT IMPLEMENTED YET"
       incomingStream
       )
 
-    let lineIdentification:IdentifyCompileStreamByCommandType = (fun incomingStream ->
-        if incomingStream.Length=0 
-          then [||] // we need at least 1 element. don't fail on weirdo data
-          else
-            let outputStream = 
-              incomingStream |> Array.mapFold(fun acc x->
-                //if it's the first item in a file, there's nothing for us to do
-                if x.LineNumber=(-1)
-                  then
-                    x, acc
-                  else
-                    let identifiedLine = (identifyLine x acc) // it becomes both the mapped item and the acc
-                    identifiedLine, identifiedLine
-                ) incomingStream.[0]
-            fst outputStream
-        )
     let translateIncomingIntoOneStream:TranslateIncomingIntoOneStream = (fun filesIn->
+        logBack Logary.Debug "Method translateIncomingIntoOneStream beginning..... "
         let firstMap = 
           filesIn
           |> Array.mapi(fun i x->
@@ -122,18 +130,25 @@ namespace EA.Core
             contentsWithBookends
             )
         |> Array.concat
+        logBack Logary.Debug (".....Method translateIncomingIntoOneStream ending with a firstMap length of " + firstMap.Length.ToString())
         firstMap
       )
 
     let Compile:CompilationUnitType[]->CompilationResultType = (fun (incomingCompilationUnits)->
+      logBack Logary.Debug "Method Compile beginning..... "
+      Console.Error.WriteLine("ASDFSADF A ASDF SAD ")
+      logBack Logary.Debug " MOOSE MOOSE!"
       //let compilationUnitArray=incomingCompileText|>Array.map(fun x->{Info=fst x; FileContents=snd x})
-      let compileResult=translateIncomingIntoOneStream(incomingCompilationUnits)
-      let squishedText =
-        compileResult |> stripBookEnds |> Array.map(fun x->x.LineText)
+      let oneStream=translateIncomingIntoOneStream(incomingCompilationUnits)
+      let compileResult=matchLineToCommandType oneStream
+      //let squishedText =
+      //  compileResult |> stripBookEnds |> Array.map(fun x->x.LineText)
       //let squishedText:string[] = Array.concat (incomingCompilationUnits |> Array.map(fun x->x.FileContents))
-      logEvent Logary.Debug ("Method doStuff squished text linecount = " + squishedText.Length.ToString()) moduleLogger
-      let ret={MasterModelText=squishedText}
-      ret
+      logBack Logary.Debug ("Method doStuff squished text linecount = " + compileResult.Length.ToString())
+//      let ret={Results=squishedText}
+//      ret
+      logBack Logary.Debug (".....Method Compile ending with Results.length of " + compileResult.Length.ToString())
+      {Results=compileResult}
       )
 
-    logEvent Verbose "....Module exit" moduleLogger
+    logBack Verbose "....Module exit"

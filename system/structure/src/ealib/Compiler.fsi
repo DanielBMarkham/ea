@@ -9,7 +9,9 @@ namespace EA.Core
     open EA.Persist
     open EA.Core.Util
     open EA.Core.Tokens
+    open Logary
     
+    val setLogger:(LogLevel->string->unit)->unit
     type LineIdentification =
       |CommandMatch of LineMatcherType
       |LineType of EasyAMLineTypes
@@ -24,15 +26,20 @@ namespace EA.Core
       LineText:string
       TextStartColumn:int
       }
+    val isCompilationLineAFileBegin:CompilationLine->bool
+    val isCompilationLineAFileEnd:CompilationLine->bool
+    val isCompilationLineAFileMarker:CompilationLine->bool 
+    val isCompilationLineFreeFormText:CompilationLine->bool
     type CompilationStream = CompilationLine []
-
+    type CompilationResultType = {
+      Results:CompilationStream
+      }
     val Compile:CompilationUnitType[]->CompilationResultType
     type TranslateIncomingIntoOneStream=CompilationUnitType[]->CompilationStream
     type IdentifyCompileStreamByCommandType=CompilationStream->CompilationStream
     type TranslateCommandStreamIntoLineType=CompilationStream->CompilationStream
 
     val translateIncomingIntoOneStream:TranslateIncomingIntoOneStream
-    val lineIdentification:IdentifyCompileStreamByCommandType
 
     // new ones
     val matchLineToCommandType:IdentifyCompileStreamByCommandType

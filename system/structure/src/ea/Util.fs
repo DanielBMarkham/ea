@@ -8,9 +8,12 @@ namespace EA.Compiler
     open EA.Lenses
     open EA.Persist
     open EA.Utilities
+    open EA.Core
     open EA.Core.Util
     open EA.Core.Compiler
     open Logary // needed at bottom to give right "Level" lookup for logging
+    open System.Numerics
+
     // * Opens have gotten fewer. Still working through my code-build-debug cycle
     // * Have yet to use the debugger (!)
 
@@ -81,8 +84,12 @@ namespace EA.Compiler
 
     let doStuff:RunCompilationType = (fun (opts, compilationUnitArray)->
       logEvent Logary.Debug ("Method doStuff beginning..... " + compilationUnitArray.Length.ToString() + " Compilation Units coming in with " + (compilationUnitArray |> Seq.sumBy(fun x->x.FileContents.Length)).ToString() + " total lines") moduleLogger
-      let ret=Compile(compilationUnitArray)
-      logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.MasterModelText.Length.ToString() + " lines in master model" ) moduleLogger
+      let libraryLogger:Logger= (logary.getLogger (PointName [| "EA"; "Core"; "Compiler"; "EALib"; "Compiler" |]))
+      let l2 (lvl:LogLevel) (str:string) = logEvent lvl str libraryLogger
+      l2 Debug "..... Setting Remote Logger." 
+      setLogger (l2)
+      let ret:CompilationResultType=EA.Core.Compiler.Compile(compilationUnitArray)
+      logEvent Logary.Debug ("..... Method doStuff ending. Normal Path. " + ret.Results.Length.ToString() + " lines in Results" ) moduleLogger
       (opts,ret)
     )
 
@@ -92,17 +99,29 @@ namespace EA.Compiler
       // If the loop-through check fails, we're not writing out
       let initialOutput=transformedModel
       let newFakeInfo=getFakeFileInfo()
-      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=initialOutput.MasterModelText}|]
+      let newFileContents:string[] = 
+        initialOutput.Results 
+        |> Array.filter(fun x->isCompilationLineAFileMarker x = false)
+        |> Array.map(fun x->x.LineText)
+      let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFileContents}|]
       let opts,secondTimeThrough=(opts,newParm) |> doStuff
-      if initialOutput<>secondTimeThrough
-        then
-            failwith "MODEL LOOPBACK FAILURE"
-        else
-            let totalCharacters = transformedModel.MasterModelText |> Array.sumBy(fun x->x.Length)
-            logEvent Logary.Debug ("..... Method outputStuff totalCharacters = " + totalCharacters.ToString()) moduleLogger
-            transformedModel.MasterModelText |> Array.iteri(fun i x->
-              Console.Error.WriteLine(x)
-              )
+      //if initialOutput<>secondTimeThrough
+      //  then
+      //      logEvent Logary.Error ("..... Method outputStuff loopback FAIL" ) moduleLogger
+      //      failwith "MODEL LOOPBACK FAILURE"
+      //  else
+      //      let totalCharacters = transformedModel.MasterModelText |> Array.sumBy(fun x->x.Length)
+      //      logEvent Logary.Debug ("..... Method outputStuff totalCharacters = " + totalCharacters.ToString()) moduleLogger
+      //      transformedModel.MasterModelText |> Array.iteri(fun i x->
+      //        Console.Error.WriteLine(x)
+      //        )
+
+      transformedModel.Results|>Array.iteri(fun i x->
+        let t1 = match x.Type with |LineType lt->lt.ToString() |CommandMatch cm->cm.LineType.ToString()
+        let t2 = t1 + "                ".Substring(t1.Length)
+        Console.Error.WriteLine(x.LineNumber.ToString() + ". " + t2 + "\t" + x.LineText)
+        )
+
       logEvent Logary.Debug "..... Method outputStuff ending. Normal Path." moduleLogger
       0 //  it's always successful as far as the O/S is concerned
     )

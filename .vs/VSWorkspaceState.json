@@ -7,10 +7,10 @@
     "\\system\\structure",
     "\\system\\structure\\src",
     "\\system\\structure\\src\\AppCommon",
-    "\\system\\structure\\src\\ealib",
-    "\\system\\structure\\src\\earTest",
+    "\\system\\structure\\src\\ea",
+    "\\system\\structure\\src\\ear",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\ealib\\Tokens.fs",
+  "SelectedNode": "\\system\\structure\\src\\ealib\\Compiler.fs",
   "PreviewInSolutionExplorer": false
 }

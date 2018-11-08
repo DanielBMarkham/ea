@@ -46,14 +46,14 @@ namespace EA.Test
           let newFakeFileContents=[||]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFakeFileContents}|]
           let result=Compile(newParm)
-          Expect.isTrue (result.MasterModelText.Length=0) "Empty input producing an output"
+          Expect.isTrue (result.Results.Length=0) "Empty input producing an output"
 
         testCase "one non-command line returns itself" <| fun _ ->
           let newFakeInfo=getFakeFileInfo()
           let newFakeFileContents=[|"a"|]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFakeFileContents}|]
           let result=Compile(newParm)
-          let testResult=(result.MasterModelText.Length=1) && (result.MasterModelText.[0]="a")
+          let testResult=(result.Results.Length=1) && (result.Results.[0].LineText="a")
           Expect.isTrue testResult  "Simple text not returning itself"
 
         testCase "Two one-line files with non-commands get concatenated" <| fun _ ->
@@ -63,7 +63,7 @@ namespace EA.Test
           let newFakeFileContents2=[|"b"|]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo1; FileContents=newFakeFileContents1};{Info=newFakeInfo2; FileContents=newFakeFileContents2}|]
           let result=Compile(newParm)
-          let testResult=(result.MasterModelText.Length=2) && (result.MasterModelText.[0]="a") && (result.MasterModelText.[1]="b")
+          let testResult=(result.Results.Length=2) && (result.Results.[0].LineText="a") && (result.Results.[1].LineText="b")
           Expect.isTrue testResult "Two files with text not concatenating"
 
 

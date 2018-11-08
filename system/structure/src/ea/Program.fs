@@ -113,7 +113,7 @@
       use sub = Console.CancelKeyPress.Subscribe (fun _ -> mre.Set())
 
       let cts = new CancellationTokenSource()
-      let incomingFileStream= bufferToHandleFilesBeingPipedInFromTheCommandLine.ToString()
+      let incomingFileStream= bufferToHandleFilesBeingPipedInFromTheCommandLine.ToString().Split([|"\r\n";"\n";"\r"|], StringSplitOptions.None)
 
       //Console.Out.WriteLine "Press Ctrl-C to terminate program"
       // As long as we're a single-thread on a console app, we can
@@ -125,7 +125,7 @@
       // * Mutable variables FTW! I think.
       let mutable ret=0
       // This needs to be a sequence since it represents possibly realtime streams of strings arriving
-      let foo=[incomingFileStream]:>seq<string>
+      let foo=incomingFileStream:>seq<string>
       let incomingFileStreams =
           if ( foo |> Seq.length >0) then foo else Seq.empty
       newMain argv cts mre (incomingFileStreams) &ret

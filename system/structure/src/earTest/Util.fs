@@ -23,7 +23,7 @@ namespace EA.EAR.Test
       let libraryCompilationUnits:CompilationUnitType[] =
         localCompilationUnits |> Array.map(fun x->{Info=x.Info; FileContents=x.FileContents})
       let libraryRet:CompilationResultType=Compile(libraryCompilationUnits)
-      let translatedRet:CompilationResultType={MasterModelText=libraryRet.MasterModelText}
+      let translatedRet:CompilationResultType={Results=[||]}
       translatedRet
 
 
