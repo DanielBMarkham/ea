@@ -107,16 +107,19 @@ namespace EA.Compiler
       let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFileContents}|]
       let opts,secondTimeThrough=(opts,newParm) |> doStuff
       logEvent Logary.Verbose ("Method outputStuff secondTimeThrough length = " + secondTimeThrough.Results.Length.ToString()) moduleLogger
+      // ROUND-TRIP TEST DOESN'T MAKE SENSE WITH THE CODE IN THIS HALF-ASSED STATE
+      // TURN BACK ON LATER
       //if initialOutput<>secondTimeThrough
       //  then
       //      logEvent Logary.Error ("..... Method outputStuff loopback FAIL" ) moduleLogger
       //      failwith "MODEL LOOPBACK FAILURE"
       //  else
-      //      let totalCharacters = transformedModel.MasterModelText |> Array.sumBy(fun x->x.Length)
-      //      logEvent Logary.Debug ("..... Method outputStuff totalCharacters = " + totalCharacters.ToString()) moduleLogger
-      //      transformedModel.MasterModelText |> Array.iteri(fun i x->
-      //        Console.Error.WriteLine(x)
-      //        )
+      let totalCharacters = transformedModel.Results |> Array.sumBy(fun x->x.LineText.Length)
+      logEvent Logary.Debug ("..... Method outputStuff totalCharacters = " + totalCharacters.ToString()) moduleLogger
+      // THINGS GET WRITTEN OUT HERE
+      transformedModel.Results |> removeFileMarkersFromStream |> Array.iteri(fun i x->
+        Console.Error.WriteLine(x.LineText)
+        )
       logEvent Logary.Verbose ("Method outputStuff transformedModel length = " + transformedModel.Results.Length.ToString()) moduleLogger
 
       let tempFeedbackSB = new System.Text.StringBuilder(65535)
