@@ -19,7 +19,6 @@ namespace EA.Core
       |FileEnd
       |NewSectionItem
       |NewJoinedItem
-      //|NewItem //2  // handles both newSectionItem and newJoinedItem, depending on context and indent
       |CompilerJoinDirective //11
       |NewItemJoinCombination //1
       |CompilerNamespaceDirectiveWithItem //4

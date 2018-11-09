@@ -53,9 +53,9 @@ namespace EA.Test
 
         testCase "Simple one-line file is freeform text" <| fun _ ->
           let newParm=[|{Info=FakeFile1; FileContents=[|"I like ice cream"|]}|]
-          let result=newParm |> translateIncomingIntoOneStream |> lineIdentification
+          let result=newParm |> translateIncomingIntoOneStream |> matchLineToCommandType
           Expect.isTrue (result.Length=3) "Two static files get concatenated"
-          Expect.isTrue (isCompilationLineFreeFormText result.[1]) "Simple one-line file should be freeform text"
+          Expect.isTrue (isCompilationLineFreeFormText result.[1]) ("Simple one-line file should be freeform text. Instead it's " + result.[1].LineTypeDescription )
           Expect.isTrue (isCompilationLineAFileBegin result.[0]) "Simple one-line missing file begin"
           Expect.isTrue (isCompilationLineAFileEnd result.[2]) "Simple one-line missing file end"
 

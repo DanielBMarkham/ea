@@ -103,8 +103,10 @@ namespace EA.Compiler
         initialOutput.Results 
         |> Array.filter(fun x->isCompilationLineAFileMarker x = false)
         |> Array.map(fun x->x.LineText)
+      logEvent Logary.Verbose ("Method outputStuff newFileContents length = " + newFileContents.Length.ToString()) moduleLogger
       let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFileContents}|]
       let opts,secondTimeThrough=(opts,newParm) |> doStuff
+      logEvent Logary.Verbose ("Method outputStuff secondTimeThrough length = " + secondTimeThrough.Results.Length.ToString()) moduleLogger
       //if initialOutput<>secondTimeThrough
       //  then
       //      logEvent Logary.Error ("..... Method outputStuff loopback FAIL" ) moduleLogger
@@ -115,13 +117,18 @@ namespace EA.Compiler
       //      transformedModel.MasterModelText |> Array.iteri(fun i x->
       //        Console.Error.WriteLine(x)
       //        )
+      logEvent Logary.Verbose ("Method outputStuff transformedModel length = " + transformedModel.Results.Length.ToString()) moduleLogger
 
+      let tempFeedbackSB = new System.Text.StringBuilder(65535)
       transformedModel.Results|>Array.iteri(fun i x->
-        let t1 = match x.Type with |LineType lt->lt.ToString() |CommandMatch cm->cm.LineType.ToString()
-        let t2 = t1 + "                ".Substring(t1.Length)
-        Console.Error.WriteLine(x.LineNumber.ToString() + ". " + t2 + "\t" + x.LineText)
+        let linenum = i.ToString() + "(" + x.LineNumber.ToString() + ")."
+        let l2 = linenum + "         ".Substring(linenum.Length)
+        let t1 = l2 + "" + (match x.Type with |LineType lt->lt.ToString() |CommandMatch cm->cm.LineType.ToString())
+        let t2 = t1 + "                           | ".Substring(t1.Length)
+        tempFeedbackSB.Append(t2 + " " + x.LineText + "\r\n") |> ignore
         )
-
+      Console.Out.WriteLine()
+      Console.Out.WriteLine(tempFeedbackSB.ToString())
       logEvent Logary.Debug "..... Method outputStuff ending. Normal Path." moduleLogger
       0 //  it's always successful as far as the O/S is concerned
     )

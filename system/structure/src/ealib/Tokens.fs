@@ -47,7 +47,6 @@ namespace EA.Core
       |FileEnd
       |NewSectionItem
       |NewJoinedItem
-      //|NewItem //2  // handles both newSectionItem and newJoinedItem, depending on context and indent
       |CompilerJoinDirective //11
       |NewItemJoinCombination //1
       |CompilerNamespaceDirectiveWithItem //4
@@ -65,7 +64,6 @@ namespace EA.Core
         [
         NewSectionItem
         ;NewJoinedItem
-        //newItem
         ;CompilerJoinDirective //11
         ;NewItemJoinCombination //1
         ;CompilerNamespaceDirectiveWithItem //4
@@ -92,14 +90,13 @@ namespace EA.Core
           else 
             if String.Compare(str, arg, StringComparison.OrdinalIgnoreCase) = 0
               then Some() else Option<_>.None
-        //let stringChange:string->string = match ignoreCase with |Default|IgnoreCase->(fun x -> x.ToUpper()) | CaseSensitive->fun x -> x
+
         match stringValue with 
           |CaseMatch "Unprocessed"->EasyAMLineTypes.Unprocessed
           |CaseMatch "FileBegin"->EasyAMLineTypes.FileBegin
           |CaseMatch "FileEnd"->EasyAMLineTypes.FileEnd
           |CaseMatch "NewSectionItem"->NewSectionItem
           |CaseMatch "NewJoinedItem"->NewJoinedItem
-          //|CaseMatch "NewItem"->EasyAMLineTypes.NewItem // new sectionItem or new JoinedItem
           |CaseMatch "NewItemJoinCombination"->EasyAMLineTypes.NewItemJoinCombination
           |CaseMatch "CompilerNamespaceDirectiveWithItem"->EasyAMLineTypes.CompilerNamespaceDirectiveWithItem
           |CaseMatch "PoundTagWithItem"->EasyAMLineTypes.PoundTagWithItem
@@ -124,7 +121,6 @@ namespace EA.Core
           |FileEnd->"FileEnd"
           |NewSectionItem->"NewSectionItem"
           |NewJoinedItem->"NewJoinedItem"
-          //|NewItem->"NewItem" // handles both newSectionItem and newJoinedItem, depending on context and indent
           |NewItemJoinCombination->"NewItemJoinCombination"
           |CompilerNamespaceDirectiveWithItem->"CompilerNamespaceDirectiveWithItem"
           |PoundTagWithItem->"PoundTagWithItem"
@@ -156,6 +152,7 @@ namespace EA.Core
         LineType:EasyAMCommandType;
         MatchTokens:RegexMatcherType []
       }
+
     //[NewItem;Join;Namespace;Tag;SectionDirective;EmptyLine;None]
 
     // The regex has to have capture groups that correspond to the number of parms expected from line
@@ -231,6 +228,7 @@ namespace EA.Core
               {Regex=new Regex("(.?)"); CaptureGroupsExpected=1; PossibleLineTypes=[FreeFormText] }
             |];
             }
+        // template to paste in later if needed
         //{ LineType=
         //    Namespace; 
         //  MatchTokens=

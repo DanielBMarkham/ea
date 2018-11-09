@@ -38,6 +38,7 @@ namespace EA.Test
     let StaticTenLineDummyFile:CompilationUnitType 
       = {Info=FakeFile1; FileContents=[|"0";"1";"2";"3";"4";"5";"6";"7";"8";"9"|]}
 
+    // Need a better tagging/naming/organizing strategy
     [<Tests>]
     let tests =
       testList "file" [
@@ -45,15 +46,15 @@ namespace EA.Test
           let newFakeInfo=getFakeFileInfo()
           let newFakeFileContents=[||]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFakeFileContents}|]
-          let result=Compile(newParm)
-          Expect.isTrue (result.Results.Length=0) "Empty input producing an output"
+          let result=(Compile newParm).Results |> matchLineToCommandType |> removeFileMarkersFromStream
+          Expect.isTrue (result.Length=0) "Empty input producing an output"
 
         testCase "one non-command line returns itself" <| fun _ ->
           let newFakeInfo=getFakeFileInfo()
           let newFakeFileContents=[|"a"|]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo; FileContents=newFakeFileContents}|]
-          let result=Compile(newParm)
-          let testResult=(result.Results.Length=1) && (result.Results.[0].LineText="a")
+          let result=(Compile newParm).Results |> matchLineToCommandType |> removeFileMarkersFromStream
+          let testResult=(result.Length=1) && (result.[0].LineText="a")
           Expect.isTrue testResult  "Simple text not returning itself"
 
         testCase "Two one-line files with non-commands get concatenated" <| fun _ ->
@@ -62,8 +63,8 @@ namespace EA.Test
           let newFakeInfo2=getFakeFileInfo()
           let newFakeFileContents2=[|"b"|]
           let newParm:CompilationUnitType[]=[|{Info=newFakeInfo1; FileContents=newFakeFileContents1};{Info=newFakeInfo2; FileContents=newFakeFileContents2}|]
-          let result=Compile(newParm)
-          let testResult=(result.Results.Length=2) && (result.Results.[0].LineText="a") && (result.Results.[1].LineText="b")
+          let result=(Compile newParm).Results |> matchLineToCommandType |> removeFileMarkersFromStream
+          let testResult=(result.Length=2) && (result.[0].LineText="a") && (result.[1].LineText="b")
           Expect.isTrue testResult "Two files with text not concatenating"
 
 

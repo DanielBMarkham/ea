@@ -22,26 +22,27 @@ namespace EA.Test
       testList "Smoke" [
         testCase "Empty file return empty" <| fun _ ->
           let newParm=[|{Info=FakeFile1; FileContents=[||]}|]
-          let result=Compile(newParm)
+          let result=Compile(newParm) |> removeFileMarkersFromResult
           Expect.isTrue (result.Results.Length=0) "Empty input producing an output"
 
         testCase "Two empty files return empty" <| fun _ ->
           let newParm=[|{Info=FakeFile1; FileContents=[||]}; {Info=FakeFile2; FileContents=[||]}|]
-          let result=Compile(newParm)
+          let result=Compile(newParm) |> removeFileMarkersFromResult
           Expect.isTrue (result.Results.Length=0) "Two empty inputs producing an output"
 
         testCase "Dummy static file remains the same" <| fun _ ->
           let newParm=[|StaticTenLineDummyFile|]
-          let result=Compile(newParm)
+          let result=Compile(newParm) |> removeFileMarkersFromResult
           Expect.isTrue (result.Results.Length=10) "Static 10-line dummy not staying 10 lines"
       
         testCase "Two static dummy files concatenate" <| fun _ ->
           let newParm=[|StaticTenLineDummyFile|]
-          let result=Compile(newParm)
+          let result=Compile(newParm) |> removeFileMarkersFromResult
           Expect.isTrue (result.Results.Length=10) "Two static 10-line dummy files not equalling 20 lines"
       
       ]
 
+      // WHAT TO DO WITH FILE MARKERS HERE?
 
 //logEvent Verbose "Method XXXXX beginning....." moduleLogger
 //logEvent Verbose "..... Method XXXXX ending. Normal Path." moduleLogger
