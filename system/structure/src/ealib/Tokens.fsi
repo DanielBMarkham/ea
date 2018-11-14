@@ -32,7 +32,7 @@ namespace EA.Core
       |CompilerSectionDirective //10
       |FreeFormText //12
       |EmptyLine //13
-        
+      interface IFormattable
     // Not the same as line types. Commands are what we search for. The line type depends on the context
     type EasyAMCommandType =
       |NewItem

@@ -134,9 +134,7 @@ namespace EA.Core
           |CompilerJoinDirective->"CompilerJoinDirective"
           |FreeFormText->"FreeFormText"
           |EmptyLine->"EmptyLine"
-          |Unprocessed->"Unprocessed"
-          |FileBegin->"FileBegin"
-          |FileEnd->"FileEnd"
+
       override self.ToString() = self.MatchToString
       interface IFormattable with
         member self.ToString(format, formatProvider) = 
@@ -339,18 +337,18 @@ namespace EA.Core
       }
     // May need to add roles in at some point
     type RoleSillyNameType =
-      | THE_DORK
-      | THE_AUTOMATRON
-      | THE_WEASEL
-      | THE_FACE
-      | THE_ASSHOLE
-      | THE_DREAMER
-      | THE_CODEPENDENT
-      | THE_SELF_HELP_GURU
-      | THE_EXAMPLE
-      | THE_TEACHER
-      | THE_PROPHET
-      | THE_EVANGELIST
+      | TheDork
+      | TheAutomatron
+      | TheWeasel
+      | TheFace
+      | TheAsshole
+      | TheDreamer
+      | TheCodependent
+      | TheSelfHelpGuru
+      | TheExample
+      | TheTeacher
+      | TheProphet
+      | TheEvangelist
 
     type RoleMetaType =
       | WorkForTheUsers

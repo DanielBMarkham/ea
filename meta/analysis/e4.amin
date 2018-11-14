@@ -1,0 +1,10 @@
+TO-DO
+  * Start adding code in ear for this reporting
+
+USER STORIES
+  * Print the model in some kind of canonical/sorted format
+	  Organize files by line type
+	  Be easy-to-use
+  * Print a question list of any questions anybody might have
+	  Organize files by line type
+	  Be easy-to-use

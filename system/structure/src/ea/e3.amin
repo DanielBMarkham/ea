@@ -20,3 +20,8 @@ USER STORIES
 
 
 *This is both the sprint backlog and the test data*
+
+NOTES: 
+  * BASH tests failing last time led to huge adventure with threads and streams (time overrun)
+  * Be sure to talk about using the compiler as a solo dev versus working in a team!
+  * Do we have tests to show? What happened to printing out to-do items?
