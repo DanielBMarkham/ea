@@ -66,12 +66,12 @@ namespace EA.EAR
       0 //  it's always successful as far as the O/S is concerned
     )
 
-    let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (ret:int byref) =
+    let newMain (argv:string[]) (compilerCancelationToken:System.Threading.CancellationTokenSource) (manualResetEvent:System.Threading.ManualResetEventSlim) (incomingStream:seq<string>) (ret:int byref) =
         try
           logEvent Verbose "Method newMain beginning....." moduleLogger
           // Error is the new Out. Write here so user can pipe places
           Console.Error.WriteLine "I am here. yes."
-          let mutable ret=loadEARConfigFromCommandLine argv |> inputStuff |> doStuff |> outputStuff
+          let mutable ret=loadEARConfigFromCommandLine argv incomingStream |> inputStuff |> doStuff |> outputStuff
 
           // I'm done (since I'm a single-threaded function, I know this)
           // take a few seconds to catch up, then you may run until you quit

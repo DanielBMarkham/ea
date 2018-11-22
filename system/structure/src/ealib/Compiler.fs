@@ -11,6 +11,8 @@ namespace EA.Core
     open EA.Core.Tokens
     open Logary // needed at bottom to give right "Level" lookup for logging
     open System.Threading
+    open System.Drawing
+
     //open System.Web.Configuration
 
     //
@@ -51,6 +53,10 @@ namespace EA.Core
         |LineType lt->lt.ToString()
     // Maybe there is a better way of doing this. Just not today. (Or should this be the start of the lenses...)
     // Discussion of the choice of type-methods, functions, or lenses based on project direction
+    let isCompilationLineACommand (line:CompilationLine) =
+      match line.Type with |CommandMatch ct->true |_->false
+    let isCompilationLineALineType (line:CompilationLine) =
+      match line.Type with |LineType lt->true |_->false
     let isCompilationLineAFileBegin(line:CompilationLine):bool=
       match line.Type with |LineType(EasyAMLineTypes.FileBegin)->true |_->false
     let isCompilationLineAFileEnd(line:CompilationLine):bool=
@@ -61,6 +67,43 @@ namespace EA.Core
         |LineType(EasyAMLineTypes.FreeFormText)->true 
         |CommandMatch cm->cm.LineType=EasyAMCommandType.None // there's no command. It has to be freeform text
         |_->false
+    let isCompilationLineTypeUnprocessed (line:CompilationLine) =
+      match line.Type with |LineType(EasyAMLineTypes.Unprocessed)->true |_->false
+    let isCompilationLineTypeFileBegin (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.FileBegin)->true |_->false
+    let isCompilationLineTypeFileEnd (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.FileEnd)->true |_->false
+    let isCompilationLineTypeNewSectionItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.NewSectionItem)->true |_->false
+    let isCompilationLineTypeNewJoinedItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.NewJoinedItem)->true |_->false
+    let isCompilationLineTypeCompilerJoinDirective (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerJoinDirective)->true |_->false
+    let isCompilationLineTypeNewItemJoinCombination (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.NewItemJoinCombination)->true |_->false
+    let isCompilationLineTypeCompilerNamespaceDirectiveWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerNamespaceDirectiveWithItem)->true |_->false
+    let isCompilationLineTypePoundTagWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.PoundTagWithItem)->true |_->false
+    let isCompilationLineTypeMentionTagWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.MentionTagWithItem)->true |_->false
+    let isCompilationLineTypeNameValueTagWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.NameValueTagWithItem)->true |_->false
+    let isCompilationLineTypeCompilerSectionDirectiveWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerSectionDirectiveWithItem)->true |_->false
+    let isCompilationLineTypeCompilerJoinTypeWithItem (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerJoinTypeWithItem)->true |_->false
+    let isCompilationLineTypeCompilerNamespaceDirective (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerNamespaceDirective)->true |_->false
+    let isCompilationLineTypeCompilerTagReset (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerTagReset)->true |_->false
+    let isCompilationLineTypeCompilerSectionDirective (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.CompilerSectionDirective)->true |_->false
+    let isCompilationLineTypeFreeFormText (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.FreeFormText)->true |_->false
+    let isCompilationLineTypeEmptyLine (line:CompilationLine) = 
+      match line.Type with |LineType(EasyAMLineTypes.EmptyLine)->true |_->false
+
 
     type CompilationStream = CompilationLine []
     // This will evolve, probably as the compiler matures
@@ -150,14 +193,22 @@ namespace EA.Core
             then x
             else {x with Type=CommandMatch(commandMatch)}
           )
-      logBack Logary.Verbose "..... Method matchLineToCommandType ending"  
+      logBack Logary.Verbose "..... Method matchLineToCommandType ending"
       ret
       )
     let matchLineWithCommandToLineType:TranslateCommandStreamIntoLineType = (fun incomingStream->
       logBack Logary.Debug "Method matchLineWithCommandToLineType beginning..... "
-      logBack Error "Method matchLineWithCommandToLineType NOTHING HERE "
-      failwith "NOT IMPLEMENTED YET"
-      incomingStream
+      if incomingStream.Length <2
+        then incomingStream
+        else
+        
+        let ret =
+          incomingStream
+          |> Array.mapFold(fun acc x->
+            (x,acc)
+            ) 0
+        //logBack Error "Method matchLineWithCommandToLineType NOTHING HERE "
+        incomingStream
       )
 
     //
@@ -165,7 +216,8 @@ namespace EA.Core
     let Compile:CompilationUnitType[]->CompilationResultType = (fun (incomingCompilationUnits)->
       logBack Logary.Debug "Method Compile beginning..... "
       let oneStream=translateIncomingIntoOneStream(incomingCompilationUnits)
-      let compileResult=matchLineToCommandType oneStream
+      let lineTypeResult=matchLineToCommandType oneStream
+      let compileResult=matchLineWithCommandToLineType lineTypeResult
       logBack Logary.Debug (".....Method Compile ending with compileResult.length of " + compileResult.Length.ToString())
       {Results=compileResult}
       )

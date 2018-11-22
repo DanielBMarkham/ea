@@ -246,6 +246,12 @@ namespace EA.Core
         member self.ToString(format, formatProvider) = 
           self.MatchToString.ToString()
 
+    // NOT IMPLEMENTED YET. IT'S A DAG LIKE EVERYTHING ELSE HERE
+    type TagHierarchy = 
+      {
+        SourceTag:TagTypes 
+        TargetTagTypes:TagTypes []
+      }
     type CompilerLocation =
       {
         ModelLoc:ModelLocation
@@ -264,6 +270,7 @@ namespace EA.Core
       | Goal
       | BusinessContext
       | Scenario
+      | Outcome
       | Contains
       | Because
       | Whenever
@@ -277,7 +284,7 @@ namespace EA.Core
       | Defect
       | ReferenceLink
       static member ToList()=
-        [ParentChild;Trigger;Actor;Goal;BusinessContext;Scenario;Contains;Because;Whenever
+        [ParentChild;Trigger;Actor;Goal;BusinessContext;Scenario;Outcome;Contains;Because;Whenever
         ;ItHasToBeThat; Note; Question; ToDo; Work; Diagram; Code; Defect; ReferenceLink]
       static member TryParse (stringValue:string) (ignoreCase:CaseSensitive)=
         let (|CaseMatch|_|) (str:string) arg =
@@ -295,6 +302,7 @@ namespace EA.Core
           |CaseMatch "Goal"->Goal
           |CaseMatch "BusinessContext"->BusinessContext
           |CaseMatch "Scenario"->Scenario
+          |CaseMatch "Outcome"->Outcome
           |CaseMatch "Contains"->Contains
           |CaseMatch "Because"->Because
           |CaseMatch "Whenever"->Whenever
@@ -316,6 +324,7 @@ namespace EA.Core
         | Goal->"Goal"
         | BusinessContext->"BusinessContext"
         | Scenario->"Scenario"
+        | Outcome->"Outcome"
         | Contains->"Contains"
         | Because->"Because"
         | Whenever->"Whenever"
@@ -333,3 +342,15 @@ namespace EA.Core
       interface IFormattable with
         member self.ToString(format, formatProvider) = 
           self.MatchToString.ToString()
+
+    type ModelJoin =
+      {
+        JoinType: JoinTypes 
+        FreeText: string 
+      }
+    type ModelRelationship =
+      {
+        SourceModelLoc:ModelLocation
+        TargetModelLoc:ModelLocation option
+        Joins:ModelJoin []
+      }

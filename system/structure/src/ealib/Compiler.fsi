@@ -31,10 +31,32 @@ namespace EA.Core
       }
       member LineTypeDescription:string
     // helpers/lenses
+    val isCompilationLineACommand:CompilationLine->bool
+    val isCompilationLineALineType:CompilationLine->bool
     val isCompilationLineAFileBegin:CompilationLine->bool
     val isCompilationLineAFileEnd:CompilationLine->bool
     val isCompilationLineAFileMarker:CompilationLine->bool 
     val isCompilationLineFreeFormText:CompilationLine->bool
+
+    val isCompilationLineTypeUnprocessed:CompilationLine->bool
+    val isCompilationLineTypeFileBegin:CompilationLine->bool
+    val isCompilationLineTypeFileEnd:CompilationLine->bool
+    val isCompilationLineTypeNewSectionItem:CompilationLine->bool
+    val isCompilationLineTypeNewJoinedItem:CompilationLine->bool
+    val isCompilationLineTypeCompilerJoinDirective:CompilationLine->bool
+    val isCompilationLineTypeNewItemJoinCombination:CompilationLine->bool
+    val isCompilationLineTypeCompilerNamespaceDirectiveWithItem:CompilationLine->bool
+    val isCompilationLineTypePoundTagWithItem:CompilationLine->bool
+    val isCompilationLineTypeMentionTagWithItem:CompilationLine->bool
+    val isCompilationLineTypeNameValueTagWithItem:CompilationLine->bool
+    val isCompilationLineTypeCompilerSectionDirectiveWithItem:CompilationLine->bool
+    val isCompilationLineTypeCompilerJoinTypeWithItem:CompilationLine->bool
+    val isCompilationLineTypeCompilerNamespaceDirective:CompilationLine->bool
+    val isCompilationLineTypeCompilerTagReset:CompilationLine->bool
+    val isCompilationLineTypeCompilerSectionDirective:CompilationLine->bool
+    val isCompilationLineTypeFreeFormText:CompilationLine->bool
+    val isCompilationLineTypeEmptyLine:CompilationLine->bool
+
     
     // Right now, the idea is that CompileResult is the 'done' type, used when
     // we're completely done on this end. It contains a stream of compiled lines

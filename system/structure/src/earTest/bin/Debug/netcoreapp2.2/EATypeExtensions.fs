@@ -60,6 +60,8 @@ namespace EA
     type EARConfigType =
         {
         ConfigBase:ConfigBase
+        FileListFromCommandLine:(string*System.IO.FileInfo)[]
+        IncomingStream:seq<string>
         }
         with member this.PrintThis() =()
             //testingLogger.info(
@@ -101,6 +103,7 @@ namespace EA
     let EAProgramHelp = [|"EasyAM. An analysis compiler. It compiles freeform notes to useful project stuff."|]
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEABaseOptions = createNewBaseOptions "ea" "The world's first analysis compiler" EAProgramHelp defaultVerbosity
+    let defaultEAConfig:EAConfigType ={ConfigBase = {defaultEABaseOptions with Verbosity=defaultVerbosity}; IncomingStream=[||]; FileListFromCommandLine=[||]}
     let loadEAConfigFromCommandLine:GetEAProgramConfigType = (fun args incomingStream->
       logEvent Verbose "Method loadEAConfigFromCommandLine beginning....." moduleLogger
       if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
@@ -136,12 +139,13 @@ namespace EA
 
     /// Process any args you can from the command line
     /// Get rid of any junk
-    type GetEARProgramConfigType=string []->EARConfigType
+    type GetEARProgramConfigType=string [] -> seq<string>->EARConfigType
     // A couple of prototype EAR types to begin thinking about what goes here
     let EARProgramHelp = [|"EasyAM Reporting (EAR). Takes EasyAM master files and translates output."|]
     //createNewBaseOptions programName programTagLine programHelpText verbose
     let defaultEARBaseOptions = createNewBaseOptions "ear" "The reporting engine for EasyAM" EARProgramHelp defaultVerbosity
-    let loadEARConfigFromCommandLine:GetEARProgramConfigType = (fun args->
+    let defaultEARConfig:EARConfigType = {ConfigBase = {defaultEARBaseOptions with Verbosity=defaultVerbosity}; IncomingStream=[||]; FileListFromCommandLine=[||]}
+    let loadEARConfigFromCommandLine:GetEARProgramConfigType = (fun args incomingStream->
         logEvent Verbose "Method loadEARConfigFromCommandLine beginning....." moduleLogger
         if args.Length>0 && (args.[0]="?"||args.[0]="/?"||args.[0]="-?"||args.[0]="--?"||args.[0]="help"||args.[0]="/help"||args.[0]="-help"||args.[0]="--help") then raise (UserNeedsHelp args.[0]) else
         let newVerbosity =ConfigEntryType<_>.populateValueFromCommandLine(defaultVerbosity, args)
@@ -152,9 +156,25 @@ namespace EA
             logEvent Info ("New Verbosity set in loadEARConfigFromCommandLine: " + newVerbosity.parameterValue.ToString()) moduleLogger
             logary.switchLoggerLevel ("", newVerbosity.parameterValue.ToLogLevel())
           else ()
+        // Go through the arg list. If it's a file, add to list.
+        // If it's a directory, add files in the directory to the list
+        let fileList=args |> Array.filter(fun x->
+          let newFile=System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)
+          //logEvent Verbose ("Method loadEAConfigFromCommandLine file exists: " + newFile + " = " + System.IO.File.Exists(newFile).ToString()) moduleLogger
+          System.IO.File.Exists(newFile)
+          )
+        //logEvent Verbose ("Method loadEAConfigFromCommandLine fileList length: " + fileList.Length.ToString()) moduleLogger
+        let directoriesList=args |> Array.filter(fun x->System.IO.Directory.Exists(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)))
+        //logEvent Verbose ("Method loadEAConfigFromCommandLine directories length: " + directoriesList.Length.ToString()) moduleLogger
+        let filesFromDirectories=directoriesList |> Array.map(fun x->System.IO.Directory.GetFiles(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x))) |> Array.concat
+        let filesReferenced=fileList|>Array.append filesFromDirectories
+        let newFilesReferncedFromTheCommandLine = filesReferenced |> Array.map(fun x->
+              let newFile=System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,x)
+              (newFile, System.IO.FileInfo(newFile))
+          )
         logEvent Verbose "..... Method loadEARConfigFromCommandLine ending. Normal Path." moduleLogger
         turnOnLogging()
-        {ConfigBase = newConfigBase}
+        {ConfigBase = newConfigBase; IncomingStream=incomingStream; FileListFromCommandLine=newFilesReferncedFromTheCommandLine}
         )
 
 
