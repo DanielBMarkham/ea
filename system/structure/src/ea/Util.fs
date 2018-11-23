@@ -4,6 +4,7 @@ namespace EA.Compiler
     open SystemTypeExtensions
     open SystemUtilities
     open CommandLineHelper
+    open EA
     open EA.Types
     open EA.Lenses
     open EA.Persist
