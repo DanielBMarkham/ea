@@ -32,3 +32,5 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\n
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.pdb
 c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfoInputs.cache
 c:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\obj\Debug\netcoreapp2.0\ealib.AssemblyInfo.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EA.fsi
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ealib\bin\Debug\netcoreapp2.0\EA.fs

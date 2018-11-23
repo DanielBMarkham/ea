@@ -69,3 +69,5 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfoInputs.cache
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\obj\Debug\netcoreapp2.2\eaTest.AssemblyInfo.fs
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EA.fsi
+C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\eaTest\bin\Debug\netcoreapp2.2\EA.fs

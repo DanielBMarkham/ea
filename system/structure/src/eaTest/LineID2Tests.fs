@@ -160,7 +160,8 @@ namespace EasyAM2
     //let result=Compile(snd newParm)
 
     let compileCheck (compilerResults:CompilationResultType) =
-      //let resultLines = snd compilerResults
+      let resultLines = compilerResults.Results
+      let linesThatHaveNotBeenProcessed = resultLines |> Array.filter(fun x->isCompilationLineALineType x)
       //let hasBookends =
       //  if resultLines.Length > 2 then resultLines.[0]
       ()

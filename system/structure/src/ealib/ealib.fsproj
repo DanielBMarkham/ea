@@ -19,6 +19,14 @@
       <Link>CommandLineHelper.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="..\AppCommon\EA.fsi">
+      <Link>EA.fsi</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\AppCommon\EA.fs">
+      <Link>EA.fs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="../AppCommon/EATypeExtensions.fsi">
       <Link>EATypeExtensions.fsi</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
