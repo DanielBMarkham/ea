@@ -175,6 +175,7 @@ namespace EA.Core
             [|
               {Regex=new Regex("^([^(-]*)(TO-DO(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //1
               ;{Regex=new Regex("^([^(-]*)(QUESTION(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //2
+              ;{Regex=new Regex("^([^(-]*)(NOTE(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //2
               ;{Regex=new Regex("^([^(-]*)(PARENT(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //2
               ;{Regex=new Regex("^([^(-]*)(CHILD(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //3
               ;{Regex=new Regex("^([^(-]*)(CHILDREN(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //4

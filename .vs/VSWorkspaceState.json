@@ -1,16 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\meta",
-    "\\meta\\analysis",
     "\\system",
     "\\system\\structure",
     "\\system\\structure\\src",
     "\\system\\structure\\src\\AppCommon",
     "\\system\\structure\\src\\ea",
-    "\\system\\structure\\src\\ear",
-    "\\system\\structure\\src\\eaTest"
+    "\\system\\structure\\src\\ealib",
+    "\\system\\structure\\src\\earTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\eaTest\\LineID2Tests.fs",
+  "SelectedNode": "\\system",
   "PreviewInSolutionExplorer": false
 }

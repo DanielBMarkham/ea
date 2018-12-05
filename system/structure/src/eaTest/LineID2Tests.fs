@@ -36,14 +36,14 @@ TO-DO
   * Decide what I mean when I say "print out"
 
 USER STORIES
-  Recognize and sort lines by line type
-    PARENT
-	  Organize files by line type
-	  Be easy-to-use
-  Print out project To-Do items
-    PARENT
-	  Organize files by line type
-	  Be easy-to-use
+  - Recognize and sort lines by line type
+      PARENT
+      - Organize files by line type
+      - Be easy-to-use
+  - Print out project To-Do items
+      PARENT
+      - Organize files by line type
+      - Be easy-to-use
 
 
 
@@ -177,6 +177,60 @@ namespace EasyAM2
         Expect.isTrue true "I am truth"
       testCase "Results array" <| fun _ ->
         if (episode3Results.Results.Length<>30) then Tests.failtest  ("Length is not 30. It is: " + episode3Results.Results.Length.ToString()) else ()
-      testCase "FirstLine processing" <| fun _ ->
-        if (isCompilationLineTypeEmptyLine episode3Results.Results.[1] = false) then Tests.failtest ("First line should be empty line type but is not " + episode3Results.Results.[1].Type.ToString()) else()
+      testCase "First Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[1] = false) then Tests.failtest ("First line should be empty line type but is not. It is " + episode3Results.Results.[1].Type.ToString()) else()
+      testCase "Second line is markup text" <| fun _ ->
+        if (isCompilationLineTypeFreeFormText episode3Results.Results.[2] = false) then Tests.failtest ("Second line should be freeform text but is not. It is " + episode3Results.Results.[2].Type.ToString()) else()
+      testCase "Third Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[3] = false) then Tests.failtest ("Third line should be empty line type but is not. It is " + episode3Results.Results.[3].Type.ToString()) else()
+      testCase "Fourth line is markup text" <| fun _ ->
+        if (isCompilationLineTypeFreeFormText episode3Results.Results.[4] = false) then Tests.failtest ("Fourth line should be freeform text but is not. It is " + episode3Results.Results.[4].Type.ToString()) else()
+      testCase "Fifth Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[5] = false) then Tests.failtest ("Fifth line should be empty line type but is not. It is " + episode3Results.Results.[5].Type.ToString()) else()
+      testCase "Sixth Line processing" <| fun _ ->
+        if (isCompilationLineTypeCompilerJoinDirective episode3Results.Results.[6] = false) then Tests.failtest ("Sixth line should be stand alone join line type but is not. It is " + episode3Results.Results.[6].Type.ToString()) else()
+      testCase "Seventh Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[7] = false) then Tests.failtest ("Seventh line should be new join itemline type but is not. It is " + episode3Results.Results.[7].Type.ToString()) else()
+      testCase "Eight Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[8] = false) then Tests.failtest ("Eighth line should be new join itemline type but is not. It is " + episode3Results.Results.[8].Type.ToString()) else()
+      testCase "Ninth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[9] = false) then Tests.failtest ("Ninth line should be new join itemline type but is not. It is " + episode3Results.Results.[9].Type.ToString()) else()
+      testCase "Tenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[10] = false) then Tests.failtest ("Tenth line should be empty line but is not. It is " + episode3Results.Results.[10].Type.ToString()) else()
+      testCase "Eleventh Line processing" <| fun _ ->
+        if (isCompilationLineTypeCompilerSectionDirective episode3Results.Results.[11] = false) then Tests.failtest ("Eleventh line should be new section directive but is not. It is " + episode3Results.Results.[11].Type.ToString()) else()
+      testCase "Twelveth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewSectionItem episode3Results.Results.[12] = false) then Tests.failtest ("Twelveth line should be new section item but is not. It is " + episode3Results.Results.[12].Type.ToString() + "\n" + episode3Results.Results.[12].LineText ) else()
+      testCase "Thirteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeCompilerJoinDirective episode3Results.Results.[13] = false) then Tests.failtest ("Thirteenth line should be stand alone join line type but is not. It is " + episode3Results.Results.[13].Type.ToString() + "\n" + episode3Results.Results.[13].LineText ) else()
+      testCase "Fourteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[14] = false) then Tests.failtest ("Fourteenth line should be new join itemline type but is not. It is " + episode3Results.Results.[14].Type.ToString() + "\n" + episode3Results.Results.[14].LineText ) else()
+      testCase "Fifteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[15] = false) then Tests.failtest ("Fifteenth line should be new join itemline type but is not. It is " + episode3Results.Results.[15].Type.ToString() + "\n" + episode3Results.Results.[15].LineText ) else()
+      testCase "Sixteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewSectionItem episode3Results.Results.[16] = false) then Tests.failtest ("Twelveth line should be new section item but is not. It is " + episode3Results.Results.[16].Type.ToString() + "\n" + episode3Results.Results.[16].LineText ) else()
+      testCase "Seventeenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeCompilerJoinDirective episode3Results.Results.[17] = false) then Tests.failtest ("Thirteenth line should be stand alone join line type but is not. It is " + episode3Results.Results.[17].Type.ToString() + "\n" + episode3Results.Results.[17].LineText ) else()
+      testCase "Eighteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[18] = false) then Tests.failtest ("Fourteenth line should be new join itemline type but is not. It is " + episode3Results.Results.[18].Type.ToString() + "\n" + episode3Results.Results.[18].LineText ) else()
+      testCase "Nineteenth Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[19] = false) then Tests.failtest ("Fifteenth line should be new join itemline type but is not. It is " + episode3Results.Results.[19].Type.ToString() + "\n" + episode3Results.Results.[19].LineText ) else()
+      testCase "20th Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[20] = false) then Tests.failtest ("Twentieth line should be empty line type but is not. It is " + episode3Results.Results.[20].Type.ToString()) else()
+      testCase "21st Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[21] = false) then Tests.failtest ("Twenty-First line should be empty line type but is not. It is " + episode3Results.Results.[21].Type.ToString()) else()
+      testCase "22nd Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[22] = false) then Tests.failtest ("Twenty-Second line should be empty line type but is not. It is " + episode3Results.Results.[22].Type.ToString()) else()
+      testCase "23rd line is markup text" <| fun _ ->
+        if (isCompilationLineTypeFreeFormText episode3Results.Results.[23] = false) then Tests.failtest ("Twenty-third line should be freeform text but is not. It is " + episode3Results.Results.[23].Type.ToString()) else()
+      testCase "24th Line processing" <| fun _ ->
+        if (isCompilationLineTypeEmptyLine episode3Results.Results.[24] = false) then Tests.failtest ("Twenty-Fourth line should be empty line type but is not. It is " + episode3Results.Results.[24].Type.ToString()) else()
+      testCase "25th Line processing" <| fun _ ->
+        if (isCompilationLineTypeCompilerJoinDirective episode3Results.Results.[25] = false) then Tests.failtest ("Twenty-fifth line should be stand alone join line type but is not. It is " + episode3Results.Results.[25].Type.ToString() + "\n" + episode3Results.Results.[25].LineText ) else()
+      testCase "26th Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[26] = false) then Tests.failtest ("Twenty-sixth line should be new join itemline type but is not. It is " + episode3Results.Results.[26].Type.ToString() + "\n" + episode3Results.Results.[26].LineText ) else()
+      testCase "27th Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[27] = false) then Tests.failtest ("Twenty-seventh line should be new join itemline type but is not. It is " + episode3Results.Results.[27].Type.ToString() + "\n" + episode3Results.Results.[27].LineText ) else()
+      testCase "28th Line processing" <| fun _ ->
+        if (isCompilationLineTypeNewJoinedItem episode3Results.Results.[28] = false) then Tests.failtest ("Twenty-eigth line should be new join itemline type but is not. It is " + episode3Results.Results.[28].Type.ToString() + "\n" + episode3Results.Results.[28].LineText ) else()
       ]

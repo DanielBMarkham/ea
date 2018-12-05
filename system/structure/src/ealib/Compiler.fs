@@ -13,6 +13,7 @@ namespace EA.Core
     open Logary // needed at bottom to give right "Level" lookup for logging
     open System.Threading
     open System.Drawing
+    open System.Drawing
 
     //open System.Web.Configuration
 
@@ -143,7 +144,7 @@ namespace EA.Core
             let newContents =
               x.FileContents
               |> Array.mapi(fun j y->
-                  let leadingWhiteSpaceCount = y.Length - y.TrimStart(' ').Length
+                  let leadingWhiteSpaceCount = y.IndexOfFirstNonWhitespace(0)  //y.Length - y.TrimStart(' ').Length
                   {
                   ShortFileName=tempInfo.Name
                   FullFileName=tempInfo.FullName
@@ -197,6 +198,12 @@ namespace EA.Core
       logBack Logary.Verbose "..... Method matchLineToCommandType ending"
       ret
       )
+    type NextAddShouldBeType = Item|JoinToItem
+    type NextAddExpected = 
+      {
+        AddType:NextAddShouldBeType
+        IndentColumn:int
+      }
     let matchLineWithCommandToLineType:TranslateCommandStreamIntoLineType = (fun incomingStream->
       logBack Logary.Debug "Method matchLineWithCommandToLineType beginning..... "
       if incomingStream.Length <2
@@ -205,11 +212,59 @@ namespace EA.Core
         
         let ret =
           incomingStream
-          |> Array.mapFold(fun acc x->
-            (x,acc)
-            ) 0
-        //logBack Error "Method matchLineWithCommandToLineType NOTHING HERE "
-        incomingStream
+          |> Array.mapFold(fun acc compilationLine->
+            let newCompilationLine =
+              match compilationLine.Type with 
+                // Stuff comes in as a CommandMatch, goes out as a LineType
+                |LineIdentification.CommandMatch cm ->
+                  match cm.LineType with 
+                    |EasyAMCommandType.Join->
+                      let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
+                      let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
+                      let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
+                      let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
+                      //Console.WriteLine("nono " + compilationLine.TextStartColumn.ToString())
+                      match matches.Length with 
+                        |0->(compilationLine,newAcc) // error?
+                        |1->({compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}, newAcc)
+                        |2->({compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinTypeWithItem)}, newAcc)
+                        |3->({compilationLine with Type=LineType(EasyAMLineTypes.NewItemJoinCombination)}, newAcc)
+                        |_->(compilationLine,newAcc) //error?
+                    |EasyAMCommandType.NewItem->
+                      match acc.AddType with
+                        |Item->({compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}, acc)
+                        |JoinToItem->
+                          // if the indent is the same or greater, stay with join.
+                          // otherwise switch it up to whatever the parent is
+                          if compilationLine.TextStartColumn >= acc.IndentColumn
+                            then 
+                              //Console.WriteLine(compilationLine.TextStartColumn.ToString() + " / " + acc.IndentColumn.ToString() + "  " + compilationLine.LineText)
+                              let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
+                              ({compilationLine with Type=LineType(EasyAMLineTypes.NewJoinedItem)}, newAcc)
+                            else
+                              //Console.WriteLine("*" + compilationLine.TextStartColumn.ToString() + " / " + acc.IndentColumn.ToString() + "  " + compilationLine.LineText)
+                              let newAcc={AddType=Item;IndentColumn=compilationLine.TextStartColumn}
+                              ({compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}, newAcc)
+                    |EasyAMCommandType.SectionDirective->
+                      let newAcc={AddType=Item;IndentColumn=compilationLine.TextStartColumn}
+                      ({compilationLine with Type=LineType(EasyAMLineTypes.CompilerSectionDirective)},newAcc)
+                    |EasyAMCommandType.None->
+                      ({compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)},acc)
+                    |EasyAMCommandType.EmptyLine->
+                      ({compilationLine with Type=LineType(EasyAMLineTypes.EmptyLine)},acc)
+                    |_->
+                      ({compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)},acc)
+                |LineIdentification.LineType lt->
+                  match lt with 
+                    |EasyAMLineTypes.EmptyLine->
+                      (compilationLine,acc)
+                    |_->(compilationLine,acc)
+                |LineIdentification.LineType lt->(compilationLine,acc)
+            newCompilationLine
+            ) {AddType=Item; IndentColumn=0}
+
+        logBack Logary.Debug "..... Method matchLineWithCommandToLineType ending"
+        fst ret
       )
 
     //
