@@ -31,7 +31,8 @@
             then raise (new ArgumentOutOfRangeException("startIndex"))
             else 
               if x.Length=0 then 0 else
-              x.ToCharArray() |> Array.findIndex(fun y->System.Char.IsWhiteSpace(y)=false)
+              let chopped = x.Substring(startIndex)
+              chopped.ToCharArray() |> Array.findIndex(fun y->System.Char.IsWhiteSpace(y)=false)
         member x.ContainsAnyRegex(possibleRegexMatches:string[]) =
             let ret = possibleRegexMatches |> Array.tryFind(fun y->
                 let rg = new System.Text.RegularExpressions.Regex(y)

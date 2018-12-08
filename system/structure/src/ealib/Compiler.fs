@@ -53,6 +53,13 @@ namespace EA.Core
         match self.Type with
         |CommandMatch cm->cm.LineType.ToString()
         |LineType lt->lt.ToString()
+      member self.ToFileLocation =
+        self.CompilationUnitNumber.ToString().PadLeft(3,'0') + ":"
+        + self.LineNumber.ToString().PadLeft(4,'0')
+      member self.ToFullLocation =
+        self.ShortFileName.PadLeft(System.Math.Min(32,self.ShortFileName.Length)) + ":" 
+        + self.ToFileLocation
+
     // Maybe there is a better way of doing this. Just not today. (Or should this be the start of the lenses...)
     // Discussion of the choice of type-methods, functions, or lenses based on project direction
     let isCompilationLineACommand (line:CompilationLine) =
@@ -223,16 +230,19 @@ namespace EA.Core
                       let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
                       let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
                       let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
-                      //Console.WriteLine("nono " + compilationLine.TextStartColumn.ToString())
-                      match matches.Length with 
-                        |0->(compilationLine,newAcc) // error?
-                        |1->({compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}, newAcc)
-                        |2->({compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinTypeWithItem)}, newAcc)
-                        |3->({compilationLine with Type=LineType(EasyAMLineTypes.NewItemJoinCombination)}, newAcc)
-                        |_->(compilationLine,newAcc) //error?
+                      let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
+                      //matchGroups |> Array.iteri(fun i (x:System.Text.RegularExpressions.Group)->Console.WriteLine(i.ToString() + ". " + x.ToString() + " - " + x.Captures.toArray.Length.ToString()))
+                      //Remember: You want the first match, then you're interested in the Groups collection for that match
+                      match matchGroups.Length-1 with 
+                        |0->([|compilationLine|],newAcc) // error? First group is always total string
+                        |1->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}|], newAcc)
+                        |2->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}|], newAcc)
+                        |3->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinTypeWithItem)}|], newAcc)
+                        |4->([|{compilationLine with Type=LineType(EasyAMLineTypes.NewItemJoinCombination)}|], newAcc)
+                        |_->([|compilationLine|],newAcc) //error?
                     |EasyAMCommandType.NewItem->
                       match acc.AddType with
-                        |Item->({compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}, acc)
+                        |Item->([|{compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}|], acc)
                         |JoinToItem->
                           // if the indent is the same or greater, stay with join.
                           // otherwise switch it up to whatever the parent is
@@ -240,31 +250,66 @@ namespace EA.Core
                             then 
                               //Console.WriteLine(compilationLine.TextStartColumn.ToString() + " / " + acc.IndentColumn.ToString() + "  " + compilationLine.LineText)
                               let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
-                              ({compilationLine with Type=LineType(EasyAMLineTypes.NewJoinedItem)}, newAcc)
+                              ([|{compilationLine with Type=LineType(EasyAMLineTypes.NewJoinedItem)}|], newAcc)
                             else
                               //Console.WriteLine("*" + compilationLine.TextStartColumn.ToString() + " / " + acc.IndentColumn.ToString() + "  " + compilationLine.LineText)
                               let newAcc={AddType=Item;IndentColumn=compilationLine.TextStartColumn}
-                              ({compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}, newAcc)
+                              ([|{compilationLine with Type=LineType(EasyAMLineTypes.NewSectionItem)}|], newAcc)
                     |EasyAMCommandType.SectionDirective->
                       let newAcc={AddType=Item;IndentColumn=compilationLine.TextStartColumn}
-                      ({compilationLine with Type=LineType(EasyAMLineTypes.CompilerSectionDirective)},newAcc)
+                      ([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerSectionDirective)}|],newAcc)
+                    |EasyAMCommandType.Namespace->
+                      let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
+                      let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
+                      let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
+                      let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
+                      //matchGroups |> Array.iteri(fun i (x:System.Text.RegularExpressions.Group)->Console.WriteLine(i.ToString() + ". " + x.ToString() + " - " + x.Captures.toArray.Length.ToString()))
+                      //Remember: You want the first match, then you're interested in the Groups collection for that match
+                      match matchGroups.Length-1 with 
+                        |0->([|compilationLine|],acc) // error? First group is always total string
+                        |1->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerNamespaceDirective)}|], acc)
+                        |2->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerNamespaceDirectiveWithItem)}|], acc)
+                        |3->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerNamespaceDirectiveWithItem)}|], acc)
+                        |_->([|compilationLine|],acc) // error?
+                    |EasyAMCommandType.Tag->
+                      // This one's funky. It's only time we can have multiple commands at once
+                      let lineSplit=compilationLine.LineText.Split([|" "|], StringSplitOptions.None) |> Array.filter(fun x->x.Length>1) // to tag something, there has to be a tag and something else
+                      let tagChunks=lineSplit|>Array.filter(fun x->x.Substring(0,1)="&" || x.Substring(0,1)="#" || x.Substring(0,1)="@" )
+                      let newLines=tagChunks|>Array.map(fun x->
+                        let newLineType=
+                          match x.Substring(0,1), x.Substring(1,1)  with
+                            |"&",_->LineType(EasyAMLineTypes.NameValueTagWithItem)
+                            |"#","@" | "@","#"->LineType(EasyAMLineTypes.CompilerTagReset)
+                            |"#",_->LineType(EasyAMLineTypes.PoundTagWithItem)
+                            |"@",_->LineType(EasyAMLineTypes.MentionTagWithItem)
+                            |_,_->compilationLine.Type
+                        {compilationLine with Type=newLineType}
+                        )
+                      //let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
+                      //let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
+                      //let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
+                      //let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
+                      //let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
+                      //({compilationLine with Type=newLineType},acc)
+                      (newLines, acc)
                     |EasyAMCommandType.None->
-                      ({compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)},acc)
+                      ([|{compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)}|],acc)
                     |EasyAMCommandType.EmptyLine->
-                      ({compilationLine with Type=LineType(EasyAMLineTypes.EmptyLine)},acc)
-                    |_->
-                      ({compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)},acc)
+                      ([|{compilationLine with Type=LineType(EasyAMLineTypes.EmptyLine)}|],acc)
                 |LineIdentification.LineType lt->
                   match lt with 
                     |EasyAMLineTypes.EmptyLine->
-                      (compilationLine,acc)
-                    |_->(compilationLine,acc)
-                |LineIdentification.LineType lt->(compilationLine,acc)
+                      ([|compilationLine|],acc)
+                    |_->([|compilationLine|],acc)
+                |LineIdentification.LineType lt->([|compilationLine|],acc)
             newCompilationLine
             ) {AddType=Item; IndentColumn=0}
 
         logBack Logary.Debug "..... Method matchLineWithCommandToLineType ending"
-        fst ret
+        let collapsedRet=
+          ((fst ret |> Array.concat)
+          ,snd ret)
+        fst collapsedRet
       )
 
     //

@@ -31,6 +31,8 @@ namespace EA.Core
       TextStartColumn:int
       }
       member LineTypeDescription:string
+      member ToFileLocation:string 
+      member ToFullLocation:string
     // helpers/lenses
     val isCompilationLineACommand:CompilationLine->bool
     val isCompilationLineALineType:CompilationLine->bool

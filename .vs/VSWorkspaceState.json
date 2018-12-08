@@ -7,8 +7,9 @@
     "\\system\\structure\\src\\AppCommon",
     "\\system\\structure\\src\\ea",
     "\\system\\structure\\src\\ealib",
-    "\\system\\structure\\src\\earTest"
+    "\\system\\structure\\src\\earTest",
+    "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system",
+  "SelectedNode": "\\system\\structure\\src\\ealib\\Compiler.fs",
   "PreviewInSolutionExplorer": false
 }
