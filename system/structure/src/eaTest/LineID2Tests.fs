@@ -149,7 +149,7 @@ NAMESPACE EasyAM2
         * Work like other Unix commands
       OUTCOME
         * Whatever notes I took are copied over to the output without any changes to them
-      @episode=2 @status=done @testscript=test_episode2.sh
+      #episode=2 #status=done #testscript=test_episode2.sh
     * I took a bunch of notes without any tagged information in two separate files
       PARENT
         * Organize a set of notes I took today
@@ -348,28 +348,44 @@ NAMESPACE EasyAM2
         resultLineChecker(eaAtEpisoderResults.Results.[29], isCompilationLineTypeNewJoinedItem)
         resultLineChecker(eaAtEpisoderResults.Results.[30], isCompilationLineTypeEmptyLine)
         resultLineChecker(eaAtEpisoderResults.Results.[31], isCompilationLineTypeCompilerSectionDirective)
+
+        // with multi-tags on one line, the line multiplies. This means array index no longer useful for lookup
         resultLineChecker(eaAtEpisoderResults.Results.[32], isCompilationLineTypeNameValueTagWithItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[33], isCompilationLineTypeNewSectionItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[34], isCompilationLineTypeCompilerJoinDirective)
-        resultLineChecker(eaAtEpisoderResults.Results.[35], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[36], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[37], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[33], isCompilationLineTypeNameValueTagWithItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[34], isCompilationLineTypeNameValueTagWithItem)
+
+        resultLineChecker(eaAtEpisoderResults.Results.[35], isCompilationLineTypeNewSectionItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[36], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[37], isCompilationLineTypeNewJoinedItem)
         resultLineChecker(eaAtEpisoderResults.Results.[38], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[39], isCompilationLineTypeNameValueTagWithItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[40], isCompilationLineTypeNewSectionItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[41], isCompilationLineTypeCompilerJoinDirective)
-        resultLineChecker(eaAtEpisoderResults.Results.[42], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[43], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[44], isCompilationLineTypeCompilerJoinDirective)
-        resultLineChecker(eaAtEpisoderResults.Results.[45], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[46], isCompilationLineTypeNameValueTagWithItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[47], isCompilationLineTypeCompilerJoinDirective)
-        resultLineChecker(eaAtEpisoderResults.Results.[48], isCompilationLineTypeNewJoinedItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[39], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[40], isCompilationLineTypeNewJoinedItem)
+
+        // another split/multiply
+        resultLineChecker(eaAtEpisoderResults.Results.[41], isCompilationLineTypeMentionTagWithItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[42], isCompilationLineTypeMentionTagWithItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[43], isCompilationLineTypeMentionTagWithItem)
+
+
+        resultLineChecker(eaAtEpisoderResults.Results.[44], isCompilationLineTypeNewSectionItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[45], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[46], isCompilationLineTypeNewJoinedItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[47], isCompilationLineTypeNewJoinedItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[48], isCompilationLineTypeCompilerJoinDirective)
         resultLineChecker(eaAtEpisoderResults.Results.[49], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[50], isCompilationLineTypeCompilerJoinDirective)
-        resultLineChecker(eaAtEpisoderResults.Results.[51], isCompilationLineTypeNewJoinedItem)
-        resultLineChecker(eaAtEpisoderResults.Results.[52], isCompilationLineTypeEmptyLine) //MADE IT HERE
-        resultLineChecker(eaAtEpisoderResults.Results.[53], isCompilationLineAFileBegin)
-        resultLineChecker(eaAtEpisoderResults.Results.[54], isCompilationLineAFileBegin)
-        resultLineChecker(eaAtEpisoderResults.Results.[55], isCompilationLineAFileEnd)
+
+
+        resultLineChecker(eaAtEpisoderResults.Results.[50], isCompilationLineTypePoundTagWithItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[51], isCompilationLineTypePoundTagWithItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[52], isCompilationLineTypePoundTagWithItem)
+
+        resultLineChecker(eaAtEpisoderResults.Results.[53], isCompilationLineTypeNewSectionItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[54], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[55], isCompilationLineTypeNewJoinedItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[56], isCompilationLineTypeNewJoinedItem)
+        resultLineChecker(eaAtEpisoderResults.Results.[57], isCompilationLineTypeCompilerJoinDirective)
+        resultLineChecker(eaAtEpisoderResults.Results.[58], isCompilationLineTypeNewJoinedItem) //MADE IT HERE
+        resultLineChecker(eaAtEpisoderResults.Results.[59], isCompilationLineTypeEmptyLine)
+        resultLineChecker(eaAtEpisoderResults.Results.[60], isCompilationLineTypeEmptyLine)
+        resultLineChecker(eaAtEpisoderResults.Results.[61], isCompilationLineAFileEnd)
       ]

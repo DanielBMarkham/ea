@@ -283,7 +283,7 @@ namespace EA.Core
                             |"#",_->LineType(EasyAMLineTypes.PoundTagWithItem)
                             |"@",_->LineType(EasyAMLineTypes.MentionTagWithItem)
                             |_,_->compilationLine.Type
-                        {compilationLine with Type=newLineType}
+                        {compilationLine with Type=newLineType; LineText=x}
                         )
                       //let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
                       //let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
