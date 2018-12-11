@@ -4,6 +4,7 @@ namespace EA
     open SystemTypeExtensions
     open SystemUtilities
     open CommandLineHelper
+    open EA
     open Logary
     open System.Data
     //open System.Web.Configuration
@@ -31,6 +32,37 @@ namespace EA
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Types"; "EATypeExtensions" |])
     // DIDNT NEED. WILD GOOSE CHASE USING THIS FROM HELP FILES
     //Logary.Adapters.Facade.LogaryFacadeAdapter.initialise<Expecto.Logging.Logger> logary
+
+
+    let ManageBucket      = {Name=Manage;       Category=ServicesOfferedAndValues;  Focus=ChangeMentalModelBasedOnInteractions;               WorkType=EmergentDiscoverRealityAndDecideStrategy;    BucketColor=HexColor("ffffff")}
+    let UnderstandBucket  = {Name=Understand;   Category=Values;                    Focus=ChangeMentalModelBasedOnInteractions;               WorkType=DirectDecideAndChangeReality;                BucketColor=HexColor("ffffff")}
+    let ExecuteBucket     = {Name=Execute;      Category=Values;                    Focus=AdjustHowMentalModelAndInteractionsWorkTogether;    WorkType=EmergentDiscoverRealityAndDecideStrategy;    BucketColor=HexColor("ffffff")}
+    let InstantiateBucket = {Name=Instantiate;  Category=Values;                    Focus=ChangeInteractionsBasedOnMentalModel;               WorkType=DirectDecideAndChangeReality;                BucketColor=HexColor("ffffff")}
+    let DeliverBucket     = {Name=Deliver;      Category=ServicesOfferedAndValues;  Focus=ChangeInteractionsBasedOnMentalModel;               WorkType=EmergentDiscoverRealityAndDecideStrategy;    BucketColor=HexColor("ffffff")}
+    let OptimizeBucket    = {Name=Optimize;     Category=ServicesOffered;           Focus=ChangeInteractionsBasedOnMentalModel;               WorkType=DirectDecideAndChangeReality;                BucketColor=HexColor("ffffff")}
+    let PlanBucket        = {Name=Plan;         Category=ServicesOffered;           Focus=AdjustHowMentalModelAndInteractionsWorkTogether;    WorkType=EmergentDiscoverRealityAndDecideStrategy;    BucketColor=HexColor("ffffff")}
+    let GuessBucket       = {Name=Guess;        Category=ServicesOffered;           Focus=ChangeMentalModelBasedOnInteractions;               WorkType=DirectDecideAndChangeReality;                BucketColor=HexColor("ffffff")}
+    let BucketList =
+      [
+        ManageBucket;
+        UnderstandBucket;
+        ExecuteBucket;
+        InstantiateBucket;
+        DeliverBucket;
+        OptimizeBucket;
+        PlanBucket;
+        GuessBucket
+      ]
+    let defaultLocationPointer =
+      {
+        Genre=Business
+        AbstractionLevel=Abstract
+        Bucket=PlanBucket
+        TemporaalIndicator=ToBe
+        Tags=[||]
+        Namespace=[||]
+      }
+
     
     /// ErrorLevel, Message to display, and logger to send it to
     let logEvent (lvl:LogLevel) msg lggr =

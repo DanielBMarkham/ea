@@ -239,8 +239,8 @@ NAMESPACE EasyAM2
     let episode4Input=(defaultEAConfig,[|{Info=FakeFile2; FileContents=file2.Split([|"\r\n";"\n";"\r"|], StringSplitOptions.None)}|])
     let episode4Results=Compile(snd episode4Input)      
     let resultLineChecker ((
-                            resultLine:EA.Core.Compiler.CompilationLine)
-                            , (funChecker:EA.Core.Compiler.CompilationLine->bool)) =
+                            resultLine:CompilationLine)
+                            , (funChecker:CompilationLine->bool)) =
       let result=funChecker resultLine
       if result=true
         then ()

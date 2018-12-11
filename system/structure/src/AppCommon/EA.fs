@@ -1,27 +1,11 @@
   namespace EA 
     open System
-    type CaseSensitive=Default|IgnoreCase|CaseSensitive
-    // Not the same as line types. Commands are what we search for. The line type depends on the context
-    type EasyAMCommandType =
-      |NewItem
-      |Join
-      |Namespace
-      |Tag
-      |SectionDirective
-      |EmptyLine
-      |None
-      static member ToList()=
-        [NewItem;Join;Namespace;Tag;SectionDirective;EmptyLine;None]
 
-    //let (|CaseSensitive|_|) (str:string) arg = 
-    //  if String.Compare(str, arg, StringComparison.Ordinal) = 0
-    //    then Some() else Option<_>.None
-    //let (|CaseInsensitive|_|) (str:string) arg = 
-    //  if String.Compare(str, arg, StringComparison.OrdinalIgnoreCase) = 0
-    //    then Some() else Option<_>.None
 
     // the command type sorts the string generally regardless of context
     // once some kind of running context is established, we get the line type
+    type CaseSensitive=Default|IgnoreCase|CaseSensitive
+    
     type EasyAMLineTypes =
       |Unprocessed //14 - if parsing fails it defaults here
       |FileBegin
@@ -120,6 +104,20 @@
       interface IFormattable with
         member self.ToString(format, formatProvider) = 
           self.MatchToString.ToString()
+
+    // Not the same as line types. Commands are what we search for. The line type depends on the context
+    type EasyAMCommandType =
+      |NewItem
+      |Join
+      |Namespace
+      |Tag
+      |SectionDirective
+      |EmptyLine
+      |None
+      static member ToList()=
+        [NewItem;Join;Namespace;Tag;SectionDirective;EmptyLine;None]
+
+
     type RegexMatcherType = 
       {
         Regex:System.Text.RegularExpressions.Regex
@@ -131,3 +129,157 @@
         LineType:EasyAMCommandType;
         MatchTokens:RegexMatcherType []
       }
+    // Couldn't decide for separate types or all Compilation Line
+    type LineIdentification =
+      |CommandMatch of LineMatcherType
+      |LineType of EasyAMLineTypes
+    type CompilationLine =
+      {
+      ShortFileName:string
+      FullFileName:string
+      CompilationUnitNumber:int
+      LineNumber:int 
+      Type:LineIdentification
+      LineText:string
+      TextStartColumn:int
+      }
+      with
+      // This linetype/command/matcher crap is getting mixed up too easily. name better!
+      member self.LineTypeDescription =
+        match self.Type with
+        |CommandMatch cm->cm.LineType.ToString()
+        |LineType lt->lt.ToString()
+      member self.ToFileLocation =
+        self.CompilationUnitNumber.ToString().PadLeft(3,'0') + ":"
+        + self.LineNumber.ToString().PadLeft(4,'0')
+      member self.ToFullLocation =
+        self.ShortFileName.PadLeft(System.Math.Min(32,self.ShortFileName.Length)) + ":" 
+        + self.ToFileLocation
+    
+    type CompilationStream = CompilationLine []
+
+    type CompilationUnitType = {
+      Info:System.IO.FileInfo
+      FileContents:string[]
+      }
+
+
+
+
+
+
+
+    type BucketWorkType =
+      | DirectDecideAndChangeReality
+      | EmergentDiscoverRealityAndDecideStrategy
+    type BucketName =
+      | Manage
+      | Understand 
+      | Execute 
+      | Instantiate 
+      | Deliver 
+      | Optimize 
+      | Plan 
+      | Guess
+    type BucketCategoryType =
+      | ServicesOffered // What's our service/product DO that people want?
+      | Values // What are our values and how do they relate to our work?
+      | ServicesOfferedAndValues // The critical areas where these two come into conflict
+    type BucketFocusType =
+      | ChangeMentalModelBasedOnInteractions
+      | ChangeInteractionsBasedOnMentalModel
+      | AdjustHowMentalModelAndInteractionsWorkTogether
+    // System.Drawing not available yet in dotnet. Let's fake it out.
+    //type BucketColorType = System.Drawing.Color
+    type BucketColorType =
+      | RGB of (int8*int8*int8)
+      | HexColor of string
+    type BucketType =
+      {
+        Name:BucketName
+        Category:BucketCategoryType
+        Focus: BucketFocusType
+        WorkType:BucketWorkType
+        BucketColor:BucketColorType
+      }
+    
+
+    type BucketMetaTypeName =
+      | Aim
+      | Supplementals
+      | Target
+      | Service
+    type BucketMetaTypeDrivers =
+      {
+        MakeItHappenEasy:BucketType
+        MakeItHappen:BucketType
+        MakeItHappenRight:BucketType
+      }
+    type BucketMetaType =
+      {
+        Name: BucketMetaTypeName
+        Drivers: BucketMetaTypeDrivers
+      }
+    // May need to add roles in at some point
+    type RoleSillyNameType =
+      | TheDork
+      | TheAutomatron
+      | TheWeasel
+      | TheFace
+      | TheAsshole
+      | TheDreamer
+      | TheCodependent
+      | TheSelfHelpGuru
+      | TheExample
+      | TheTeacher
+      | TheProphet
+      | TheEvangelist
+
+    type RoleMetaType =
+      | WorkForTheUsers
+      | WorkForTheTeams
+      | WorkForEverybody
+
+    type TemporalIndicatorType =
+      | Was
+      | AsIs
+      | ToBe 
+    type GenreType =
+      | Meta
+      | Business
+      | System
+    type AbstractionLevelType =
+      | Abstract
+      | Realized
+
+    type LocationPointerType =
+      {
+        Genre:GenreType
+        AbstractionLevel:AbstractionLevelType
+        Bucket: BucketType
+        TemporaalIndicator:TemporalIndicatorType
+        Tags:string[]
+        Namespace:string[]
+      }
+
+
+
+
+
+
+
+
+    type ModelItemType =
+      | Item 
+      | Join of (int*int)
+    type ModelItem =
+      {
+      Id:int 
+      Type:ModelItemType
+      Parent:int
+      Location:LocationPointerType 
+      Description:string 
+      References:string 
+      }
+
+

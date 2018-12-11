@@ -143,6 +143,16 @@
             this.Groups.[this.Groups.Count-1]
         member this.lastIndex =
             this.lastGroup.Index + this.lastGroup.Length
+    type System.Text.RegularExpressions.GroupCollection with
+        member this.toSeq =
+            seq {for i = 0 to this.Count - 1 do yield this.[i]}
+        member this.toArray =
+            [|for i = 0 to this.Count - 1 do yield this.[i] |]
+    type System.Text.RegularExpressions.CaptureCollection with 
+        member this.toSeq =
+            seq {for i = 0 to this.Count - 1 do yield this.[i]}
+        member this.toArray =
+            [|for i = 0 to this.Count - 1 do yield this.[i] |]
  /// Homegrown/copied pure functional stack implementation
  /// from https://viralfsharp.com/2012/02/11/implementing-a-stack-in-f/
     [<StructuredFormatDisplay("{StructuredFormatDisplay}")>]

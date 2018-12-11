@@ -30,7 +30,7 @@ namespace EA.Core
     val CompilerRules:CompilerRuleType list
     val isThisLineAllowedNext: EasyAMLineTypes->lineTypeToTest:EasyAMLineTypes->bool
 
-    type CompilationUnitType = {
-      Info:System.IO.FileInfo
-      FileContents:string[]
-      }
+    //type CompilationUnitType = {
+    //  Info:System.IO.FileInfo
+    //  FileContents:string[]
+    //  }

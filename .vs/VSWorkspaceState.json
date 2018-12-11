@@ -10,6 +10,6 @@
     "\\system\\structure\\src\\earTest",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\ealib\\Compiler.fs",
+  "SelectedNode": "\\system\\structure\\src\\eaTest\\LineID2Tests.fs",
   "PreviewInSolutionExplorer": false
 }

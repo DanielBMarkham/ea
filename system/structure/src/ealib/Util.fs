@@ -64,22 +64,7 @@ namespace EA.Core
           |_->false
         )
 
-    type CompilationLine =
-      {
-      ShortFileName:string
-      FullFileName:string
-      CompilationUnitNumber:int
-      LineNumber:int 
-      LineType:EasyAMLineTypes
-      LineText:string
-      TextStartColumn:int
-      }
-    type CompilationStream = CompilationLine []
 
-    type CompilationUnitType = {
-      Info:System.IO.FileInfo
-      FileContents:string[]
-      }
 
 
     logEvent Verbose "....Module exit" moduleLogger
