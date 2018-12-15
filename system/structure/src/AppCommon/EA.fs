@@ -1,11 +1,29 @@
-  namespace EA 
+  namespace EA
     open System
 
+    // THE PIPELINE
+    // 1. files console/list
+    // 2. compilation unit []
+    // 3. CompilationLine with commands
+    // 4. CompilationLine with linetype
+    // 5. Model
+    // didn't print, no model
 
     // the command type sorts the string generally regardless of context
     // once some kind of running context is established, we get the line type
+    // Not the same as line types. Commands are what we search for. The line type depends on the context
+    type EasyAMCommandType =
+      |NewItem
+      |Join
+      |Namespace
+      |Tag
+      |SectionDirective
+      |EmptyLine
+      |None
+      static member ToList()=
+        [NewItem;Join;Namespace;Tag;SectionDirective;EmptyLine;None]
+
     type CaseSensitive=Default|IgnoreCase|CaseSensitive
-    
     type EasyAMLineTypes =
       |Unprocessed //14 - if parsing fails it defaults here
       |FileBegin
@@ -52,11 +70,11 @@
           then
             if String.Compare(str, arg, StringComparison.Ordinal) = 0
               then Some() else Option<_>.None
-          else 
+          else
             if String.Compare(str, arg, StringComparison.OrdinalIgnoreCase) = 0
               then Some() else Option<_>.None
 
-        match stringValue with 
+        match stringValue with
           |CaseMatch "Unprocessed"->EasyAMLineTypes.Unprocessed
           |CaseMatch "FileBegin"->EasyAMLineTypes.FileBegin
           |CaseMatch "FileEnd"->EasyAMLineTypes.FileEnd
@@ -80,7 +98,7 @@
           |CaseMatch "FileEnd"->EasyAMLineTypes.FileEnd
           |_->Unprocessed
       member self.MatchToString=
-        match self with 
+        match self with
           |Unprocessed->"Unprocessed"
           |FileBegin->"FileBegin"
           |FileEnd->"FileEnd"
@@ -102,29 +120,19 @@
 
       override self.ToString() = self.MatchToString
       interface IFormattable with
-        member self.ToString(format, formatProvider) = 
+        member self.ToString(format, formatProvider) =
           self.MatchToString.ToString()
 
-    // Not the same as line types. Commands are what we search for. The line type depends on the context
-    type EasyAMCommandType =
-      |NewItem
-      |Join
-      |Namespace
-      |Tag
-      |SectionDirective
-      |EmptyLine
-      |None
-      static member ToList()=
-        [NewItem;Join;Namespace;Tag;SectionDirective;EmptyLine;None]
 
 
-    type RegexMatcherType = 
+
+    type RegexMatcherType =
       {
         Regex:System.Text.RegularExpressions.Regex
         CaptureGroupsExpected:int
         PossibleLineTypes:EasyAMLineTypes list
       }
-    type LineMatcherType = 
+    type LineMatcherType =
       {
         LineType:EasyAMCommandType;
         MatchTokens:RegexMatcherType []
@@ -138,7 +146,7 @@
       ShortFileName:string
       FullFileName:string
       CompilationUnitNumber:int
-      LineNumber:int 
+      LineNumber:int
       Type:LineIdentification
       LineText:string
       TextStartColumn:int
@@ -153,9 +161,9 @@
         self.CompilationUnitNumber.ToString().PadLeft(3,'0') + ":"
         + self.LineNumber.ToString().PadLeft(4,'0')
       member self.ToFullLocation =
-        self.ShortFileName.PadLeft(System.Math.Min(32,self.ShortFileName.Length)) + ":" 
+        self.ShortFileName.PadLeft(System.Math.Min(32,self.ShortFileName.Length)) + ":"
         + self.ToFileLocation
-    
+
     type CompilationStream = CompilationLine []
 
     type CompilationUnitType = {
@@ -165,21 +173,17 @@
 
 
 
-
-
-
-
     type BucketWorkType =
       | DirectDecideAndChangeReality
       | EmergentDiscoverRealityAndDecideStrategy
     type BucketName =
       | Manage
-      | Understand 
-      | Execute 
-      | Instantiate 
-      | Deliver 
-      | Optimize 
-      | Plan 
+      | Understand
+      | Execute
+      | Instantiate
+      | Deliver
+      | Optimize
+      | Plan
       | Guess
     type BucketCategoryType =
       | ServicesOffered // What's our service/product DO that people want?
@@ -202,7 +206,7 @@
         WorkType:BucketWorkType
         BucketColor:BucketColorType
       }
-    
+
 
     type BucketMetaTypeName =
       | Aim
@@ -243,7 +247,7 @@
     type TemporalIndicatorType =
       | Was
       | AsIs
-      | ToBe 
+      | ToBe
     type GenreType =
       | Meta
       | Business
@@ -261,25 +265,23 @@
         Tags:string[]
         Namespace:string[]
       }
-
-
-
-
-
-
-
-
-    type ModelItemType =
-      | Item 
-      | Join of (int*int)
+    type JoinType = 
+      |ParentChild
+      |NodeNotes
+    type ModelItemType = 
+      |Root
+      |Node of int
+      |ModelJoin of JoinType*int*int
+      |Note of string
     type ModelItem =
       {
-      Id:int 
-      Type:ModelItemType
-      Parent:int
-      Location:LocationPointerType 
-      Description:string 
-      References:string 
+        Id: int 
+        Type:ModelItemType
+        Location:LocationPointerType
+        Title:string
+        Mentions:CompilationLine []
       }
+
+
 
 

@@ -54,3 +54,5 @@ C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\net
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\obj\Debug\netcoreapp2.2\ear.pdb
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EA.fsi
 C:\Users\Daniel_Main\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EA.fs
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EA.fsi
+D:\Dropbox\aa-source\ea\system\structure\src\ear\bin\Debug\netcoreapp2.2\EA.fs

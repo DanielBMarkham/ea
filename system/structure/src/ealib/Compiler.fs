@@ -15,11 +15,6 @@ namespace EA.Core
     open System.Drawing
     open System.Drawing
 
-    //open System.Web.Configuration
-
-    //
-    // THIS IS WHACK. WHAT TO DO WITH LOGGER STATIC VAR IN A SHARED DLL?
-    //
     // Tag-list for the logger is namespace, project name, file name
     let moduleLogger = logary.getLogger (PointName [| "EA"; "Core"; "Compiler"; "EALib"; "Compiler" |])
     let mutable clientLogBack:(LogLevel->string->unit) option=Option<LogLevel->string->unit>.None
@@ -34,9 +29,6 @@ namespace EA.Core
     logBack Verbose "Module enter...."
 
 
-
-
-
     type CompilationStream = CompilationLine []
     // This will evolve, probably as the compiler matures
     type CompilationResultType = {
@@ -47,19 +39,24 @@ namespace EA.Core
     type TranslateIncomingIntoOneStream=CompilationUnitType[]->CompilationStream
     type IdentifyCompileStreamByCommandType=CompilationStream->CompilationStream
     type TranslateCommandStreamIntoLineType=CompilationStream->CompilationStream
+// *****
+// translate CompilationStream with LineTypes into model? NEXT UP
+// flushed out the matchLineWithCommandToLineType method to get LineType added in
+// led to more testing
+//*****
 
-    // Little helper func to take the file markers back off 
+    // Little helper func to take the file markers back off
     let removeFileMarkersFromStream (incomingStream:CompilationStream):CompilationStream =
       incomingStream |> Array.filter(fun x->
-        match x.Type with 
+        match x.Type with
           | LineType(FileBegin) | LineType(FileEnd) ->false
           |_->true
         )
     let removeFileMarkersFromResult (compileResult:CompilationResultType):CompilationResultType =
-      let newResults = 
+      let newResults =
         compileResult.Results
         |> Array.filter(fun x->
-          match x.Type with 
+          match x.Type with
             | LineType(FileBegin) | LineType(FileEnd) ->false
             |_->true
           )
@@ -67,7 +64,7 @@ namespace EA.Core
 
     let translateIncomingIntoOneStream:TranslateIncomingIntoOneStream = (fun filesIn->
         logBack Logary.Debug "Method translateIncomingIntoOneStream beginning..... "
-        let firstMap = 
+        let firstMap =
           filesIn
           |> Array.mapi(fun i x->
             let tempInfo=x.Info
@@ -117,7 +114,7 @@ namespace EA.Core
 
     let matchLineToCommandType:IdentifyCompileStreamByCommandType = (fun incomingStream->
       logBack Logary.Verbose "Method matchLineToCommandType beginning..... "
-      let ret = 
+      let ret =
         incomingStream |> Array.map(fun x->
           let commandMatch=matchLineWithRecommendedCommand x.LineText
           // For now, if it's a file marker line, just ignore whatever happens
@@ -129,7 +126,7 @@ namespace EA.Core
       ret
       )
     type NextAddShouldBeType = Item|JoinToItem
-    type NextAddExpected = 
+    type NextAddExpected =
       {
         AddType:NextAddShouldBeType
         IndentColumn:int
@@ -139,24 +136,23 @@ namespace EA.Core
       if incomingStream.Length <2
         then incomingStream
         else
-        
+
         let ret =
           incomingStream
           |> Array.mapFold(fun acc compilationLine->
             let newCompilationLine =
-              match compilationLine.Type with 
+              match compilationLine.Type with
                 // Stuff comes in as a CommandMatch, goes out as a LineType
                 |LineIdentification.CommandMatch cm ->
-                  match cm.LineType with 
+                  match cm.LineType with
                     |EasyAMCommandType.Join->
                       let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
                       let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
                       let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
                       let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
                       let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
-                      //matchGroups |> Array.iteri(fun i (x:System.Text.RegularExpressions.Group)->Console.WriteLine(i.ToString() + ". " + x.ToString() + " - " + x.Captures.toArray.Length.ToString()))
                       //Remember: You want the first match, then you're interested in the Groups collection for that match
-                      match matchGroups.Length-1 with 
+                      match matchGroups.Length-1 with
                         |0->([|compilationLine|],newAcc) // error? First group is always total string
                         |1->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}|], newAcc)
                         |2->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerJoinDirective)}|], newAcc)
@@ -170,7 +166,7 @@ namespace EA.Core
                           // if the indent is the same or greater, stay with join.
                           // otherwise switch it up to whatever the parent is
                           if compilationLine.TextStartColumn >= acc.IndentColumn
-                            then 
+                            then
                               //Console.WriteLine(compilationLine.TextStartColumn.ToString() + " / " + acc.IndentColumn.ToString() + "  " + compilationLine.LineText)
                               let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
                               ([|{compilationLine with Type=LineType(EasyAMLineTypes.NewJoinedItem)}|], newAcc)
@@ -188,7 +184,7 @@ namespace EA.Core
                       let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
                       //matchGroups |> Array.iteri(fun i (x:System.Text.RegularExpressions.Group)->Console.WriteLine(i.ToString() + ". " + x.ToString() + " - " + x.Captures.toArray.Length.ToString()))
                       //Remember: You want the first match, then you're interested in the Groups collection for that match
-                      match matchGroups.Length-1 with 
+                      match matchGroups.Length-1 with
                         |0->([|compilationLine|],acc) // error? First group is always total string
                         |1->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerNamespaceDirective)}|], acc)
                         |2->([|{compilationLine with Type=LineType(EasyAMLineTypes.CompilerNamespaceDirectiveWithItem)}|], acc)
@@ -208,12 +204,7 @@ namespace EA.Core
                             |_,_->compilationLine.Type
                         {compilationLine with Type=newLineType; LineText=x}
                         )
-                      //let firstMatchToken:RegexMatcherType=cm.MatchTokens.[0]
-                      //let initialRegex:System.Text.RegularExpressions.Regex = firstMatchToken.Regex
-                      //let matches:System.Text.RegularExpressions.Match []=initialRegex.Matches(compilationLine.LineText).toArray
-                      //let newAcc={AddType=JoinToItem;IndentColumn=compilationLine.TextStartColumn}
-                      //let matchGroups=matches.[0].Groups.toArray |> Array.filter(fun x->x.ToString().Length>0)
-                      //({compilationLine with Type=newLineType},acc)
+
                       (newLines, acc)
                     |EasyAMCommandType.None->
                       ([|{compilationLine with Type=LineType(EasyAMLineTypes.FreeFormText)}|],acc)

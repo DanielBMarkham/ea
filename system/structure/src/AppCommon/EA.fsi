@@ -32,13 +32,13 @@
       |None
 
 
-    type RegexMatcherType = 
+    type RegexMatcherType =
       {
         Regex:System.Text.RegularExpressions.Regex
         CaptureGroupsExpected:int
         PossibleLineTypes:EasyAMLineTypes list
       }
-    type LineMatcherType = 
+    type LineMatcherType =
       {
         LineType:EasyAMCommandType;
         MatchTokens:RegexMatcherType []
@@ -157,5 +157,20 @@
         Tags:string[]
         Namespace:string[]
       }
-
+    type JoinType = 
+      |ParentChild
+      |NodeNotes
+    type ModelItemType = 
+      |Root
+      |Node of int
+      |ModelJoin of JoinType*int*int
+      |Note of string
+    type ModelItem =
+      {
+        Id: int 
+        Type:ModelItemType
+        Location:LocationPointerType
+        Title:string
+        Mentions:CompilationLine []
+      }
 

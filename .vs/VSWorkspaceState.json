@@ -7,9 +7,10 @@
     "\\system\\structure\\src\\AppCommon",
     "\\system\\structure\\src\\ea",
     "\\system\\structure\\src\\ealib",
+    "\\system\\structure\\src\\ear",
     "\\system\\structure\\src\\earTest",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\eaTest\\LineID2Tests.fs",
+  "SelectedNode": "\\system\\structure\\src\\ealib\\Compiler.fsi",
   "PreviewInSolutionExplorer": false
 }

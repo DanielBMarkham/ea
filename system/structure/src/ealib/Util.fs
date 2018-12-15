@@ -32,7 +32,7 @@ namespace EA.Core
         |NewJoinedItemType of AllowedNextLinesType
         |NewItemJoinCombinationType of AllowedNextLinesType
     and AllowedNextLinesType = AllowedNextLines of (EasyAMLineTypes list)
-    
+
     let makeRule (ruleName) (nextLinesAllowed:EasyAMLineTypes list) = (ruleName)(AllowedNextLines(nextLinesAllowed))
     let fileBeginRule = makeRule FileBeginType [FileEnd; EasyAMLineTypes.EmptyLine; FreeFormText; CompilerSectionDirective; NewJoinedItem; NewSectionItem]
     let fileEndRule = makeRule FileEndType []

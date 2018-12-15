@@ -36,7 +36,7 @@ namespace EA.Core
             |];
             };
         { LineType=
-            Join;  // handles newJoinSection and item join item
+            EasyAMCommandType.Join;  // handles newJoinSection and item join item
           MatchTokens=
             [|
               {Regex=new Regex("^([^(-]*)(TO-DO(?:S?:?))(?-)(|[^-].*)$"); CaptureGroupsExpected=3; PossibleLineTypes=[CompilerJoinDirective; CompilerJoinTypeWithItem; NewItemJoinCombination] }    //1
