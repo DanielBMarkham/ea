@@ -11,6 +11,6 @@
     "\\system\\structure\\src\\earTest",
     "\\system\\structure\\src\\eaTest"
   ],
-  "SelectedNode": "\\system\\structure\\src\\ealib\\Compiler.fsi",
+  "SelectedNode": "\\system\\structure\\src\\AppCommon\\EA.fs",
   "PreviewInSolutionExplorer": false
 }

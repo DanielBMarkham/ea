@@ -1,51 +1,47 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  
-  <PropertyGroup>
-    <ServerGarbageCollection>true</ServerGarbageCollection>
-  </PropertyGroup>
-
   <ItemGroup>
-    <Compile Include="..\AppCommon\Facade.fs">
+    <ProjectReference Include="..\ealib\ealib.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../AppCommon/Facade.fs">
       <Link>Facade.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\..\..\..\..\SystemCommon\SystemTypeExtensions.fs">
+    <Compile Include="../../../../../SystemCommon/SystemTypeExtensions.fs">
       <Link>SystemTypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\..\..\..\..\SystemCommon\SystemUtilities.fs">
+    <Compile Include="../../../../../SystemCommon/SystemUtilities.fs">
       <Link>SystemUtilities.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\..\..\..\..\SystemCommon\CommandLineHelper.fs">
+    <Compile Include="../../../../../SystemCommon/CommandLineHelper.fs">
       <Link>CommandLineHelper.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\AppCommon\EATypeExtensions.fs">
+    <Compile Include="../AppCommon/EATypeExtensions.fs">
       <Link>EATypeExtensions.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\AppCommon\EALenses.fs">
+    <Compile Include="Util.fs" />
+    <Compile Include="../AppCommon/EALenses.fs">
       <Link>EALenses.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\AppCommon\EAAppUtilities.fs">
+    <Compile Include="../AppCommon/EAAppUtilities.fs">
       <Link>EAAppUtilities.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="..\AppCommon\EAPersist.fs">
+    <Compile Include="../AppCommon/EAPersist.fs">
       <Link>EAPersist.fs</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Util.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Expecto" Version="8.4.2" />
     <PackageReference Include="Logary" Version="5.0.0-beta.26" />
@@ -56,9 +52,4 @@
     <PackageReference Include="NewtonSoft.Json" Version="11.0.2" />
     <PackageReference Include="System" Version="4.1.0311.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ealib\ealib.fsproj" />
-  </ItemGroup>
-
 </Project>
